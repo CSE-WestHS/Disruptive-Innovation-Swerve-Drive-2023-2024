@@ -21,7 +21,7 @@ public class RobotContainer {
     swerve.setDefaultCommand(driveCommands.JoyStickDriveCommand());
     }
     catch(IOException e){
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
     configureBindings();
   }
