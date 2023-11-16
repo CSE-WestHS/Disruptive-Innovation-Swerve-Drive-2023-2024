@@ -10,20 +10,24 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import swervelib.SwerveDrive;
+import swervelib.imu.SwerveIMU;
 import swervelib.parser.SwerveParser;
+import swervelib.simulation.SwerveIMUSimulation;
 
 public class SwerveDriveSystem extends SubsystemBase {
     SwerveDrive swerve;
-
+    SwerveIMUSimulation swerveSim;
     public SwerveDriveSystem() throws IOException {
         swerve = new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve")).createSwerveDrive();
         swerve.resetEncoders();
-
+        
+        swerveSim = new SwerveIMUSimulation();
     }
 
     public void drive(double x, double y, double rotation) {
         Translation2d translation = new Translation2d(x, y);
         swerve.drive(translation, rotation, false, true);
+        updateOdometry();
     }
 
     public void updateOdometry() {
@@ -52,5 +56,10 @@ public class SwerveDriveSystem extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         drive(0, 0, 0);
+    }
+
+    @Override
+    public void simulationPeriodic(){
+        
     }
 }

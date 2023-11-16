@@ -18,7 +18,8 @@ public class RobotContainer {
     try{
     swerve = new SwerveDriveSystem();
     driveCommands = new DriveCommands(swerve);
-    swerve.setDefaultCommand(driveCommands.JoyStickDriveCommand());
+    Command joystickDrive = driveCommands.JoyStickDriveCommand();
+    swerve.setDefaultCommand(joystickDrive);
     }
     catch(IOException e){
       throw new RuntimeException(e);

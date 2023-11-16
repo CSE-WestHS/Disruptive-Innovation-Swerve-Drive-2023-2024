@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -14,9 +15,9 @@ public class DriveCommands{
     }
 
     public Command JoyStickDriveCommand(){
-        double x = OI.getLeftX();
-        double y = OI.getLeftY();
-        double rotation = OI.getRightX();
+        double x = MathUtil.applyDeadband(OI.getLeftX(), 0.2)  * 3;
+        double y = MathUtil.applyDeadband(OI.getLeftY(), 0.2) * 3;
+        double rotation = MathUtil.applyDeadband(OI.getRightX(), 0.2);
         return Commands.run(() -> swerve.drive(x, y, rotation), swerve);
     }
 }

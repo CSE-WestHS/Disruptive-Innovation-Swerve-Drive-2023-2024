@@ -2,8 +2,8 @@
   "maxSpeed": 15,
   "optimalVoltage": 12,
   "imu": {
-    "type": "navx",
-    "id": 0,
+    "type": "navx_mxp",
+    "id": null,
     "canbus": null
   },
   "invertedIMU": false,
