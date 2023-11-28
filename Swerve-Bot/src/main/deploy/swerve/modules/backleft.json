@@ -6,13 +6,17 @@
   "absoluteEncoderOffset": 0,
   "drive": {
     "type": "sparkmax",
-    "id":3,
+    "id": 3,
     "canbus": null
   },
   "angle": {
     "type": "sparkmax",
     "id": 1,
     "canbus": null
+  },
+  "conversionFactor": {
+    "angle": 0,
+    "drive": 0
   },
   "encoder": {
     "type": "cancoder",
