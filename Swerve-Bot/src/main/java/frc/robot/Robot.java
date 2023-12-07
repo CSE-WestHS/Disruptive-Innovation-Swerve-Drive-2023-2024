@@ -30,6 +30,10 @@ public class Robot extends TimedRobot {
     m_swerve.updateOdometry();
   }
 
+  @Override
+  public void robotPeriodic(){
+    m_swerve.putValues();
+  }
   private void driveWithJoystick(boolean fieldRelative) {
     // Get the x speed. We are inverting this because Xbox controllers return
     // negative values when we push forward.
