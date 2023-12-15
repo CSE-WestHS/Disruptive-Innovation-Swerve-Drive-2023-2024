@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.*;
 
@@ -51,7 +52,7 @@ public class SwerveModule extends SubsystemBase {
                   kvDriveVoltSecondsSquaredPerMeter);
 
   private final ProfiledPIDController m_turningPIDController
-          = new ProfiledPIDController(1, 0, 0,
+          = new ProfiledPIDController(.01, 0, 0,
           new TrapezoidProfile.Constraints(2 * Math.PI, 2 * Math.PI));
 
   public SwerveModule(
@@ -76,6 +77,7 @@ public class SwerveModule extends SubsystemBase {
 
     m_angleEncoder.configFactoryDefault();
     m_angleEncoder.configAllSettings(CtreUtils.generateCanCoderConfig());
+    m_angleEncoder.configMagnetOffset(m_angleOffset);
 
     m_driveEncoder = m_driveMotor.getEncoder();
     m_driveEncoder.setPositionConversionFactor(kDriveRevToMeters);
@@ -87,14 +89,15 @@ public class SwerveModule extends SubsystemBase {
 
     m_driveController = m_driveMotor.getPIDController();
     m_turnController = m_turnMotor.getPIDController();
-
+    m_turnController.setP(0.01);
+    
+    
     if (RobotBase.isSimulation()) {
       REVPhysicsSim.getInstance().addSparkMax(m_driveMotor, DCMotor.getNEO(1));
       REVPhysicsSim.getInstance().addSparkMax(m_turnMotor, DCMotor.getNEO(1));
       m_driveController.setP(1, SIM_SLOT);
     }
 
-    resetAngleToAbsolute();
   }
 
   public int getModuleNumber() {
@@ -132,17 +135,21 @@ public class SwerveModule extends SubsystemBase {
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
     desiredState = RevUtils.optimize(desiredState, getHeadingRotation2d());
-
+    
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
       m_driveMotor.set(percentOutput);
+      SmartDashboard.putNumber("Module "+ m_moduleNumber,percentOutput);
     } else {
+      
       int DRIVE_PID_SLOT = RobotBase.isReal() ? VEL_SLOT : SIM_SLOT;
       m_driveController.setReference(
               desiredState.speedMetersPerSecond,
               CANSparkMax.ControlType.kVelocity,
               DRIVE_PID_SLOT
+        
       );
+      SmartDashboard.putNumber("Module "+ m_moduleNumber,desiredState.speedMetersPerSecond);
     }
 
     double angle =
@@ -197,6 +204,10 @@ public class SwerveModule extends SubsystemBase {
   }
 
   private void updateSmartDashboard() {}
+  public void setIdleMode(CANSparkMax.IdleMode idleMode){
+    m_driveMotor.setIdleMode(idleMode);
+    m_turnMotor.setIdleMode(idleMode);
+  }
 
   @Override
   public void periodic() {}

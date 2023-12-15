@@ -15,7 +15,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.CAN;
 import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.ModulePosition;
@@ -36,30 +40,30 @@ public class SwerveDrive extends SubsystemBase {
                                   new CANSparkMax(CAN.frontLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANSparkMax(CAN.frontLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANCoder(CAN.frontLeftCanCoder),
-                                  0),
+                                  Constants.Swerve.frontLeftCANCoderOffset),
                           ModulePosition.FRONT_RIGHT,
                           new SwerveModule(
                                   1,
                                   new CANSparkMax(CAN.frontRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANSparkMax(CAN.frontRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANCoder(CAN.frontRightCanCoder),
-                                  0),
+                                  Constants.Swerve.frontRightCANCoderOffset),
                           ModulePosition.BACK_LEFT,
                           new SwerveModule(
                                   2,
                                   new CANSparkMax(CAN.backLeftTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANSparkMax(CAN.backLeftDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANCoder(CAN.backLeftCanCoder),
-                                  0),
+                                  Constants.Swerve.backLeftCANCoderOffset),
                           ModulePosition.BACK_RIGHT,
                           new SwerveModule(
                                   3,
                                   new CANSparkMax(CAN.backRightTurnMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANSparkMax(CAN.backRightDriveMotor, CANSparkMaxLowLevel.MotorType.kBrushless),
                                   new CANCoder(CAN.backRightCanCoder),
-                                  0)));
+                                  Constants.Swerve.backRightCANCoderOffset)));
 
-  private AHRS m_navX = new AHRS();
+  private AHRS m_navX = new AHRS(Port.kMXP);
 
   private SwerveDriveOdometry m_odometry =
           new SwerveDriveOdometry(
@@ -68,12 +72,12 @@ public class SwerveDrive extends SubsystemBase {
                   getModulePositions(),
                   new Pose2d());
 
-  private ProfiledPIDController m_xController =
-          new ProfiledPIDController(kP_X, 0, kD_X, kThetaControllerConstraints);
-  private ProfiledPIDController m_yController =
-          new ProfiledPIDController(kP_Y, 0, kD_Y, kThetaControllerConstraints);
-  private ProfiledPIDController m_turnController =
-          new ProfiledPIDController(kP_Theta, 0, kD_Theta, kThetaControllerConstraints);
+  // private ProfiledPIDController m_xController =
+  //           new ProfiledPIDController(kP_X, 0, kD_X, kThetaControllerConstraints);
+  // private ProfiledPIDController m_yController =
+  //           new ProfiledPIDController(kP_Y, 0, kD_Y, kThetaControllerConstraints);
+  // private ProfiledPIDController m_turnController =
+  //           new ProfiledPIDController(kP_Theta, 0, kD_Theta, kThetaControllerConstraints);
 
   private double m_simYaw;
 
@@ -81,7 +85,8 @@ public class SwerveDrive extends SubsystemBase {
     m_navX.reset();
   }
 
-  public void drive(
+  public void drive
+  (
           double throttle,
           double strafe,
           double rotation,
@@ -91,6 +96,9 @@ public class SwerveDrive extends SubsystemBase {
     strafe *= kMaxSpeedMetersPerSecond;
     rotation *= kMaxRotationRadiansPerSecond;
 
+    SmartDashboard.putNumber("Strafe m per s", strafe);
+    SmartDashboard.putNumber("throttle m per s", throttle);
+
     ChassisSpeeds chassisSpeeds =
             isFieldRelative
                     ? ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -99,7 +107,9 @@ public class SwerveDrive extends SubsystemBase {
 
     SwerveModuleState[] moduleStates = kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
 
+
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, kMaxSpeedMetersPerSecond);
+    SmartDashboard.putNumber("MaxSpeed m per s", kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : m_swerveModules.values())
       module.setDesiredState(moduleStates[module.getModuleNumber()], isOpenLoop);
@@ -160,14 +170,24 @@ public class SwerveDrive extends SubsystemBase {
     }
   }
 
-  private void updateSmartDashboard() {}
+  private void updateSmartDashboard() {
+        SmartDashboard.putNumber("FrontLeftBearing",m_swerveModules.get(ModulePosition.FRONT_LEFT).m_angleEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("FrontRightBearing",m_swerveModules.get(ModulePosition.FRONT_RIGHT).m_angleEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("BackLeftBearing",m_swerveModules.get(ModulePosition.BACK_LEFT).m_angleEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("BackRightBearing",m_swerveModules.get(ModulePosition.BACK_RIGHT).m_angleEncoder.getAbsolutePosition());
+
+  }
 
   @Override
   public void periodic() {
     updateOdometry();
     updateSmartDashboard();
   }
-
+  public void setIdleMode(CANSparkMax.IdleMode idleMode){
+    for(SwerveModule m: m_swerveModules.values()){
+      m.setIdleMode(idleMode);
+    }
+  }
   @Override
   public void simulationPeriodic() {
     ChassisSpeeds chassisSpeed = kSwerveKinematics.toChassisSpeeds(getModuleStates());

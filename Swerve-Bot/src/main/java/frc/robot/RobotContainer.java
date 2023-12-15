@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -42,7 +45,7 @@ public class RobotContainer {
             new SetSwerveDrive(
                     m_robotDrive,
                     ()-> leftJoystick.getY(),
-                    ()-> leftJoystick.getX(),
+                    ()-> -leftJoystick.getX(),
                     ()-> rightJoystick.getX(),
                     false));
 
@@ -74,5 +77,8 @@ public class RobotContainer {
   
   public void periodic() {
     m_fieldSim.periodic();
+  }
+  public void setIdleMode(CANSparkMax.IdleMode idleMode){
+    m_robotDrive.setIdleMode(idleMode);
   }
 }

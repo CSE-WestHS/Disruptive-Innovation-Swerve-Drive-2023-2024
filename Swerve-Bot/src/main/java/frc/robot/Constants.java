@@ -51,8 +51,8 @@ public final class Constants {
   }
 
   public static final class Swerve {
-    public static final double kTrackWidth = Units.inchesToMeters(30);
-    public static final double kWheelBase = Units.inchesToMeters(30);
+    public static final double kTrackWidth = Units.inchesToMeters(22.5);
+    public static final double kWheelBase = Units.inchesToMeters(37.5);
 
     public static final Translation2d[] kModuleTranslations = {
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -61,17 +61,17 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)
     };
 
-    public static final double frontLeftCANCoderOffset = -264.20;
-    public static final double frontRightCANCoderOffset = -141.5;
-    public static final double backLeftCANCoderOffset = -335.65;
-    public static final double backRightCANCoderOffset = -281.16;
+    public static final double frontLeftCANCoderOffset = -86;
+    public static final double frontRightCANCoderOffset = -324;
+    public static final double backLeftCANCoderOffset = -158;
+    public static final double backRightCANCoderOffset = -101;
 
     public static final SwerveDriveKinematics kSwerveKinematics =
         new SwerveDriveKinematics(kModuleTranslations);
 
-    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(18);
-    public static final double kMaxRotationRadiansPerSecond = Math.PI * 2.0;
-    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 2.0;
+    public static final double kMaxSpeedMetersPerSecond = 0.1;
+    public static final double kMaxRotationRadiansPerSecond = Math.PI * 0.5;
+    public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 0.5;
 
     public static final double kP_X = 0.2;
     public static final double kD_X = 0;
@@ -85,13 +85,13 @@ public final class Constants {
             kMaxRotationRadiansPerSecond, kMaxRotationRadiansPerSecondSquared);
 
     public static final class Module {
-      public static final double kDriveMotorGearRatio = 6.12;
-      public static final double kTurningMotorGearRatio = 12.8;
+      public static final double kDriveMotorGearRatio = 6.75;
+      public static final double kTurningMotorGearRatio = 150/7;
       public static final double kWheelDiameterMeters = Units.inchesToMeters(3.94);
       public static final int kNeoCPR = 42;
       public static final int kCANCoderCPR = 4096; // Figure this out for Neo Motors.
 
-      public static final DCMotor kDriveGearbox = DCMotor.getNEO(1);
+      public static final DCMotor kDriveGearbox = DCMotor.getNEO(1); 
       public static final DCMotor kTurnGearbox = DCMotor.getNEO(1);
 
       public static final double kDriveRevToMeters =

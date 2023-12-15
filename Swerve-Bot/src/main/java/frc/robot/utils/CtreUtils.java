@@ -52,8 +52,7 @@ public final class CtreUtils {
 
     sensorConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
     sensorConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
-    sensorConfig.sensorTimeBase = SensorTimeBase.PerSecond;
-
+    sensorConfig.sensorTimeBase = SensorTimeBase.PerSecond;  
     return sensorConfig;
   }
 
