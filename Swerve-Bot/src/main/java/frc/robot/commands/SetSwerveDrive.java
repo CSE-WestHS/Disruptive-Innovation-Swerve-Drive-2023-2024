@@ -50,7 +50,10 @@ public class SetSwerveDrive extends CommandBase {
     double rotation = Math.abs(m_rotationInput.getAsDouble()) > 0.05 ? m_rotationInput.getAsDouble() : 0;
 
     SmartDashboard.putString("FrontLeftState", m_swerveDrive.getModuleStates()[0].toString());
-    m_swerveDrive.drive(throttle, strafe, rotation, m_isFieldRelative, true);    // Forward/Back Trottle, Left/Right Strafe, Left/Right Turn
+    SmartDashboard.putString("BackLeftState", m_swerveDrive.getModuleStates()[2].toString());
+    SmartDashboard.putString("FrontRightState", m_swerveDrive.getModuleStates()[1].toString());
+    SmartDashboard.putString("BackRightState", m_swerveDrive.getModuleStates()[3].toString());
+    m_swerveDrive.drive(throttle, strafe, rotation, m_isFieldRelative, false);    // Forward/Back Trottle, Left/Right Strafe, Left/Right Turn
   }
 
   // Called once the command ends or is interrupted.

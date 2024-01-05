@@ -88,6 +88,7 @@ public class SwerveModule extends SubsystemBase {
     m_turnEncoder.setVelocityConversionFactor(kTurnRotationsToDegrees / 60);
 
     m_driveController = m_driveMotor.getPIDController();
+    m_driveController.setP(0.1, VEL_SLOT);
     m_turnController = m_turnMotor.getPIDController();
     m_turnController.setP(0.01);
     
@@ -97,7 +98,7 @@ public class SwerveModule extends SubsystemBase {
       REVPhysicsSim.getInstance().addSparkMax(m_turnMotor, DCMotor.getNEO(1));
       m_driveController.setP(1, SIM_SLOT);
     }
-
+    resetAngleToAbsolute();
   }
 
   public int getModuleNumber() {
@@ -105,7 +106,7 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void resetAngleToAbsolute() {
-    double angle = m_angleEncoder.getAbsolutePosition() - m_angleOffset;
+    double angle = m_angleEncoder.getAbsolutePosition();
     m_turnEncoder.setPosition(angle);
   }
 
@@ -137,7 +138,7 @@ public class SwerveModule extends SubsystemBase {
     desiredState = RevUtils.optimize(desiredState, getHeadingRotation2d());
     
     if (isOpenLoop) {
-      double percentOutput = desiredState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
+      double percentOutput = desiredState.speedMetersPerSecond;
       m_driveMotor.set(percentOutput);
       SmartDashboard.putNumber("Module "+ m_moduleNumber,percentOutput);
     } else {

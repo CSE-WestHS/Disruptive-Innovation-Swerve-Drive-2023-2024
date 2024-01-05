@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -30,7 +31,7 @@ public class RobotContainer {
 
   private final FieldSim m_fieldSim = new FieldSim(m_robotDrive);
 
-  static Joystick leftJoystick = new Joystick(USB.leftJoystick);
+  static XboxController controller = new XboxController(USB.leftJoystick);
   static Joystick rightJoystick = new Joystick(USB.rightJoystick);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -44,9 +45,9 @@ public class RobotContainer {
             // Turning is controlled by the X axis of the right stick.
             new SetSwerveDrive(
                     m_robotDrive,
-                    ()-> leftJoystick.getY(),
-                    ()-> -leftJoystick.getX(),
-                    ()-> rightJoystick.getX(),
+                    ()-> controller.getLeftY(),
+                    ()-> -controller.getLeftX(),
+                    ()-> controller.getRightX(),
                     false));
 
     m_fieldSim.initSim();

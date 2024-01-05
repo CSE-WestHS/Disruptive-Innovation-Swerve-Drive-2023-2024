@@ -107,9 +107,7 @@ public class SwerveDrive extends SubsystemBase {
 
     SwerveModuleState[] moduleStates = kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
 
-
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, kMaxSpeedMetersPerSecond);
-    SmartDashboard.putNumber("MaxSpeed m per s", kMaxSpeedMetersPerSecond);
 
     for (SwerveModule module : m_swerveModules.values())
       module.setDesiredState(moduleStates[module.getModuleNumber()], isOpenLoop);

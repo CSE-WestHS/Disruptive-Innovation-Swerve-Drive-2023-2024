@@ -61,15 +61,15 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)
     };
 
-    public static final double frontLeftCANCoderOffset = -86;
-    public static final double frontRightCANCoderOffset = -324;
-    public static final double backLeftCANCoderOffset = -158;
-    public static final double backRightCANCoderOffset = -101;
+    public static final double frontLeftCANCoderOffset = -264;
+    public static final double frontRightCANCoderOffset = -144;
+    public static final double backLeftCANCoderOffset = -335;
+    public static final double backRightCANCoderOffset = -281;
 
     public static final SwerveDriveKinematics kSwerveKinematics =
         new SwerveDriveKinematics(kModuleTranslations);
 
-    public static final double kMaxSpeedMetersPerSecond = 0.1;
+    public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxRotationRadiansPerSecond = Math.PI * 0.5;
     public static final double kMaxRotationRadiansPerSecondSquared = Math.PI * 0.5;
 
