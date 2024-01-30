@@ -38,7 +38,11 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.LocalADStarAK;
+
+import static edu.wpi.first.units.Units.Volts;
+
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -92,14 +96,34 @@ public class Drive extends SubsystemBase {
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
+        log -> {
+          log.motor("drive-left")
+              .voltage(
+                  m_appliedVoltage.mut_replace(
+                      modules[3].getDriveVoltage(), Volts))
+              .linearPosition(m_distance.mut_replace(modules[3].getPosition().distanceMeters, Meters))
+              .linearVelocity(
+                  m_velocity.mut_replace(modules[3].getDriveSpeed(), MetersPerSecond));
+          log.motor("drive-right")
+              .voltage(
+                  m_appliedVoltage.mut_replace(
+                      modules[0].getDriveVoltage() * RobotController.getBatteryVoltage(), Volts))
+              .linearPosition(m_distance.mut_replace(modules[3].getPosition().distanceMeters, Meters))
+              .linearVelocity(
+                  m_velocity.mut_replace(modules[0].getDriveSpeed(), MetersPerSecond));
+        },
+        this));
   }
 
+  
   public void periodic() {
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
     for (var module : modules) {
       module.periodic();
     }
+
+    // Creates a SysIdRoutine
 
     // Stop moving when disabled
     if (DriverStation.isDisabled()) {
