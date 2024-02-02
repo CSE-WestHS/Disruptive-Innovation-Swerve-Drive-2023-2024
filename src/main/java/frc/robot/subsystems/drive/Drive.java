@@ -21,6 +21,7 @@
 
 package frc.robot.subsystems.drive;
 
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -38,11 +39,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.util.LocalADStarAK;
-
-import static edu.wpi.first.units.Units.Volts;
-
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -57,7 +54,6 @@ public class Drive extends SubsystemBase {
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private final Module[] modules = new Module[4]; // FL, FR, BL, BR
-
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
   private Pose2d pose = new Pose2d();
   private Rotation2d lastGyroRotation = new Rotation2d();
@@ -96,26 +92,8 @@ public class Drive extends SubsystemBase {
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
-        log -> {
-          log.motor("drive-left")
-              .voltage(
-                  m_appliedVoltage.mut_replace(
-                      modules[3].getDriveVoltage(), Volts))
-              .linearPosition(m_distance.mut_replace(modules[3].getPosition().distanceMeters, Meters))
-              .linearVelocity(
-                  m_velocity.mut_replace(modules[3].getDriveSpeed(), MetersPerSecond));
-          log.motor("drive-right")
-              .voltage(
-                  m_appliedVoltage.mut_replace(
-                      modules[0].getDriveVoltage() * RobotController.getBatteryVoltage(), Volts))
-              .linearPosition(m_distance.mut_replace(modules[3].getPosition().distanceMeters, Meters))
-              .linearVelocity(
-                  m_velocity.mut_replace(modules[0].getDriveSpeed(), MetersPerSecond));
-        },
-        this));
   }
 
-  
   public void periodic() {
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
