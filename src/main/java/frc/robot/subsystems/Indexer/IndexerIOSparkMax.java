@@ -33,7 +33,7 @@ public class IndexerIOSparkMax implements IndexerIO {
 
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
-  static DigitalInput GetBeamState = new DigitalInput(0); //returns true if something is there
+  static DigitalInput GetBeamState = new DigitalInput(0); // returns true if something is there
 
   public IndexerIOSparkMax() {
     leader.restoreFactoryDefaults();

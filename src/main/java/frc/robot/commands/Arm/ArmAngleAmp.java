@@ -18,7 +18,9 @@ public class ArmAngleAmp extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {arm.setPosition(frc.robot.Constants.ANGLE_AMP);}
+  public void initialize() {
+    arm.setPosition(frc.robot.Constants.ANGLE_AMP);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

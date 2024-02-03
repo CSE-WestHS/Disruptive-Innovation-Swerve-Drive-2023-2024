@@ -6,12 +6,12 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.Arm.ArmAngleSpeaker;
-import frc.robot.subsystems.Arm.Arm;
+// import edu.wpi.first.wpilibj2.command.Commands;
+// import frc.robot.commands.Arm.ArmAngleSpeaker;
+// import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Indexer.Indexer;
 import frc.robot.subsystems.Shooter.Shooter;
-import frc.robot.commands.Arm.*;
+// import frc.robot.commands.Arm.*;
 
 public class ShootNoteSpeaker extends Command {
   private Indexer indexer;
@@ -19,22 +19,23 @@ public class ShootNoteSpeaker extends Command {
   private double targetSpeed;
   private double startTime;
 
-  /** Creates a new ShootNote. 
-   * @param d */
+  /**
+   * Creates a new ShootNote.
+   *
+   * @param d
+   */
   public ShootNoteSpeaker(Indexer Indexer, Shooter Shooter, double TargetSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.indexer = Indexer;
     this.shooter = Shooter;
     this.targetSpeed = TargetSpeed;
-    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
-    shooter.runVelocity(targetSpeed);
 
+    shooter.runVelocity(targetSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

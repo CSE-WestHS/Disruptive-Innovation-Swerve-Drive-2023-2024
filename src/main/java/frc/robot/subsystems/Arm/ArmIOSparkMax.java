@@ -14,13 +14,13 @@
 package frc.robot.subsystems.Arm;
 
 import com.revrobotics.CANSparkBase;
-import com.revrobotics.CANSparkBase.ControlType;
+// import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.SparkPIDController.ArbFFUnits;
-import edu.wpi.first.math.util.Units;
+// import com.revrobotics.SparkPIDController.ArbFFUnits;
+// import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 
 /**
@@ -34,7 +34,6 @@ public class ArmIOSparkMax implements ArmIO {
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
 
-
   public ArmIOSparkMax() {
     leader.restoreFactoryDefaults();
 
@@ -44,10 +43,10 @@ public class ArmIOSparkMax implements ArmIO {
 
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(30);
-    leader.getEncoder().setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
+    encoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     leader.burnFlash();
 
-    leader.getEncoder().setPosition(Constants.ANGLE_SPEAKER);
+    encoder.setPosition(Constants.ANGLE_SPEAKER);
   }
 
   @Override
@@ -64,7 +63,6 @@ public class ArmIOSparkMax implements ArmIO {
   public void setVoltage(double volts) {
     leader.setVoltage(volts);
   }
-  
 
   /*@Override
   public void setVelocity(double velocityRadPerSec, double ffVolts) {
@@ -80,7 +78,7 @@ public class ArmIOSparkMax implements ArmIO {
   public void setPosition(double position) {
     pid.setReference(position, CANSparkBase.ControlType.kPosition, 0);
   }
-  
+
   @Override
   public void stop() {
     leader.stopMotor();

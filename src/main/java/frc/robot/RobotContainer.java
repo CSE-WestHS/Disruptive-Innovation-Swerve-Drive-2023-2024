@@ -21,10 +21,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.DriveCommands;
-import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
+import frc.robot.commands.DriveCommands;
+import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.ShootNoteAmp;
@@ -70,7 +70,6 @@ public class RobotContainer {
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
   private Arm arm;
- 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -163,7 +162,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    intake.setDefaultCommand(new IdleOuttake(intake,200.0));
+    intake.setDefaultCommand(new IdleOuttake(intake, 200.0));
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
@@ -173,9 +172,13 @@ public class RobotContainer {
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller.a().whileTrue(new AcquireNote(indexer, intake));
     controller.y().whileTrue(new EjectNote(intake));
-    controller.leftStick().onTrue(new ShootNoteSpeaker(indexer,shooter,5000));
-    controller.leftStick().onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
-    controller.leftTrigger().onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
+    controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
+    controller
+        .leftStick()
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
+    controller
+        .leftTrigger()
+        .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
     controller
         .b()
         .onTrue(

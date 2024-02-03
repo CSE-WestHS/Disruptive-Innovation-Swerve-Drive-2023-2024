@@ -25,7 +25,7 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 // IntakeIOInputsAutoLogged copy = new IntakeIOInputsAutoLogged();
 
-import com.revrobotics.CANSparkBase;
+// import com.revrobotics.CANSparkBase;
 
 public class Arm extends SubsystemBase {
   private final ArmIO io;
@@ -88,6 +88,7 @@ public class Arm extends SubsystemBase {
     io.setPosition(position);
     Logger.recordOutput("Arm/SetpointPosition", position);
   }
+
   public double getPosition() {
     return inputs.position;
   }
@@ -95,7 +96,7 @@ public class Arm extends SubsystemBase {
   public void stop() {
     io.stop();
   }
-  
+
   /** Returns a command to run a quasistatic test in the specified direction. */
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return sysId.quasistatic(direction);

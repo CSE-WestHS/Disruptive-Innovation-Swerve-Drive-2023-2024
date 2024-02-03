@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
-import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
+// import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
 
 public class Indexer extends SubsystemBase {
   private final IndexerIO io;
@@ -82,6 +82,7 @@ public class Indexer extends SubsystemBase {
     // Log flywheel setpoint
     Logger.recordOutput("Indexer/SetpointRPM", velocityRPM);
   }
+
   public boolean getBeamState() {
     return IndexerIOSparkMax.GetBeamState.get();
   }

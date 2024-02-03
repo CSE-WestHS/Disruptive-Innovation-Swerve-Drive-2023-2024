@@ -12,8 +12,9 @@ public class IdleOuttake extends Command {
   private double targetSpeed;
 
   /** Creates a new IdleOuttake. */
-  public IdleOuttake(Intake Intake,double TargetSpeed) {
+  public IdleOuttake(Intake Intake, double TargetSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Intake);
     this.intake = Intake;
     this.targetSpeed = TargetSpeed;
   }

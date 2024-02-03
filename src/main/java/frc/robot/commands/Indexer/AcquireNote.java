@@ -14,7 +14,7 @@ public class AcquireNote extends Command {
   private Intake intake;
   private double startTime;
   /** Creates a new IndexIn. */
-  public AcquireNote(Indexer Indexer,Intake Intake) {
+  public AcquireNote(Indexer Indexer, Intake Intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Intake);
     this.indexer = Indexer;
@@ -44,7 +44,7 @@ public class AcquireNote extends Command {
   @Override
   public boolean isFinished() {
     if (indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 30) {
-        return true;
+      return true;
     }
     return false;
   }
