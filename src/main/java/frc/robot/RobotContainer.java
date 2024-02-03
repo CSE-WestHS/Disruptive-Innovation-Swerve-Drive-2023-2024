@@ -23,8 +23,28 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.Arm.ArmAngleAmp;
+import frc.robot.commands.Arm.ArmAngleSpeaker;
+import frc.robot.commands.Indexer.AcquireNote;
+import frc.robot.commands.Intake.*;
+import frc.robot.commands.Shooter.ShootNoteAmp;
+import frc.robot.commands.Shooter.ShootNoteSpeaker;
+import frc.robot.subsystems.Arm.Arm;
+import frc.robot.subsystems.Arm.ArmIO;
+import frc.robot.subsystems.Arm.ArmIOSim;
+import frc.robot.subsystems.Arm.ArmIOSparkMax;
 import frc.robot.subsystems.Indexer.Indexer;
+import frc.robot.subsystems.Indexer.IndexerIO;
+import frc.robot.subsystems.Indexer.IndexerIOSim;
 import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIO;
+import frc.robot.subsystems.Intake.IntakeIOSim;
+import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.ShooterIO;
+import frc.robot.subsystems.Shooter.ShooterIOSim;
+import frc.robot.subsystems.Shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.drive.*;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -38,6 +58,8 @@ public class RobotContainer {
   // Subsystems
   public final Drive drive;
   public final Indexer indexer;
+  public final Intake intake;
+  private Shooter shooter;
   // private final Flywheel flywheel;
   // private final Flywheel motor2;
   // Controller
@@ -47,6 +69,8 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
+  private Arm arm;
+ 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -61,7 +85,9 @@ public class RobotContainer {
                 new ModuleIOSparkMax(2),
                 new ModuleIOSparkMax(3));
         indexer = new Indexer(new IndexerIOSparkMax());
-
+        intake = new Intake(new IntakeIOSparkMax());
+        shooter = new Shooter(new ShooterIOSparkMax());
+        arm = new Arm(new ArmIOSparkMax());
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
 
         // drive = new Drive(
@@ -83,6 +109,10 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         // flywheel = new Flywheel(new FlywheelIOSim());
+        indexer = new Indexer(new IndexerIOSim());
+        intake = new Intake(new IntakeIOSim());
+        shooter = new Shooter(new ShooterIOSim());
+        arm = new Arm(new ArmIOSim());
         break;
 
       default:
@@ -95,6 +125,10 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         // flywheel = new Flywheel(new FlywheelIO() {});
+        indexer = new Indexer(new IndexerIO() {});
+        intake = new Intake(new IntakeIO() {});
+        shooter = new Shooter(new ShooterIO() {});
+        arm = new Arm(new ArmIO() {});
         break;
     }
 
@@ -129,6 +163,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    intake.setDefaultCommand(new IdleOuttake(intake,200.0));
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
@@ -136,6 +171,11 @@ public class RobotContainer {
             () -> controller.getLeftX(),
             () -> controller.getRightX()));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    controller.a().whileTrue(new AcquireNote(indexer, intake));
+    controller.y().whileTrue(new EjectNote(intake));
+    controller.leftStick().onTrue(new ShootNoteSpeaker(indexer,shooter,5000));
+    controller.leftStick().onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
+    controller.leftTrigger().onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
     controller
         .b()
         .onTrue(

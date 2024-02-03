@@ -28,7 +28,7 @@ import edu.wpi.first.math.util.Units;
 public class ShooterIOSparkMax implements ShooterIO {
   private static final double GEAR_RATIO = 1.5;
 
-  private final CANSparkMax leader = new CANSparkMax(0, MotorType.kBrushless);
+  private final CANSparkMax leader = new CANSparkMax(17, MotorType.kBrushless);
   private final CANSparkMax follower = new CANSparkMax(1, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
@@ -63,7 +63,7 @@ public class ShooterIOSparkMax implements ShooterIO {
   public void setVoltage(double volts) {
     leader.setVoltage(volts);
   }
-
+  
   @Override
   public void setVelocity(double velocityRadPerSec, double ffVolts) {
     pid.setReference(

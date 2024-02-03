@@ -11,7 +11,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.Indexer;
+package frc.robot.subsystems.Arm;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -23,16 +23,18 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
-import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
+// IntakeIOInputsAutoLogged copy = new IntakeIOInputsAutoLogged();
 
-public class Indexer extends SubsystemBase {
-  private final IndexerIO io;
-  private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged();
+import com.revrobotics.CANSparkBase;
+
+public class Arm extends SubsystemBase {
+  private final ArmIO io;
+  private final ArmIOInputsAutoLogged inputs = new ArmIOInputsAutoLogged();
   private final SimpleMotorFeedforward ffModel;
   private final SysIdRoutine sysId;
 
   /** Creates a new Flywheel. */
-  public Indexer(IndexerIO io) {
+  public Arm(ArmIO io) {
     this.io = io;
 
     // Switch constants based on mode (the physics simulator is treated as a
@@ -59,14 +61,14 @@ public class Indexer extends SubsystemBase {
                 null,
                 null,
                 null,
-                (state) -> Logger.recordOutput("Indexer/SysIdState", state.toString())),
+                (state) -> Logger.recordOutput("Arm/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism((voltage) -> runVolts(voltage.in(Volts)), null, this));
   }
 
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.processInputs("Indexer", inputs);
+    Logger.processInputs("Arm", inputs);
   }
 
   /** Run open loop at the specified voltage. */
@@ -75,21 +77,25 @@ public class Indexer extends SubsystemBase {
   }
 
   /** Run closed loop at the specified velocity. */
-  public void runVelocity(double velocityRPM) {
-    var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
-    io.setVelocity(velocityRadPerSec, ffModel.calculate(velocityRadPerSec));
+  // public void runVelocity(double velocityRPM) {
+  //   var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
+  //   io.setVelocity(velocityRadPerSec, ffModel.calculate(velocityRadPerSec));
 
-    // Log flywheel setpoint
-    Logger.recordOutput("Indexer/SetpointRPM", velocityRPM);
+  //   // Log flywheel setpoint
+  //   Logger.recordOutput("Arm/SetpointRPM", velocityRPM);
+  // }
+  public void setPosition(double position) {
+    io.setPosition(position);
+    Logger.recordOutput("Arm/SetpointPosition", position);
   }
-  public boolean getBeamState() {
-    return IndexerIOSparkMax.GetBeamState.get();
+  public double getPosition() {
+    return inputs.position;
   }
   /** Stops the flywheel. */
   public void stop() {
     io.stop();
   }
-
+  
   /** Returns a command to run a quasistatic test in the specified direction. */
   public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
     return sysId.quasistatic(direction);

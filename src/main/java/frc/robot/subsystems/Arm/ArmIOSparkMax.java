@@ -11,8 +11,9 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
-package frc.robot.subsystems.Indexer;
+package frc.robot.subsystems.Arm;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -20,22 +21,21 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkPIDController.ArbFFUnits;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants;
 
 /**
  * NOTE: To use the Spark Flex / NEO Vortex, replace all instances of "CANSparkMax" with
  * "CANSparkFlex".
  */
-public class IndexerIOSparkMax implements IndexerIO {
-  private static final double GEAR_RATIO = 1.5;
+public class ArmIOSparkMax implements ArmIO {
 
-  private final CANSparkMax leader = new CANSparkMax(16, MotorType.kBrushless);
-
+  private final CANSparkMax leader = new CANSparkMax(15, MotorType.kBrushless);
+  // private final CANSparkMax follower = new CANSparkMax(1, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
-  static DigitalInput GetBeamState = new DigitalInput(0); //returns true if something is there
 
-  public IndexerIOSparkMax() {
+
+  public ArmIOSparkMax() {
     leader.restoreFactoryDefaults();
 
     leader.setCANTimeout(250);
@@ -44,29 +44,29 @@ public class IndexerIOSparkMax implements IndexerIO {
 
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(30);
-
+    leader.getEncoder().setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     leader.burnFlash();
+
+    leader.getEncoder().setPosition(Constants.ANGLE_SPEAKER);
   }
 
   @Override
-  public void updateInputs(IndexerIOInputs inputs) {
-    inputs.positionRad = Units.rotationsToRadians(encoder.getPosition() / GEAR_RATIO);
-    inputs.velocityRadPerSec =
-        Units.rotationsPerMinuteToRadiansPerSecond(encoder.getVelocity() / GEAR_RATIO);
+  public void updateInputs(ArmIOInputs inputs) {
+    // inputs.positionRad = Units.rotationsToRadians(encoder.getPosition() / GEAR_RATIO);
+    // inputs.velocityRadPerSec =
+    //     Units.rotationsPerMinuteToRadiansPerSecond(encoder.getVelocity() / GEAR_RATIO);
     inputs.appliedVolts = leader.getAppliedOutput() * leader.getBusVoltage();
-    inputs.currentAmps =
-        new double[] {
-          leader.getOutputCurrent(), /*follower.getOutputCurrent()*/
-        };
-    inputs.BeamBreak = GetBeamState.get();
+    inputs.currentAmps = new double[] {leader.getOutputCurrent()};
+    inputs.position = leader.getEncoder().getPosition();
   }
 
   @Override
   public void setVoltage(double volts) {
     leader.setVoltage(volts);
   }
+  
 
-  @Override
+  /*@Override
   public void setVelocity(double velocityRadPerSec, double ffVolts) {
     pid.setReference(
         Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec) * GEAR_RATIO,
@@ -75,7 +75,12 @@ public class IndexerIOSparkMax implements IndexerIO {
         ffVolts,
         ArbFFUnits.kVoltage);
   }
-
+  */
+  @Override
+  public void setPosition(double position) {
+    pid.setReference(position, CANSparkBase.ControlType.kPosition, 0);
+  }
+  
   @Override
   public void stop() {
     leader.stopMotor();
