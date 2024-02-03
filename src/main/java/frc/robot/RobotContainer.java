@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
+import frc.robot.commands.Arm.ArmDownGradual;
+import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.Indexer.AcquireNote;
@@ -179,6 +181,8 @@ public class RobotContainer {
     controller
         .leftTrigger()
         .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
+    controller.povUp().whileTrue(new ArmUpGradual(arm));
+    controller.povDown().whileTrue(new ArmDownGradual(arm));
     controller
         .b()
         .onTrue(
