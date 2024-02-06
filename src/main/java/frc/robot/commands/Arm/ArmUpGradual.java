@@ -20,15 +20,15 @@ public class ArmUpGradual extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //1300 = speed
-    
+    // 1300 = speed
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     arm.setPosition(angle);
-    angle += 10;
+    angle += (1 / 10);
   }
 
   // Called once the command ends or is interrupted.
