@@ -67,7 +67,7 @@ public class RobotContainer {
   // private final Flywheel motor2;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  private final Camera camera = new Camera();
+  private Camera camera;
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
@@ -90,6 +90,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSparkMax());
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
+        camera = new Camera();
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
 
         // drive = new Drive(
@@ -147,6 +148,7 @@ public class RobotContainer {
         "Drive FF Characterization",
         new FeedForwardCharacterization(
             drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    camera.useFrontCamera();
     // autoChooser.addOption(
     //  "Flywheel FF Characterization",
     // new FeedForwardCharacterization(

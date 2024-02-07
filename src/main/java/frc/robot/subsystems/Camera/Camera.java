@@ -23,7 +23,7 @@ public class Camera extends SubsystemBase {
   }
 
   public void useFrontCamera() {
-    frontcamera = setupServer(2);
+    frontcamera = setupServer(0);
     frontcamera.setResolution(320, 240);
     frontcamera.setFPS(15);
 
