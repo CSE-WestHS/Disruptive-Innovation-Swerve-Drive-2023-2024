@@ -35,6 +35,7 @@ import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIO;
 import frc.robot.subsystems.Arm.ArmIOSim;
 import frc.robot.subsystems.Arm.ArmIOSparkMax;
+import frc.robot.subsystems.Camera.*;
 import frc.robot.subsystems.Indexer.Indexer;
 import frc.robot.subsystems.Indexer.IndexerIO;
 import frc.robot.subsystems.Indexer.IndexerIOSim;
@@ -66,7 +67,7 @@ public class RobotContainer {
   // private final Flywheel motor2;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-
+  private final Camera camera = new Camera();
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =

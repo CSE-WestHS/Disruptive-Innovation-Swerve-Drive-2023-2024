@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.Constants;
 
 public class ArmIOSim implements ArmIO {
-  
+
   private SingleJointedArmSim sim =
       new SingleJointedArmSim(
           DCMotor.getNEO(1), 1 / Constants.ARM_GEAR_RATIO, 0.8, 0.8, 0.31, 0.83, false, 0.31);
@@ -47,7 +47,6 @@ public class ArmIOSim implements ArmIO {
     // inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = new double[] {sim.getCurrentDrawAmps()};
     inputs.position = (sim.getAngleRads()) * 180;
-
   }
 
   @Override

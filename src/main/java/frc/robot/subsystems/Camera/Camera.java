@@ -5,20 +5,30 @@
 package frc.robot.subsystems.Camera;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
 public class Camera extends SubsystemBase {
   // Creates UsbCamera and MjpegServer [1] and connects them
-  UsbCamera CamerServer =
-      CameraServer.startAutomaticCapture("USB Camera 1", "C:\\Users\\programmer\\Videos");
+  private UsbCamera frontcamera;
 
-  // Creates the CvSink and connects it to the UsbCamera
-  CvSink cvSink = CameraServer.getVideo();
+  private UsbCamera setupServer(int id) {
 
-  // Creates the CvSource and MjpegServer [2] and connects them
-  CvSource outputStream = CameraServer.putVideo("Blur", 640, 480);
+    UsbCamera camera = CameraServer.startAutomaticCapture("Video Feed", id);
+    ((MjpegServer) CameraServer.getServer()).setCompression(50);
+    return camera;
+  }
+
+  public void useFrontCamera() {
+    frontcamera = setupServer(2);
+    frontcamera.setResolution(320, 240);
+    frontcamera.setFPS(15);
+
+    CameraServer.getServer().setSource(frontcamera);
+    System.out.println("Switching to front camera");
+    SmartDashboard.putString("Current Camera", "Front");
+  }
 }
