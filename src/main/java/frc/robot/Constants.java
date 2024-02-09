@@ -27,6 +27,7 @@ public final class Constants {
   public static final double ANGLE_SPEAKER = 56;
   public static final double ARM_GEAR_RATIO = (11.0 / 28.0) * (1.0 / 40.0) * (36.0 / 54.0);
   public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
+  public static final int LED_LENGTH = 60;
 
   public static enum Mode {
     /** Running on a real robot. */

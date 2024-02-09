@@ -44,6 +44,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.subsystems.LEDS.LEDS;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -73,6 +74,7 @@ public class RobotContainer {
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
   private Arm arm;
+  private LEDS leds;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -91,6 +93,7 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
+        leds = new LEDS();
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
 
         // drive = new Drive(
@@ -149,6 +152,7 @@ public class RobotContainer {
         new FeedForwardCharacterization(
             drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
     camera.useFrontCamera();
+    leds.RunLEDS();
     // autoChooser.addOption(
     //  "Flywheel FF Characterization",
     // new FeedForwardCharacterization(

@@ -25,7 +25,7 @@ public class Camera extends SubsystemBase {
   public void useFrontCamera() {
     frontcamera = setupServer(0);
     frontcamera.setResolution(320, 240);
-    frontcamera.setFPS(15);
+    frontcamera.setFPS(30);
 
     CameraServer.getServer().setSource(frontcamera);
     System.out.println("Switching to front camera");
