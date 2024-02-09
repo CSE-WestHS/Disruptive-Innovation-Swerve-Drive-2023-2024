@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 0.9460856836405611,
-        "y": 5.515013115334288
+        "x": 1.3777394973336319,
+        "y": 6.069529933546082
       },
       "prevControl": {
-        "x": 1.0764728117133961,
-        "y": 5.4356042503554205
+        "x": 1.508126625406467,
+        "y": 5.990121068567215
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,7 +53,14 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AcquireNote"
+              }
+            }
+          ]
         }
       }
     },
@@ -63,13 +70,20 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootNoteSpeaker"
+              }
+            }
+          ]
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -83,7 +97,7 @@
   "folder": null,
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 0
+    "velocity": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

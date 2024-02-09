@@ -14,6 +14,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -21,34 +22,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.Arm.ArmAngleAmp;
-import frc.robot.commands.Arm.ArmAngleSpeaker;
-import frc.robot.commands.Arm.ArmDownGradual;
-import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
-import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Intake.*;
-import frc.robot.commands.Shooter.ShootNoteAmp;
-import frc.robot.commands.Shooter.ShootNoteSpeaker;
-import frc.robot.subsystems.Arm.Arm;
-import frc.robot.subsystems.Arm.ArmIO;
-import frc.robot.subsystems.Arm.ArmIOSim;
-import frc.robot.subsystems.Arm.ArmIOSparkMax;
 import frc.robot.subsystems.Camera.*;
-import frc.robot.subsystems.Indexer.Indexer;
-import frc.robot.subsystems.Indexer.IndexerIO;
-import frc.robot.subsystems.Indexer.IndexerIOSim;
-import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
-import frc.robot.subsystems.Intake.Intake;
-import frc.robot.subsystems.Intake.IntakeIO;
-import frc.robot.subsystems.Intake.IntakeIOSim;
-import frc.robot.subsystems.Intake.IntakeIOSparkMax;
 import frc.robot.subsystems.LEDS.LEDS;
-import frc.robot.subsystems.Shooter.Shooter;
-import frc.robot.subsystems.Shooter.ShooterIO;
-import frc.robot.subsystems.Shooter.ShooterIOSim;
-import frc.robot.subsystems.Shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.drive.*;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -61,9 +39,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   public final Drive drive;
-  public final Indexer indexer;
-  public final Intake intake;
-  private Shooter shooter;
+  // public final Indexer indexer;
+  // public final Intake intake;
+  // private Shooter shooter;
   // private final Flywheel flywheel;
   // private final Flywheel motor2;
   // Controller
@@ -73,7 +51,7 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
-  private Arm arm;
+  // private Arm arm;
   private LEDS leds;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -88,10 +66,10 @@ public class RobotContainer {
                 new ModuleIOSparkMax(1),
                 new ModuleIOSparkMax(2),
                 new ModuleIOSparkMax(3));
-        indexer = new Indexer(new IndexerIOSparkMax());
-        intake = new Intake(new IntakeIOSparkMax());
-        shooter = new Shooter(new ShooterIOSparkMax());
-        arm = new Arm(new ArmIOSparkMax());
+        // indexer = new Indexer(new IndexerIOSparkMax());
+        // intake = new Intake(new IntakeIOSparkMax());
+        // shooter = new Shooter(new ShooterIOSparkMax());
+        // arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
         leds = new LEDS();
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
@@ -115,10 +93,10 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         // flywheel = new Flywheel(new FlywheelIOSim());
-        indexer = new Indexer(new IndexerIOSim());
-        intake = new Intake(new IntakeIOSim());
-        shooter = new Shooter(new ShooterIOSim());
-        arm = new Arm(new ArmIOSim());
+        // indexer = new Indexer(new IndexerIOSim());
+        // intake = new Intake(new IntakeIOSim());
+        // shooter = new Shooter(new ShooterIOSim());
+        // arm = new Arm(new ArmIOSim());
         break;
 
       default:
@@ -131,10 +109,10 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         // flywheel = new Flywheel(new FlywheelIO() {});
-        indexer = new Indexer(new IndexerIO() {});
-        intake = new Intake(new IntakeIO() {});
-        shooter = new Shooter(new ShooterIO() {});
-        arm = new Arm(new ArmIO() {});
+        // indexer = new Indexer(new IndexerIO() {});
+        // intake = new Intake(new IntakeIO() {});
+        // shooter = new Shooter(new ShooterIO() {});
+        // arm = new Arm(new ArmIO() {});
         break;
     }
 
@@ -151,6 +129,8 @@ public class RobotContainer {
         "Drive FF Characterization",
         new FeedForwardCharacterization(
             drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    autoChooser.addOption("Example Auto", new PathPlannerAuto("Example Auto"));
+
     camera.useFrontCamera();
     leds.RunLEDS();
     // autoChooser.addOption(
@@ -171,25 +151,25 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    intake.setDefaultCommand(new IdleOuttake(intake, 200.0));
+    // intake.setDefaultCommand(new IdleOuttake(intake, 200.0));
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
             () -> controller.getLeftY(),
             () -> controller.getLeftX(),
             () -> controller.getRightX()));
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.a().whileTrue(new AcquireNote(indexer, intake));
-    controller.y().whileTrue(new EjectNote(intake));
-    controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
-    controller
-        .leftStick()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
-    controller
-        .leftTrigger()
-        .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
-    controller.povUp().whileTrue(new ArmUpGradual(arm));
-    controller.povDown().whileTrue(new ArmDownGradual(arm));
+    // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    // controller.a().whileTrue(new AcquireNote(indexer, intake));
+    // controller.y().whileTrue(new EjectNote(intake));
+    // controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
+    // controller
+    //     .leftStick()
+    //     .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
+    // controller
+    //     .leftTrigger()
+    //     .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
+    // controller.povUp().whileTrue(new ArmUpGradual(arm));
+    // controller.povDown().whileTrue(new ArmDownGradual(arm));
     controller
         .b()
         .onTrue(
