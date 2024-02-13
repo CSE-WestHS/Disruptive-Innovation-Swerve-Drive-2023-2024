@@ -28,7 +28,7 @@ public class ArmDownGradual extends Command {
   @Override
   public void execute() {
     arm.setPosition(angle);
-    angle -= 10;
+    angle -= 0.1;
   }
 
   // Called once the command ends or is interrupted.
