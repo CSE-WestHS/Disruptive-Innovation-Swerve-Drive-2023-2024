@@ -28,7 +28,8 @@ import edu.wpi.first.math.util.Units;
 public class IntakeIOSparkMax implements IntakeIO {
   private static final double GEAR_RATIO = 1.5;
 
-  private final CANSparkMax leader = new CANSparkMax(frc.robot.Constants.INTAKE, MotorType.kBrushless);
+  private final CANSparkMax leader =
+      new CANSparkMax(frc.robot.Constants.INTAKE, MotorType.kBrushless);
   // private final CANSparkMax follower = new CANSparkMax(1, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
