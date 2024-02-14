@@ -34,8 +34,8 @@ public final class Constants {
   public static final int TURN_FRONT_LEFT = 8;
   public static final int DRIVE_BACK_RIGHT = 11;
   public static final int TURN_BACK_RIGHT = 12;
-  public static final int DRIVE_BACK_LEFT = 10;
-  public static final int TURN_BACK_LEFT = 11;
+  public static final int DRIVE_BACK_LEFT = 9;
+  public static final int TURN_BACK_LEFT = 10;
   public static final int SHOOTER_LEFT = 4;
   public static final int SHOOTER_RIGHT = 6;
   public static final int INDEXER = 5;

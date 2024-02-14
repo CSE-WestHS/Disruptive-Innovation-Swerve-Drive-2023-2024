@@ -54,27 +54,27 @@ public class ModuleIOSparkMax implements ModuleIO {
       case 0:
         driveSparkMax = new CANSparkMax(frc.robot.Constants.DRIVE_FRONT_LEFT, MotorType.kBrushless);
         turnSparkMax = new CANSparkMax(frc.robot.Constants.TURN_FRONT_LEFT, MotorType.kBrushless);
-        turnAbsoluteEncoder = new CANcoder(5);
-        absoluteEncoderOffset = new Rotation2d(-1.68); // MUST BE CALIBRATED
+        turnAbsoluteEncoder = new CANcoder(16);
+        absoluteEncoderOffset = new Rotation2d(-2.57); // MUST BE CALIBRATED
         break;
       case 1:
         driveSparkMax =
             new CANSparkMax(frc.robot.Constants.DRIVE_FRONT_RIGHT, MotorType.kBrushless);
         turnSparkMax = new CANSparkMax(frc.robot.Constants.TURN_FRONT_RIGHT, MotorType.kBrushless);
-        turnAbsoluteEncoder = new CANcoder(8);
-        absoluteEncoderOffset = new Rotation2d(2.46); // MUST BE CALIBRATED
+        turnAbsoluteEncoder = new CANcoder(19);
+        absoluteEncoderOffset = new Rotation2d(0.97); // MUST BE CALIBRATED
         break;
       case 2:
         driveSparkMax = new CANSparkMax(frc.robot.Constants.DRIVE_BACK_LEFT, MotorType.kBrushless);
         turnSparkMax = new CANSparkMax(frc.robot.Constants.TURN_BACK_LEFT, MotorType.kBrushless);
-        turnAbsoluteEncoder = new CANcoder(2);
-        absoluteEncoderOffset = new Rotation2d(-0.43); // MUST BE CALIBRATED
+        turnAbsoluteEncoder = new CANcoder(17);
+        absoluteEncoderOffset = new Rotation2d(-2.35); // MUST BE CALIBRATED
         break;
       case 3:
         driveSparkMax = new CANSparkMax(frc.robot.Constants.DRIVE_BACK_RIGHT, MotorType.kBrushless);
         turnSparkMax = new CANSparkMax(frc.robot.Constants.TURN_BACK_RIGHT, MotorType.kBrushless);
-        turnAbsoluteEncoder = new CANcoder(11);
-        absoluteEncoderOffset = new Rotation2d(-1.38); // MUST BE CALIBRATED
+        turnAbsoluteEncoder = new CANcoder(18);
+        absoluteEncoderOffset = new Rotation2d(2.29); // MUST BE CALIBRATED
         break;
       default:
         throw new RuntimeException("Invalid module index");
