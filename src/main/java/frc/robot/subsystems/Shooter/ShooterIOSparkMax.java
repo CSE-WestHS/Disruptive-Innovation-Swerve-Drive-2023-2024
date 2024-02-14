@@ -28,8 +28,8 @@ import edu.wpi.first.math.util.Units;
 public class ShooterIOSparkMax implements ShooterIO {
   private static final double GEAR_RATIO = 1.5;
 
-  private final CANSparkMax leader = new CANSparkMax(17, MotorType.kBrushless);
-  private final CANSparkMax follower = new CANSparkMax(19, MotorType.kBrushless);
+  private final CANSparkMax leader = new CANSparkMax(frc.robot.Constants.SHOOTER_LEFT, MotorType.kBrushless);
+  private final CANSparkMax follower = new CANSparkMax(frc.robot.Constants.SHOOTER_RIGHT, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
 
@@ -41,7 +41,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     follower.setCANTimeout(250);
 
     leader.setInverted(false);
-    follower.follow(leader, false);
+    follower.follow(leader, true);
 
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(30);

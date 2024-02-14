@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class IndexerIOSparkMax implements IndexerIO {
   private static final double GEAR_RATIO = 1.5;
 
-  private final CANSparkMax leader = new CANSparkMax(16, MotorType.kBrushless);
+  private final CANSparkMax leader = new CANSparkMax(frc.robot.Constants.INDEXER, MotorType.kBrushless);
 
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();

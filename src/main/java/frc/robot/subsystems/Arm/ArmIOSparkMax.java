@@ -29,23 +29,23 @@ import frc.robot.Constants;
  */
 public class ArmIOSparkMax implements ArmIO {
 
-  private final CANSparkMax leader = new CANSparkMax(15, MotorType.kBrushless);
-  // private final CANSparkMax follower = new CANSparkMax(1, MotorType.kBrushless);
+  private final CANSparkMax leader = new CANSparkMax(frc.robot.Constants.ARM_LEFT, MotorType.kBrushless);
+  private final CANSparkMax follower = new CANSparkMax(frc.robot.Constants.ARM_RIGHT, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
 
   public ArmIOSparkMax() {
     leader.restoreFactoryDefaults();
-
+    follower.restoreFactoryDefaults();
     leader.setCANTimeout(250);
-
+    follower.setCANTimeout(250);
     leader.setInverted(false);
-
+    follower.follow(leader,false);
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(30);
     encoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     leader.burnFlash();
-
+    follower.burnFlash();
     encoder.setPosition(Constants.ANGLE_SPEAKER);
   }
 
