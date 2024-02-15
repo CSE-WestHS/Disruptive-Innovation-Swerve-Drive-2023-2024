@@ -29,9 +29,9 @@ public class ShooterIOSparkMax implements ShooterIO {
   private static final double GEAR_RATIO = 1.5;
 
   private final CANSparkMax leader =
-      new CANSparkMax(frc.robot.Constants.SHOOTER_LEFT, MotorType.kBrushless);
+      new CANSparkMax(frc.robot.Constants.SHOOTER_TOP, MotorType.kBrushless);
   private final CANSparkMax follower =
-      new CANSparkMax(frc.robot.Constants.SHOOTER_RIGHT, MotorType.kBrushless);
+      new CANSparkMax(frc.robot.Constants.SHOOTER_BOTTOM, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
 
