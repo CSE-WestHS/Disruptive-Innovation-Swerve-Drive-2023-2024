@@ -35,32 +35,15 @@ public class Module {
   private Rotation2d angleSetpoint = null; // Setpoint for closed loop control, null for open loop
   private Double speedSetpoint = null; // Setpoint for closed loop control, null for open loop
   private Rotation2d turnRelativeOffset = null; // Relative + Offset = Absolute
-  private double lastPositionMeters = 0.0; // Used for delta calculation
 
   public Module(ModuleIO io, int index) {
     this.io = io;
     this.index = index;
-    // R2=0.99427 ﻿
-    // ﻿﻿﻿﻿﻿﻿ 	kS=0.15330 ﻿
-    // ﻿﻿﻿﻿﻿﻿ 	kV=0.13586 ﻿
 
-    //     ﻿﻿﻿﻿﻿﻿ 	R2=0.99686 ﻿
-    // ﻿﻿﻿﻿﻿﻿ 	kS=0.16576 ﻿
-    // ﻿﻿﻿﻿﻿﻿ 	kV=0.13539
-
-    // with 2.0 ramp volts
-    // In the parameter it goes (kS, kV, kA)
-    // kS = 0.36295 ﻿
-    // kV = 0.13244 ﻿
-    // kA = 0.99948 ﻿
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)
     switch (Constants.currentMode) {
       case REAL:
-        driveFeedforward = new SimpleMotorFeedforward(0.36295, 0.13244);
-        driveFeedback = new PIDController(.15, 0.0, 0.0);
-        turnFeedback = new PIDController(7, 1, 0.0);
-        break;
       case REPLAY:
         driveFeedforward = new SimpleMotorFeedforward(0.1, 0.13);
         driveFeedback = new PIDController(0.05, 0.0, 0.0);
@@ -177,13 +160,6 @@ public class Module {
   /** Returns the module position (turn angle and drive position). */
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(getPositionMeters(), getAngle());
-  }
-
-  /** Returns the module position delta since the last call to this method. */
-  public SwerveModulePosition getPositionDelta() {
-    var delta = new SwerveModulePosition(getPositionMeters() - lastPositionMeters, getAngle());
-    lastPositionMeters = getPositionMeters();
-    return delta;
   }
 
   /** Returns the module state (turn angle and drive velocity). */
