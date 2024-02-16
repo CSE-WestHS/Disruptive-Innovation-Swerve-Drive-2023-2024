@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.Intake.*;
+import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Camera.*;
 import frc.robot.subsystems.LEDS.LEDS;
 import frc.robot.subsystems.drive.*;
@@ -53,6 +54,7 @@ public class RobotContainer {
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
   // private Arm arm;
   private LEDS leds;
+  private Arm arm;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -70,8 +72,8 @@ public class RobotContainer {
         // intake = new Intake(new IntakeIOSparkMax());
         // shooter = new Shooter(new ShooterIOSparkMax());
         // arm = new Arm(new ArmIOSparkMax());
-        camera = new Camera();
-        leds = new LEDS();
+        // camera = new Camera();
+        // leds = new LEDS();
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
 
         // drive = new Drive(
@@ -131,8 +133,8 @@ public class RobotContainer {
             drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
     autoChooser.addOption("Example Auto", new PathPlannerAuto("Example Auto"));
 
-    camera.useFrontCamera();
-    leds.RunLEDS();
+    // camera.useFrontCamera();
+    // leds.RunLEDS();
     // autoChooser.addOption(
     //  "Flywheel FF Characterization",
     // new FeedForwardCharacterization(

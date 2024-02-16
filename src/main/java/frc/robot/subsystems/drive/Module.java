@@ -57,9 +57,9 @@ public class Module {
     // separate robot with different tuning)
     switch (Constants.currentMode) {
       case REAL:
-        driveFeedforward = new SimpleMotorFeedforward(0.36295, 0.13244);
+        driveFeedforward = new SimpleMotorFeedforward(0, 0);
         driveFeedback = new PIDController(.15, 0.0, 0.0);
-        turnFeedback = new PIDController(7, 1, 0.0);
+        turnFeedback = new PIDController(1, 0, 0.0);
         break;
       case REPLAY:
         driveFeedforward = new SimpleMotorFeedforward(0.1, 0.13);
@@ -74,7 +74,7 @@ public class Module {
       default:
         driveFeedforward = new SimpleMotorFeedforward(0.0, 0.0);
         driveFeedback = new PIDController(0.10, 0.0, 0.0);
-        turnFeedback = new PIDController(0.0, 0.0, 0.0);
+        turnFeedback = new PIDController(1.0, 0.0, 0.0);
         break;
     }
 

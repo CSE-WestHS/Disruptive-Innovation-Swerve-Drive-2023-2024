@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 
 package frc.robot.subsystems.drive;
-
+// import java.lang.object.*;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -22,6 +22,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Module IO implementation for SparkMax drive motor controller, SparkMax turn motor controller (NEO
@@ -111,6 +112,7 @@ public class ModuleIOSparkMax implements ModuleIO {
 
     driveSparkMax.burnFlash();
     turnSparkMax.burnFlash();
+    Timer.delay(.5);
   }
 
   @Override

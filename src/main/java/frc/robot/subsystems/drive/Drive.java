@@ -64,10 +64,10 @@ public class Drive extends SubsystemBase {
       ModuleIO blModuleIO,
       ModuleIO brModuleIO) {
     this.gyroIO = gyroIO;
+    modules[3] = new Module(brModuleIO, 3);
     modules[0] = new Module(flModuleIO, 0);
     modules[1] = new Module(frModuleIO, 1);
     modules[2] = new Module(blModuleIO, 2);
-    modules[3] = new Module(brModuleIO, 3);
 
     // Configure AutoBuilder for PathPlanner
     AutoBuilder.configureHolonomic(
