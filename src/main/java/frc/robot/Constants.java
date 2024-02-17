@@ -23,6 +23,25 @@ package frc.robot;
  */
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
+  public static final double ANGLE_AMP = 135;
+  public static final double ANGLE_SPEAKER = 56;
+  public static final double ARM_GEAR_RATIO = (11.0 / 28.0) * (1.0 / 40.0) * (36.0 / 54.0);
+  public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
+  public static final int LED_LENGTH = 60;
+  public static final int DRIVE_FRONT_RIGHT = 3;
+  public static final int TURN_FRONT_RIGHT = 2;
+  public static final int DRIVE_FRONT_LEFT = 8;
+  public static final int TURN_FRONT_LEFT = 7;
+  public static final int DRIVE_BACK_RIGHT = 11;
+  public static final int TURN_BACK_RIGHT = 12;
+  public static final int DRIVE_BACK_LEFT = 10;
+  public static final int TURN_BACK_LEFT = 9;
+  public static final int SHOOTER_TOP = 4;
+  public static final int SHOOTER_BOTTOM = 5;
+  public static final int IDLER = 6;
+  public static final int INTAKE = 13;
+  public static final int RIGHT_WORM_GEAR = 15;
+  public static final int LEFT_WORM_GEAR = 14;
 
   public static enum Mode {
     /** Running on a real robot. */
