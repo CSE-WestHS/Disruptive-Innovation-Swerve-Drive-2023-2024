@@ -18,13 +18,11 @@ package frc.robot.subsystems.Arm;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import frc.robot.Constants;
 
 public class ArmIOSim implements ArmIO {
 
   private SingleJointedArmSim sim =
-      new SingleJointedArmSim(
-          DCMotor.getNEO(1), 1 / Constants.ARM_GEAR_RATIO, 0.8, 0.8, 0.31, 0.83, false, 0.31);
+      new SingleJointedArmSim(DCMotor.getNEO(1), 1, 0.8, 0.8, 0.31, 0.83, false, 0.31);
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
   private boolean closedLoop = false;

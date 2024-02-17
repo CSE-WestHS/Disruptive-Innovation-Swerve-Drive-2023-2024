@@ -21,6 +21,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 // import com.revrobotics.SparkPIDController.ArbFFUnits;
 // import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 
 /**
@@ -41,6 +42,7 @@ public class ArmIOSparkMax implements ArmIO {
     follower.restoreFactoryDefaults();
 
     encoder = leader.getEncoder();
+    // encoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     encoder.setPosition(Constants.ANGLE_SPEAKER);
 
     pid = leader.getPIDController();
@@ -49,16 +51,21 @@ public class ArmIOSparkMax implements ArmIO {
     leader.setCANTimeout(250);
     follower.setCANTimeout(250);
 
-    leader.setInverted(false);
-    follower.follow(leader, false);
-
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(30);
+
     follower.enableVoltageCompensation(12.0);
     follower.setSmartCurrentLimit(30);
 
+    leader.setInverted(false);
+    follower.follow(leader, false);
+
     leader.burnFlash();
     follower.burnFlash();
+
+    Timer.delay(1);
+
+    System.out.println(leader.getPIDController().getP(0));
   }
 
   @Override
@@ -88,8 +95,8 @@ public class ArmIOSparkMax implements ArmIO {
   */
   @Override
   public void setPosition(double position) {
-    pid.setReference(position, CANSparkBase.ControlType.kPosition, 0);
     System.out.println(position);
+    pid.setReference(position, CANSparkBase.ControlType.kPosition, 0);
   }
 
   @Override

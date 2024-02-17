@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
+import frc.robot.commands.Arm.ArmDownGradual;
+import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIO;
@@ -167,8 +169,9 @@ public class RobotContainer {
     // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
     controller.b().whileTrue(Commands.run(() -> intake.stop()));
-    controller.x().onTrue(new ArmAngleSpeaker(arm));
-    controller.y().onTrue(new ArmAngleAmp(arm));
+    // controller.x().whileTrue(Commands.run(() -> arm.runVolts(3)));
+    controller.x().onTrue(new ArmAngleAmp(arm));
+    controller.y().onTrue(new ArmAngleSpeaker(arm));
 
     // controller.a().whileTrue(new AcquireNote(indexer, intake));
     // controller.y().whileTrue(new EjectNote(intake));
@@ -179,8 +182,8 @@ public class RobotContainer {
     // controller
     //     .leftTrigger()
     //     .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
-    // controller.povUp().whileTrue(new ArmUpGradual(arm));
-    // controller.povDown().whileTrue(new ArmDownGradual(arm));
+    controller.povUp().onTrue(new ArmUpGradual(arm));
+    controller.povDown().onTrue(new ArmDownGradual(arm));
     controller
         .b()
         .onTrue(

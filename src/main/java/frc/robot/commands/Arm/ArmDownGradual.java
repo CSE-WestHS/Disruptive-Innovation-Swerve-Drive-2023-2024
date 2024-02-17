@@ -9,40 +9,33 @@ import frc.robot.subsystems.Arm.Arm;
 
 public class ArmDownGradual extends Command {
   private Arm arm;
-  private double angle = arm.getPosition();
+  private double angle;
 
   /** Creates a new ArmUpGradual. */
   public ArmDownGradual(Arm Arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = Arm;
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // 1300 = speed
-
+    angle = arm.getPosition();
+    arm.setPosition(angle - 0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    arm.setPosition(angle);
-    angle -= 0.1;
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    arm.setPosition(angle);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (angle < 56) {
-      return true;
-    }
-    return false;
+    return true;
   }
 }

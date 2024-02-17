@@ -14,6 +14,7 @@ public class ArmAngleAmp extends Command {
   public ArmAngleAmp(Arm Arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = Arm;
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
@@ -33,9 +34,11 @@ public class ArmAngleAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (arm.getPosition() - frc.robot.Constants.ANGLE_AMP > 2) {
+    if (Math.abs(arm.getPosition() - frc.robot.Constants.ANGLE_AMP) > 0.25) {
       return false;
     }
+    System.out.println("ArmAmpCommand Ended");
     return true;
+    // return false;
   }
 }

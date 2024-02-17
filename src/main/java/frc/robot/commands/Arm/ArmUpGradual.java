@@ -15,34 +15,27 @@ public class ArmUpGradual extends Command {
   public ArmUpGradual(Arm Arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = Arm;
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // 1300 = speed
-
+    angle = arm.getPosition();
+    arm.setPosition(angle + 0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    arm.setPosition(angle);
-    angle += (1 / 10);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    arm.setPosition(frc.robot.Constants.ANGLE_SPEAKER);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (angle > 150) {
-      return true;
-    }
-    return false;
+    return true;
   }
 }
