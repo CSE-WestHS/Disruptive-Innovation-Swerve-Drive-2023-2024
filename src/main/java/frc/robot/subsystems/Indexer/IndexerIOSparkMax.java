@@ -41,7 +41,7 @@ public class IndexerIOSparkMax implements IndexerIO {
 
     leader.setCANTimeout(250);
 
-    leader.setInverted(false);
+    leader.setInverted(true);
 
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(30);

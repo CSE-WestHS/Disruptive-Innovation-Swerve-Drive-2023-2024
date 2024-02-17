@@ -23,7 +23,7 @@ package frc.robot;
  */
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
-  public static final double ANGLE_AMP = 25;
+  public static final double ANGLE_AMP = 34;
   public static final double ANGLE_SPEAKER = 0;
   // public static final double ARM_GEAR_RATIO = 152;
   // ((11.0 / 28.0) * (1.0 / 40.0) * (36.0 / 54.0));

@@ -25,7 +25,7 @@ public class AcquireNote extends Command {
   @Override
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
-    indexer.runVelocity(2000);
+    indexer.runVelocity(1200);
     intake.runVelocity(2000);
   }
 

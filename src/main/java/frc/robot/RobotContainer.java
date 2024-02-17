@@ -27,6 +27,9 @@ import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Indexer.AcquireNote;
+import frc.robot.commands.Shooter.ShootNoteAmp;
+import frc.robot.commands.Shooter.ShootNoteSpeaker;
 import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIO;
 import frc.robot.subsystems.Arm.ArmIOSim;
@@ -167,7 +170,8 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> controller.getRightX()));
     // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
+    // controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
+    controller.a().onTrue(new AcquireNote(indexer, intake));
     controller.b().whileTrue(Commands.run(() -> intake.stop()));
     // controller.x().whileTrue(Commands.run(() -> arm.runVolts(3)));
     controller.x().onTrue(new ArmAngleAmp(arm));
@@ -175,13 +179,15 @@ public class RobotContainer {
 
     // controller.a().whileTrue(new AcquireNote(indexer, intake));
     // controller.y().whileTrue(new EjectNote(intake));
-    // controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
+    controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
     // controller
     //     .leftStick()
     //     .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
-    // controller
-    //     .leftTrigger()
-    //     .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 100)));
+    controller
+        .leftTrigger()
+        .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 1000)));
+
+    controller.leftBumper().onTrue(new ShootNoteSpeaker(indexer, shooter, 2000));
     controller.povUp().onTrue(new ArmUpGradual(arm));
     controller.povDown().onTrue(new ArmDownGradual(arm));
     controller

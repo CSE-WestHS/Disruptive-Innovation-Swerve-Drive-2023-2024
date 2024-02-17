@@ -22,7 +22,7 @@ public class ArmDownGradual extends Command {
   @Override
   public void initialize() {
     angle = arm.getPosition();
-    arm.setPosition(angle - 0.5);
+    arm.setPosition(angle - 1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

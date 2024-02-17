@@ -57,7 +57,7 @@ public class ShootNoteAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (!indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 1) {
+    if (!indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 2) {
       return true;
     }
     return false;
