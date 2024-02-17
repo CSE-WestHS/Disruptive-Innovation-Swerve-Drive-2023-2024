@@ -165,7 +165,7 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> controller.getRightX()));
     // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2000)));
+    controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
     controller.b().whileTrue(Commands.run(() -> intake.stop()));
     controller.x().onTrue(new ArmAngleSpeaker(arm));
     controller.y().onTrue(new ArmAngleAmp(arm));

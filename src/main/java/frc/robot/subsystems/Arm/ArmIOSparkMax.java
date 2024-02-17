@@ -33,15 +33,18 @@ public class ArmIOSparkMax implements ArmIO {
       new CANSparkMax(frc.robot.Constants.LEFT_WORM_GEAR, MotorType.kBrushless);
   private final CANSparkMax follower =
       new CANSparkMax(frc.robot.Constants.RIGHT_WORM_GEAR, MotorType.kBrushless);
-  private final RelativeEncoder encoder = leader.getEncoder();
-  private SparkPIDController pid = leader.getPIDController();
+  private final RelativeEncoder encoder;
+  private SparkPIDController pid;
 
   public ArmIOSparkMax() {
     leader.restoreFactoryDefaults();
     follower.restoreFactoryDefaults();
 
+    encoder = leader.getEncoder();
+    encoder.setPosition(Constants.ANGLE_SPEAKER);
+
     pid = leader.getPIDController();
-    pid.setOutputRange(55, 136);
+    // pid.setOutputRange(-5, 100);
 
     leader.setCANTimeout(250);
     follower.setCANTimeout(250);
@@ -54,12 +57,8 @@ public class ArmIOSparkMax implements ArmIO {
     follower.enableVoltageCompensation(12.0);
     follower.setSmartCurrentLimit(30);
 
-    encoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
-
     leader.burnFlash();
     follower.burnFlash();
-
-    encoder.setPosition(Constants.ANGLE_SPEAKER);
   }
 
   @Override
