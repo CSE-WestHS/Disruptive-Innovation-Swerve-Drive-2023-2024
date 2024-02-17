@@ -22,11 +22,25 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.commands.Arm.ArmAngleAmp;
+import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Arm.Arm;
-import frc.robot.subsystems.Camera.Camera;
-import frc.robot.subsystems.LEDS.LEDS;
+import frc.robot.subsystems.Arm.ArmIO;
+import frc.robot.subsystems.Arm.ArmIOSim;
+import frc.robot.subsystems.Arm.ArmIOSparkMax;
+import frc.robot.subsystems.Indexer.Indexer;
+import frc.robot.subsystems.Indexer.IndexerIO;
+import frc.robot.subsystems.Indexer.IndexerIOSim;
+import frc.robot.subsystems.Indexer.IndexerIOSparkMax;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIO;
+import frc.robot.subsystems.Intake.IntakeIOSim;
+import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.ShooterIO;
+import frc.robot.subsystems.Shooter.ShooterIOSim;
+import frc.robot.subsystems.Shooter.ShooterIOSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIONavX;
@@ -34,7 +48,6 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,21 +58,20 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 public class RobotContainer {
   // Subsystems
   public final Drive drive;
-  // public final Indexer indexer;
-  // public final Intake intake;
-  // private Shooter shooter;
-  // private final Flywheel flywheel;
-  // private final Flywheel motor2;
+  public final Indexer indexer;
+  public final Intake intake;
+  public final Shooter shooter;
+  public final Arm arm;
+  // public final LEDS leds;
+  // public final Camera camera;
+
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  private Camera camera;
+
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
-  // private Arm arm;
-  private LEDS leds;
-  private Arm arm;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -73,21 +85,12 @@ public class RobotContainer {
                 new ModuleIOSparkMax(1),
                 new ModuleIOSparkMax(2),
                 new ModuleIOSparkMax(3));
-        // indexer = new Indexer(new IndexerIOSparkMax());
-        // intake = new Intake(new IntakeIOSparkMax());
-        // shooter = new Shooter(new ShooterIOSparkMax());
-        // arm = new Arm(new ArmIOSparkMax());
+        indexer = new Indexer(new IndexerIOSparkMax());
+        intake = new Intake(new IntakeIOSparkMax());
+        shooter = new Shooter(new ShooterIOSparkMax());
+        arm = new Arm(new ArmIOSparkMax());
         // camera = new Camera();
         // leds = new LEDS();
-        // flywheel = new Flywheel(new FlywheelIOSparkMax());
-
-        // drive = new Drive(
-        // new GyroIOPigeon2(),
-        // new ModuleIOTalonFX(0),
-        // new ModuleIOTalonFX(1),
-        // new ModuleIOTalonFX(2),
-        // new ModuleIOTalonFX(3));
-        // flywheel = new Flywheel(new FlywheelIOTalonFX());
         break;
 
       case SIM:
@@ -99,11 +102,10 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
-        // flywheel = new Flywheel(new FlywheelIOSim());
-        // indexer = new Indexer(new IndexerIOSim());
-        // intake = new Intake(new IntakeIOSim());
-        // shooter = new Shooter(new ShooterIOSim());
-        // arm = new Arm(new ArmIOSim());
+        indexer = new Indexer(new IndexerIOSim());
+        intake = new Intake(new IntakeIOSim());
+        shooter = new Shooter(new ShooterIOSim());
+        arm = new Arm(new ArmIOSim());
         break;
 
       default:
@@ -115,11 +117,10 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
-        // flywheel = new Flywheel(new FlywheelIO() {});
-        // indexer = new Indexer(new IndexerIO() {});
-        // intake = new Intake(new IntakeIO() {});
-        // shooter = new Shooter(new ShooterIO() {});
-        // arm = new Arm(new ArmIO() {});
+        indexer = new Indexer(new IndexerIO() {});
+        intake = new Intake(new IntakeIO() {});
+        shooter = new Shooter(new ShooterIO() {});
+        arm = new Arm(new ArmIO() {});
         break;
     }
 
@@ -131,11 +132,11 @@ public class RobotContainer {
     // .withTimeout(5.0));
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    // Set up feedforward characterization
-    autoChooser.addOption(
-        "Drive FF Characterization",
-        new FeedForwardCharacterization(
-            drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
+    // // Set up feedforward characterization
+    // autoChooser.addOption(
+    //     "Drive FF Characterization",
+    //     new FeedForwardCharacterization(
+    //         drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
     autoChooser.addOption("Example Auto", new PathPlannerAuto("Example Auto"));
 
     // camera.useFrontCamera();
@@ -156,14 +157,19 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // intake.setDefaultCommand(new IdleOuttake(intake, 200.0));
+    // intake.setDefaultCommand(new IdleOuttake(intake, -200.0));
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> controller.getLeftY(),
-            () -> controller.getLeftX(),
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX(),
             () -> controller.getRightX()));
     // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2000)));
+    controller.b().whileTrue(Commands.run(() -> intake.stop()));
+    controller.x().onTrue(new ArmAngleSpeaker(arm));
+    controller.y().onTrue(new ArmAngleAmp(arm));
+
     // controller.a().whileTrue(new AcquireNote(indexer, intake));
     // controller.y().whileTrue(new EjectNote(intake));
     // controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));

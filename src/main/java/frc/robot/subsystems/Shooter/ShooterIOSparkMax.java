@@ -43,11 +43,12 @@ public class ShooterIOSparkMax implements ShooterIO {
     follower.setCANTimeout(250);
 
     leader.setInverted(false);
-    follower.follow(leader, true);
+    follower.follow(leader, false);
 
     leader.enableVoltageCompensation(12.0);
-    leader.setSmartCurrentLimit(30);
-
+    leader.setSmartCurrentLimit(60);
+    follower.setSmartCurrentLimit(60);
+    follower.enableVoltageCompensation(12.0);
     leader.burnFlash();
     follower.burnFlash();
   }
