@@ -142,7 +142,10 @@ public class RobotContainer {
     //     "Drive FF Characterization",
     //     new FeedForwardCharacterization(
     //         drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
-    autoChooser.addOption("Example Auto", new PathPlannerAuto("Example Auto"));
+    autoChooser.addOption("CenterBlue", new PathPlannerAuto("AllAutoCenterBlue"));
+    autoChooser.addOption("LeftBlue", new PathPlannerAuto("AllAutoLeftBlue"));
+    autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
+    autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
 
     // camera.useFrontCamera();
     // leds.RunLEDS();
