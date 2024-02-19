@@ -4,21 +4,16 @@
 
 package frc.robot.subsystems.LEDS;
 
-import java.sql.Driver;
-import java.util.Optional;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+// import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.util.Color;
 
 /** Add your docs here. */
 public class LEDS {
   private AddressableLED leds;
   private AddressableLEDBuffer buffer;
   private static boolean isAuto = DriverStation.isAutonomous();
-  private static Optional<edu.wpi.first.wpilibj.DriverStation.Alliance> Alliance = DriverStation.getAlliance();
   private static boolean isTeleop = DriverStation.isTeleop();
 
   public LEDS() {
@@ -49,19 +44,19 @@ public class LEDS {
     if (isTeleop) {
       for (var i = 0; i < buffer.getLength(); i++) {
         // Sets the specified LED to the HSV values for some color
-        buffer.setHSV(i, 75, 60, 50);
+        buffer.setHSV(i, 84, 8, 50);
       }
       System.out.println("set LEDs");
       leds.setData(buffer);
     }
-    
-    //example
+
+    // example
     // for (var i = 0; i < buffer.getLength(); i++) {
     //   // Sets the specified LED to the HSV values for red
     //   buffer.setHSV(i, 0, 100, 50);
     // }
     // System.out.println("set LEDs");
     // leds.setData(buffer);
-    
+
   }
 }

@@ -30,7 +30,10 @@ import org.littletonrobotics.junction.Logger;
 public class Arm extends SubsystemBase {
   private final ArmIO io;
   private final ArmIOInputsAutoLogged inputs = new ArmIOInputsAutoLogged();
+
+  @SuppressWarnings("unused")
   private final SimpleMotorFeedforward ffModel;
+
   private final SysIdRoutine sysId;
 
   /** Creates a new Flywheel. */

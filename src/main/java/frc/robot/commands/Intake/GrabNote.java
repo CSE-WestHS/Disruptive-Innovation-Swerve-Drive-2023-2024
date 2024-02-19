@@ -9,17 +9,17 @@ import frc.robot.subsystems.Intake.Intake;
 
 public class GrabNote extends Command {
   private Intake intake;
-
+  private int targetSpeed = 2000;
   /** Creates a new GrabNote. */
-  public GrabNote(Intake Intake) {
+  public GrabNote(Intake Intake, int TargetSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = Intake;
+    this.targetSpeed = TargetSpeed;
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.runVelocity(2000);
+    intake.runVelocity(targetSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

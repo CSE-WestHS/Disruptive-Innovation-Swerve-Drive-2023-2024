@@ -36,6 +36,7 @@ public class IndexerIOSim implements IndexerIO {
         (String name, HALValue value) -> {
           BeamBreakSim.setValue(value.getBoolean());
         };
+    @SuppressWarnings("unused")
     CallbackStore store = BeamBreakSim.registerValueCallback(callback, false);
   }
 

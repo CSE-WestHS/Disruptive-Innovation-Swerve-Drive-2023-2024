@@ -18,14 +18,14 @@ public class Camera extends SubsystemBase {
   private UsbCamera setupServer(int id) {
 
     UsbCamera camera = CameraServer.startAutomaticCapture("Video Feed", id);
-    ((MjpegServer) CameraServer.getServer()).setCompression(50);
+    ((MjpegServer) CameraServer.getServer()).setCompression(30);
     return camera;
   }
 
   public void useFrontCamera() {
     frontcamera = setupServer(0);
     frontcamera.setResolution(320, 240);
-    frontcamera.setFPS(30);
+    frontcamera.setFPS(25);
 
     CameraServer.getServer().setSource(frontcamera);
     System.out.println("Switching to front camera");

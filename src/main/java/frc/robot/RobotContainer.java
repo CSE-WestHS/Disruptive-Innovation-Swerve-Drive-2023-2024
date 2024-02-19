@@ -14,7 +14,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -142,10 +141,10 @@ public class RobotContainer {
     //     "Drive FF Characterization",
     //     new FeedForwardCharacterization(
     //         drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
-    autoChooser.addOption("CenterBlue", new PathPlannerAuto("AllAutoCenterBlue"));
-    autoChooser.addOption("LeftBlue", new PathPlannerAuto("AllAutoLeftBlue"));
-    autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
-    autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
+    // autoChooser.addOption("CenterBlue", new PathPlannerAuto("AllAutoCenterBlue"));
+    // autoChooser.addOption("LeftBlue", new PathPlannerAuto("AllAutoLeftBlue"));
+    // autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
+    // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
 
     // camera.useFrontCamera();
     // leds.RunLEDS();
@@ -177,8 +176,8 @@ public class RobotContainer {
     controller.a().onTrue(new AcquireNote(indexer, intake));
     controller.b().whileTrue(Commands.run(() -> intake.stop()));
     // controller.x().whileTrue(Commands.run(() -> arm.runVolts(3)));
-    controller.x().onTrue(new ArmAngleAmp(arm));
-    controller.y().onTrue(new ArmAngleSpeaker(arm));
+    controller.y().onTrue(new ArmAngleAmp(arm));
+    controller.x().onTrue(new ArmAngleSpeaker(arm));
 
     // controller.a().whileTrue(new AcquireNote(indexer, intake));
     // controller.y().whileTrue(new EjectNote(intake));
@@ -187,7 +186,7 @@ public class RobotContainer {
     //     .leftStick()
     //     .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
     controller
-        .leftTrigger()
+        .leftBumper()
         .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 1000)));
 
     controller.leftBumper().onTrue(new ShootNoteSpeaker(indexer, shooter, 2000));

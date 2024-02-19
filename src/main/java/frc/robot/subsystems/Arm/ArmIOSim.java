@@ -26,7 +26,11 @@ public class ArmIOSim implements ArmIO {
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
   private boolean closedLoop = false;
+
+  @SuppressWarnings("unused")
   private double ffVolts = 0.0;
+
+  @SuppressWarnings("unused")
   private double appliedVolts = 0.0;
 
   @Override
