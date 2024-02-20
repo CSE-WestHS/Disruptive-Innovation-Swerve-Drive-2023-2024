@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
     switch (Constants.currentMode) {
       case REAL:
         ffModel = new SimpleMotorFeedforward(0.1, 0.05);
-        io.configurePID(0.15, 0.0, 0.0);
+        io.configurePID(0.2, 0.0, 0.0);
         break;
       case REPLAY:
         ffModel = new SimpleMotorFeedforward(0.1, 0.05);
@@ -96,7 +96,7 @@ public class Arm extends SubsystemBase {
   }
 
   public double getPosition() {
-    return inputs.position;
+    return inputs.position[0];
   }
   /** Stops the flywheel. */
   public void stop() {

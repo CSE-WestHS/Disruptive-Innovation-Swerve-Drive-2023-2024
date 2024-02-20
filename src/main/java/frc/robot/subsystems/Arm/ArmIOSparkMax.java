@@ -44,6 +44,7 @@ public class ArmIOSparkMax implements ArmIO {
     encoder = leader.getEncoder();
     // encoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
     encoder.setPosition(Constants.ANGLE_SPEAKER);
+    follower.getEncoder().setPosition(Constants.ANGLE_SPEAKER);
 
     pid = leader.getPIDController();
     // pid.setOutputRange(-5, 100);
@@ -52,10 +53,10 @@ public class ArmIOSparkMax implements ArmIO {
     follower.setCANTimeout(250);
 
     leader.enableVoltageCompensation(12.0);
-    leader.setSmartCurrentLimit(75);
+    leader.setSmartCurrentLimit(45);
 
     follower.enableVoltageCompensation(12.0);
-    follower.setSmartCurrentLimit(75);
+    follower.setSmartCurrentLimit(4);
 
     leader.setInverted(false);
     follower.follow(leader, false);
@@ -75,7 +76,8 @@ public class ArmIOSparkMax implements ArmIO {
     //     Units.rotationsPerMinuteToRadiansPerSecond(encoder.getVelocity() / GEAR_RATIO);
     inputs.appliedVolts = leader.getAppliedOutput() * leader.getBusVoltage();
     inputs.currentAmps = new double[] {leader.getOutputCurrent()};
-    inputs.position = leader.getEncoder().getPosition();
+    inputs.position[0] = leader.getEncoder().getPosition();
+    inputs.position[1] = follower.getEncoder().getPosition();
   }
 
   @Override
