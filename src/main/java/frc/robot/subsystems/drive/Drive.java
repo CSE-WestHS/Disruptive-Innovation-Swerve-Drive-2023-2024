@@ -20,7 +20,6 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -66,7 +65,6 @@ public class Drive extends SubsystemBase {
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   public static final PIDController headingController = new PIDController(0.015, 0, 0.000);
-
 
   public Drive(
       GyroIO gyroIO,
@@ -181,8 +179,7 @@ public class Drive extends SubsystemBase {
     double headingDifferenceDegrees = currentHeadingDegrees - targetHeadingDegrees;
     double offsetHeadingDegrees = MathUtil.inputModulus(headingDifferenceDegrees, -180, 180);
 
-    double pidRotation =
-        headingController.calculate(offsetHeadingDegrees, 0.0);
+    double pidRotation = headingController.calculate(offsetHeadingDegrees, 0.0);
     double ffRotation = Math.signum(offsetHeadingDegrees) * Constants.ROTATE_TO_TARGET_FF;
 
     double desiredRotation = pidRotation - ffRotation;
@@ -228,8 +225,6 @@ public class Drive extends SubsystemBase {
       drive(x, y, rot, fieldRelative);
     }
   }
-
-
 
   /**
    * Runs the drive at the desired velocity.
