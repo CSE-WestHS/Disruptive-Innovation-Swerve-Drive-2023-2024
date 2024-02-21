@@ -54,6 +54,9 @@ public final class Constants {
   public static final double TRACK_WIDTH_Y = Units.inchesToMeters(25.0);
   public static final double DRIVE_BASE_RADIUS =
       Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
+  public static final double ROTATE_TO_TARGET_FF = 0.01;
+  /** If the desired chassis rotation is below this value in [0,1], it is ignored */
+  public static final double ROTATION_DEADBAND_THRESHOLD = 0.04;
 
   public static enum Mode {
     /** Running on a real robot. */

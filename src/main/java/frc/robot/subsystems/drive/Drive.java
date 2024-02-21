@@ -20,6 +20,9 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -51,6 +54,7 @@ public class Drive extends SubsystemBase {
 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
   private Rotation2d rawGyroRotation = new Rotation2d();
+  private double targetHeadingDegrees;
   private SwerveModulePosition[] lastModulePositions = // For delta tracking
       new SwerveModulePosition[] {
         new SwerveModulePosition(),
@@ -60,6 +64,9 @@ public class Drive extends SubsystemBase {
       };
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+
+  public static final PIDController headingController = new PIDController(0.015, 0, 0.000);
+
 
   public Drive(
       GyroIO gyroIO,
@@ -72,6 +79,8 @@ public class Drive extends SubsystemBase {
     modules[1] = new Module(frModuleIO, 1);
     modules[2] = new Module(blModuleIO, 2);
     modules[3] = new Module(brModuleIO, 3);
+
+    headingController.enableContinuousInput(-180, 180);
 
     // Configure AutoBuilder for PathPlanner
     AutoBuilder.configureHolonomic(
@@ -158,6 +167,69 @@ public class Drive extends SubsystemBase {
     // Apply odometry update
     poseEstimator.update(rawGyroRotation, modulePositions);
   }
+
+  /**
+   * Keeps the heading of the robot when the driver is not turning, by using PID to keep the
+   * distance between the actual heading and the last intended heading to 0.
+   *
+   * @param x Desired speed of the robot in the x direction (forward), [-1,1].
+   * @param y Desired speed of the robot in the y direction (sideways), [-1,1].
+   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   */
+  public void keepHeading(double x, double y, boolean fieldRelative) {
+    double currentHeadingDegrees = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
+    double headingDifferenceDegrees = currentHeadingDegrees - targetHeadingDegrees;
+    double offsetHeadingDegrees = MathUtil.inputModulus(headingDifferenceDegrees, -180, 180);
+
+    double pidRotation =
+        headingController.calculate(offsetHeadingDegrees, 0.0);
+    double ffRotation = Math.signum(offsetHeadingDegrees) * Constants.ROTATE_TO_TARGET_FF;
+
+    double desiredRotation = pidRotation - ffRotation;
+
+    if (Math.abs(desiredRotation) < Constants.ROTATION_DEADBAND_THRESHOLD) {
+      desiredRotation = 0;
+    }
+
+    drive(x, y, desiredRotation, fieldRelative);
+  }
+
+  public int convertCardinalDirections(int povAngleDeg) {
+    // change d-pad values for left and right to specified angle
+    if (povAngleDeg == 270) {
+      povAngleDeg += 77;
+    } else if (povAngleDeg == 90) {
+      povAngleDeg -= 77;
+    }
+    // targetHeadingDegrees is counterclockwise so need to flip povAngle
+    povAngleDeg = 360 - povAngleDeg;
+    return povAngleDeg;
+  }
+
+  /**
+   * Determines whether to rotate according to input or to run the keep heading code, by checking if
+   * the (already deadbanded) rotation input is equal to 0.
+   *
+   * @param x Desired speed of the robot in the x direction (forward), [-1,1].
+   * @param y Desired speed of the robot in the y direction (sideways), [-1,1].
+   * @param rot Desired angular rate of the robot, [-1,1].
+   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   * @param povAngleDeg Get the angle in degrees of the D-pad (clockwise, -1 means POV not pressed).
+   */
+  public void rotateOrKeepHeading(
+      double x, double y, double rot, boolean fieldRelative, int povAngleDeg) {
+    if (povAngleDeg != -1) {
+      targetHeadingDegrees = convertCardinalDirections(povAngleDeg);
+      keepHeading(x, y, fieldRelative);
+    } else if (rot == 0) {
+      keepHeading(x, y, fieldRelative);
+    } else {
+      targetHeadingDegrees = getHeadingDegrees();
+      drive(x, y, rot, fieldRelative);
+    }
+  }
+
+
 
   /**
    * Runs the drive at the desired velocity.
