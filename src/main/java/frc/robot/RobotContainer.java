@@ -70,7 +70,8 @@ public class RobotContainer {
   // public final Camera camera;
 
   // Controller
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController controllerDriver = new CommandXboxController(0);
+  private final CommandXboxController controllerOperator = new CommandXboxController(1);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -164,49 +165,67 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // intake.setDefaultCommand(new IdleOuttake(intake, -200.0));
+  
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> controller.getRightX()));
-    // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    // controller.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
-    controller.a().onTrue(new AcquireNote(indexer, intake));
-    controller.b().whileTrue(Commands.run(() -> intake.stop()));
-    // controller.x().whileTrue(Commands.run(() -> arm.runVolts(3)));
-    controller.y().onTrue(new ArmAngleAmp(arm));
-    controller.x().onTrue(new ArmAngleSpeaker(arm));
+            () -> -controllerDriver.getLeftY(),
+            () -> -controllerDriver.getLeftX(),
+            () -> controllerDriver.getRightX()));
 
-    // controller.a().whileTrue(new AcquireNote(indexer, intake));
-    // controller.y().whileTrue(new EjectNote(intake));
-    controller.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
-    // controller
+    //Driver Controls ********************************************************************
+    /* Left Stick - Translate
+     * Right Stick - Rotate
+     * 
+     * Left Trigger - Turbo Drive Speed
+     * Left Bumper - Start Intake
+     * 
+     * Right Trigger - Score Amp Command
+     * Right Bumper - Score Speaker Command
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
+
+
+
+    // controllerDriver.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    // controllerDriver.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
+    controllerDriver.a().onTrue(new AcquireNote(indexer, intake));
+    controllerDriver.b().whileTrue(Commands.run(() -> intake.stop()));
+    // controllerDriver.x().whileTrue(Commands.run(() -> arm.runVolts(3)));
+    controllerDriver.y().onTrue(new ArmAngleAmp(arm));
+    controllerDriver.x().onTrue(new ArmAngleSpeaker(arm));
+
+    // controllerDriver.a().whileTrue(new AcquireNote(indexer, intake));
+    // controllerDriver.y().whileTrue(new EjectNote(intake));
+    controllerDriver.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
+    // controllerDriver
     //     .leftStick()
     //     .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
-    controller
+    controllerDriver
         .leftBumper()
         .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 1000)));
 
-    controller.leftBumper().onTrue(new ShootNoteSpeaker(indexer, shooter, 2000));
-    controller.povUp().onTrue(new ArmUpGradual(arm));
-    controller.povDown().onTrue(new ArmDownGradual(arm));
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
-    // controller.leftTrigger().onTrue(Commands.runOnce(null, drive));
-    // controller
-    //  .a()
-    // .whileTrue(
-    //  Commands.startEnd(
-    //    () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));
+    controllerDriver.leftBumper().onTrue(new ShootNoteSpeaker(indexer, shooter, 2000));
+    controllerDriver.povUp().onTrue(new ArmUpGradual(arm));
+    controllerDriver.povDown().onTrue(new ArmDownGradual(arm));
+    
+
+    //Operator Controls ********************************************************************
+    controllerOperator.b().onTrue(
+      Commands.runOnce(() -> drive.setPose(
+        new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),drive)
+        .ignoringDisable(true));
+    controllerOperator.povUp().onTrue(new ArmUpGradual(arm));
+    controllerOperator.povDown().onTrue(new ArmDownGradual(arm));
+
+
   }
 
   /**
