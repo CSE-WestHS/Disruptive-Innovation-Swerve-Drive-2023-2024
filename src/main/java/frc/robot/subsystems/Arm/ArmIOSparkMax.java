@@ -53,10 +53,10 @@ public class ArmIOSparkMax implements ArmIO {
     follower.setCANTimeout(250);
 
     leader.enableVoltageCompensation(12.0);
-    leader.setSmartCurrentLimit(50);
+    leader.setSmartCurrentLimit(40);
 
     follower.enableVoltageCompensation(12.0);
-    follower.setSmartCurrentLimit(50);
+    follower.setSmartCurrentLimit(40);
 
     leader.setInverted(false);
     follower.follow(leader, false);
