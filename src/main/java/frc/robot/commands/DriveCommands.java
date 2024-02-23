@@ -19,15 +19,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants;
 import frc.robot.subsystems.drive.Drive;
 import java.util.function.DoubleSupplier;
 
 public class DriveCommands {
   private static final double DEADBAND = 0.1;
+  private static double MAXSPEED;
 
   private DriveCommands() {}
 
@@ -38,9 +41,16 @@ public class DriveCommands {
       Drive drive,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier,
-      DoubleSupplier omegaSupplier) {
+      DoubleSupplier omegaSupplier,
+      DoubleSupplier triggerSupplier) {
     return Commands.run(
         () -> {
+          if (triggerSupplier.getAsDouble() > 0.05) {
+            MAXSPEED = ((Constants.MAX_LINEAR_SPEED_TURBO - Constants.MAX_LINEAR_SPEED) * triggerSupplier.getAsDouble()) + Constants.MAX_LINEAR_SPEED;
+          } else {
+            MAXSPEED = drive.getMaxLinearSpeedMetersPerSec();
+          }
+
           // Apply deadband
           double linearMagnitude =
               MathUtil.applyDeadband(
@@ -65,8 +75,8 @@ public class DriveCommands {
                   && DriverStation.getAlliance().get() == Alliance.Red;
           drive.runVelocity(
               ChassisSpeeds.fromFieldRelativeSpeeds(
-                  linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
-                  linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
+                  linearVelocity.getX() * MAXSPEED,
+                  linearVelocity.getY() * MAXSPEED,
                   omega * drive.getMaxAngularSpeedRadPerSec(),
                   isFlipped
                       ? drive.getRotation().plus(new Rotation2d(Math.PI))

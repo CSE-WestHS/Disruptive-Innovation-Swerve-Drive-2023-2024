@@ -7,7 +7,6 @@ package frc.robot.commands.Arm;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm.Arm;
 
-
 public class ArmSetAngle extends Command {
   private Arm arm;
   private double angle;
@@ -16,7 +15,8 @@ public class ArmSetAngle extends Command {
   public ArmSetAngle(Arm Arm, double Angle) {
     this.arm = Arm;
     this.angle = Angle;
-    addRequirements(arm);  }
+    addRequirements(arm);
+  }
 
   // Called when the command is initially scheduled.
   @Override
