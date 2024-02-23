@@ -19,7 +19,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,7 +45,10 @@ public class DriveCommands {
     return Commands.run(
         () -> {
           if (triggerSupplier.getAsDouble() > 0.05) {
-            MAXSPEED = ((Constants.MAX_LINEAR_SPEED_TURBO - Constants.MAX_LINEAR_SPEED) * triggerSupplier.getAsDouble()) + Constants.MAX_LINEAR_SPEED;
+            MAXSPEED =
+                ((Constants.MAX_LINEAR_SPEED_TURBO - Constants.MAX_LINEAR_SPEED)
+                        * triggerSupplier.getAsDouble())
+                    + Constants.MAX_LINEAR_SPEED;
           } else {
             MAXSPEED = drive.getMaxLinearSpeedMetersPerSec();
           }

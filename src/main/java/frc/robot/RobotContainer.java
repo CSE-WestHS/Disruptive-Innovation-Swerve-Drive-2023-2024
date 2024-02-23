@@ -140,7 +140,8 @@ public class RobotContainer {
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     // // Set up feedforward characterization
-    // autoChooser.addOption(
+    // autoChooser
+    //.addOption(
     //     "Drive FF Characterization",
     //     new FeedForwardCharacterization(
     //         drive, drive::runCharacterizationVolts, drive::getCharacterizationVelocity));
