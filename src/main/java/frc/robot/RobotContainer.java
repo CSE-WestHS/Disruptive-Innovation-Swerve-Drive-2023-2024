@@ -24,9 +24,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
+import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
+import frc.robot.commands.Intake.ManualGrabNote;
 import frc.robot.commands.Shooter.ShootNoteAmp;
 import frc.robot.commands.Shooter.ShootNoteSpeaker;
 import frc.robot.subsystems.Arm.Arm;
@@ -183,50 +185,84 @@ public class RobotContainer {
      * Right Trigger - Score Amp Command
      * Right Bumper - Score Speaker Command
      * 
+     */
+
+    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
+
+    controllerDriver.leftTrigger().onTrue();//Turbo Speed)
+
+    controllerDriver
+         .rightBumper()
+         .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
+    controllerDriver
+        .rightTrigger()
+        .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 1000)));
+    
+    controllerDriver.y().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
+    controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
+  
+
+   
+    
+
+    //Operator Controls ********************************************************************
+    /*
+     * a- reverse intake
+     * b- reverse indexer 
+     * x- stop with x
+     * 
+     * 
+     * d-up- gradual arm up
+     * d-down - gradual arm down
      * 
      * 
      * 
+     * right trigger - run intake and indexer
+     * right bumper - run shoter rollers
      * 
+     * left trigger - arm down 
+     * left bumper - arm up 
+     * 
+     * left little middle button - reset pose
+     * 
+     * 
+     *     // controllerDriver.leftBumber().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
+ controllerDriver.povUp().onTrue(new ArmUpGradual(arm));
+    controllerDriver.povDown().onTrue(new ArmDownGradual(arm));
      * 
      * 
      */
 
 
-
-
-    // controllerDriver.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    // controllerDriver.a().whileTrue(Commands.run(() -> intake.runVelocity(2200)));
-    controllerDriver.a().onTrue(new AcquireNote(indexer, intake));
-    controllerDriver.b().whileTrue(Commands.run(() -> intake.stop()));
-    // controllerDriver.x().whileTrue(Commands.run(() -> arm.runVolts(3)));
-    controllerDriver.y().onTrue(new ArmAngleAmp(arm));
-    controllerDriver.x().onTrue(new ArmAngleSpeaker(arm));
-
-    // controllerDriver.a().whileTrue(new AcquireNote(indexer, intake));
-    // controllerDriver.y().whileTrue(new EjectNote(intake));
-    controllerDriver.leftStick().onTrue(new ShootNoteSpeaker(indexer, shooter, 5000));
-    // controllerDriver
-    //     .leftStick()
-    //     .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 100)));
-    controllerDriver
-        .leftBumper()
-        .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 1000)));
-
-    controllerDriver.leftBumper().onTrue(new ShootNoteSpeaker(indexer, shooter, 2000));
-    controllerDriver.povUp().onTrue(new ArmUpGradual(arm));
-    controllerDriver.povDown().onTrue(new ArmDownGradual(arm));
-    
-
-    //Operator Controls ********************************************************************
-    controllerOperator.b().onTrue(
+//Reset pose, needs to be little left middle button
+    controllerOperator.back().onTrue(
       Commands.runOnce(() -> drive.setPose(
         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),drive)
         .ignoringDisable(true));
+
     controllerOperator.povUp().onTrue(new ArmUpGradual(arm));
     controllerOperator.povDown().onTrue(new ArmDownGradual(arm));
 
+    controllerOperator.a().whileTrue(
+      Commands.run(() -> intake.runVelocity(-2200)));
 
+    controllerOperator.x().onTrue(
+      Commands.run(() -> drive.stopWithX())
+    );
+    controllerOperator.rightTrigger().whileTrue(
+      new ManualGrabNote(intake, indexer, 2000)
+    );
+    controllerOperator.rightBumper().whileTrue(
+      Commands.run(() -> shooter.runVelocity(4000))
+    );
+    controllerOperator.leftTrigger().onTrue(
+      new ArmAngleSpeaker(arm)
+    );
+    controllerOperator.leftBumper().onTrue(
+     new ArmAngleAmp(arm)
+     );
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

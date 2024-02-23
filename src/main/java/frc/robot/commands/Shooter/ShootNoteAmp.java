@@ -63,3 +63,4 @@ public class ShootNoteAmp extends Command {
     return false;
   }
 }
+

@@ -25,6 +25,8 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
+  public static final double ANGLE_CLIMB_UP = 30;
+  public static final double ANGLE_CLIMB_DOWN = 10;
   public static final double ANGLE_AMP = 34;
   public static final double ANGLE_SPEAKER = 0;
   // public static final double ARM_GEAR_RATIO = 152;
