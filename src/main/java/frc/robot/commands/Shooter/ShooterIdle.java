@@ -2,53 +2,44 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Indexer;
+package frc.robot.commands.Shooter;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Indexer.Indexer;
-import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Shooter.Shooter;
 
-public class AcquireNote extends Command {
-  private Indexer indexer;
-  private Intake intake;
-  private double startTime;
-  /** Creates a new IndexIn. */
-  public AcquireNote(Indexer Indexer, Intake Intake) {
+public class ShooterIdle extends Command {
+  private Shooter shooter;
+  private double targetSpeed;
+
+  /** Creates a new IdleOuttake. */
+  public ShooterIdle(Shooter Shooter, double TargetSpeed) {
+    this.shooter = Shooter;
+    this.targetSpeed = TargetSpeed;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Intake);
-    this.indexer = Indexer;
-    this.intake = Intake;
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    startTime = Timer.getFPGATimestamp();
-    indexer.runVelocity(1200);
-    intake.runVelocity(2000);
+    shooter.runVelocity(targetSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexer.runVelocity(1200);
-    intake.runVelocity(2000);
+    shooter.runVelocity(targetSpeed);
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    indexer.stop();
-    intake.stop();
+    shooter.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 30) {
-      return true;
-    }
     return false;
   }
 }

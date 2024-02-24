@@ -29,6 +29,7 @@ public class ShootNoteSpeaker extends Command {
     this.indexer = Indexer;
     this.shooter = Shooter;
     this.targetSpeed = TargetSpeed;
+    addRequirements(shooter, indexer);
   }
 
   // Called when the command is initially scheduled.
@@ -41,7 +42,7 @@ public class ShootNoteSpeaker extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((shooter.getVelocityRPM() - targetSpeed) < 20) {
+    if ((shooter.getVelocityRPM() - targetSpeed) < 5) {
       startTime = Timer.getFPGATimestamp();
       indexer.runVelocity(2000);
     }

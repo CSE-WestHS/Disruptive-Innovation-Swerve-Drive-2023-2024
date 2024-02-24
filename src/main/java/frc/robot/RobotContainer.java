@@ -28,9 +28,12 @@ import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
+import frc.robot.commands.Indexer.IndexerIdle;
+import frc.robot.commands.Intake.IntakeIdle;
 import frc.robot.commands.Intake.ManualGrabNote;
 import frc.robot.commands.Shooter.ShootNoteAmp;
 import frc.robot.commands.Shooter.ShootNoteSpeaker;
+import frc.robot.commands.Shooter.ShooterIdle;
 import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIO;
 import frc.robot.subsystems.Arm.ArmIOSim;
@@ -177,6 +180,10 @@ public class RobotContainer {
             () -> controllerDriver.getRightX(),
             () -> controllerDriver.getLeftTriggerAxis()));
 
+    shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
+    intake.setDefaultCommand(new IntakeIdle(intake, 0));
+    indexer.setDefaultCommand(new IndexerIdle(indexer, 0));
+
     // Driver Controls ********************************************************************
     /* Left Stick - Translate
      * Right Stick - Rotate
@@ -196,7 +203,10 @@ public class RobotContainer {
         .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 2000)));
     controllerDriver
         .rightTrigger()
-        .onTrue(new ArmAngleAmp(arm).andThen(new ShootNoteAmp(indexer, shooter, 1500)));
+        .onTrue(
+            new ArmAngleAmp(arm)
+                .andThen(new ShootNoteAmp(indexer, shooter, 1500))
+                .andThen(new ArmAngleSpeaker(arm)));
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
@@ -244,6 +254,7 @@ public class RobotContainer {
     controllerOperator.povDown().onTrue(new ArmDownGradual(arm));
 
     controllerOperator.a().whileTrue(Commands.run(() -> intake.runVelocity(-2200)));
+    controllerOperator.b().whileTrue(Commands.run(() -> indexer.runVelocity(-1500)));
 
     controllerOperator.x().onTrue(Commands.run(() -> drive.stopWithX()));
     controllerOperator.rightTrigger().whileTrue(new ManualGrabNote(intake, indexer, 2000));

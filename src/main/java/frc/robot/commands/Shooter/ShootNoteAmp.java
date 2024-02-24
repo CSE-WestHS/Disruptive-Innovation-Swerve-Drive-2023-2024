@@ -29,6 +29,7 @@ public class ShootNoteAmp extends Command {
     this.indexer = Indexer;
     this.shooter = Shooter;
     this.targetSpeed = TargetSpeed;
+    addRequirements(shooter, indexer);
   }
 
   // Called when the command is initially scheduled.

@@ -18,6 +18,7 @@ public class ManualGrabNote extends Command {
     this.intake = Intake;
     this.indexer = Indexer;
     this.targetSpeed = TargetSpeed;
+    addRequirements(intake, indexer);
   }
   // Called when the command is initially scheduled.
   @Override
