@@ -37,26 +37,21 @@ public class ShootNoteSpeaker extends Command {
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
     shooter.runVelocity(targetSpeed);
-    System.out.println("start rollers");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     shooter.runVelocity(targetSpeed);
-    if (Math.abs(shooter.getVelocityRPM() - targetSpeed) < 100) {
+    if (Math.abs(shooter.getVelocityRPM() - targetSpeed) < 75) {
 
       indexer.runVelocity(2000);
-      System.out.println("start indexer");
     }
-    System.out.println("execute");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println(
-        "end******************************************************************************");
     indexer.stop();
     shooter.stop();
   }

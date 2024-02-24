@@ -143,7 +143,7 @@ public class RobotContainer {
     //      () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel)
     // .withTimeout(5.0));
 
-    NamedCommands.registerCommand("ShootNoteSpeaker", new ShootNoteSpeaker(indexer, shooter, 4000));
+    NamedCommands.registerCommand("ShootNoteSpeaker", new ShootNoteSpeaker(indexer, shooter, 3000));
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
 
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -211,12 +211,12 @@ public class RobotContainer {
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3000)));
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
         .onTrue(
             new ArmAngleAmp(arm)
-                .andThen(new ShootNoteAmp(indexer, shooter, 1500))
+                .andThen(new ShootNoteAmp(indexer, shooter, 2500))
                 .andThen(new ArmAngleSpeaker(arm)));
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
@@ -267,7 +267,6 @@ public class RobotContainer {
     controllerOperator.a().whileTrue(Commands.run(() -> intake.runVelocity(-2200)));
     controllerOperator.b().whileTrue(Commands.run(() -> indexer.runVelocity(-1500)));
 
-    controllerOperator.x().onTrue(Commands.run(() -> drive.stopWithX()));
     controllerOperator.rightTrigger().whileTrue(new ManualGrabNote(intake, indexer, 2000));
     controllerOperator.rightBumper().whileTrue(Commands.run(() -> shooter.runVelocity(4000)));
     controllerOperator.leftTrigger().onTrue(new ArmAngleSpeaker(arm));

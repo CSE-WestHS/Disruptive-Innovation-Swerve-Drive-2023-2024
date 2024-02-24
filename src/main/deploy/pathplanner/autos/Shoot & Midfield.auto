@@ -2,27 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.5,
-      "y": 4.5
+      "x": 1.0999813478323706,
+      "y": 4.31039498670476
     },
-    "rotation": 150.0
+    "rotation": 124.9920201985587
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
         {
           "type": "path",
           "data": {

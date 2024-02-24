@@ -35,20 +35,20 @@ public class ShootNoteAmp extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    startTime = Timer.getFPGATimestamp();
     shooter.runVelocity(targetSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Math.abs(shooter.getVelocityRPM() - targetSpeed) < 25) {
-      startTime = Timer.getFPGATimestamp();
+    if (Math.abs(shooter.getVelocityRPM() - targetSpeed) < 100) {
       indexer.runVelocity(2000);
     }
   }
 
   // Called once the command ends or is interrupted.
+
   @Override
   public void end(boolean interrupted) {
     indexer.stop();
@@ -58,7 +58,7 @@ public class ShootNoteAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (!indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 2) {
+    if (!indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 3) {
       return true;
     }
     return false;
