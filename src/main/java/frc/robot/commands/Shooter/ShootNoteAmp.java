@@ -42,7 +42,7 @@ public class ShootNoteAmp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((shooter.getVelocityRPM() - targetSpeed) < 100) {
+    if (Math.abs(shooter.getVelocityRPM() - targetSpeed) < 25) {
       startTime = Timer.getFPGATimestamp();
       indexer.runVelocity(2000);
     }

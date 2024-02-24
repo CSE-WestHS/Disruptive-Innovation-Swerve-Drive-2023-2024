@@ -52,7 +52,7 @@ public final class Constants {
   public static final int INTAKE = 14;
   public static final int RIGHT_WORM_GEAR = 13;
   public static final int LEFT_WORM_GEAR = 15;
-  public static final double MAX_LINEAR_SPEED = Units.feetToMeters(5);
+  public static final double MAX_LINEAR_SPEED = Units.feetToMeters(7);
   public static final double MAX_LINEAR_SPEED_TURBO = Units.feetToMeters(15);
   public static final double MAX_LINEAR_SPEED_AUTO = Units.feetToMeters(15);
   public static final double TRACK_WIDTH_X = Units.inchesToMeters(20.0);

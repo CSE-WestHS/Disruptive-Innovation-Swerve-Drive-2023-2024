@@ -14,6 +14,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -140,7 +142,17 @@ public class RobotContainer {
     // Commands.startEnd(
     //      () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel)
     // .withTimeout(5.0));
+
+    NamedCommands.registerCommand("ShootNoteSpeaker", new ShootNoteSpeaker(indexer, shooter, 4000));
+    NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
+
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    autoChooser.addOption("Forward 2M", new PathPlannerAuto("Forward 2M"));
+    autoChooser.addOption("Shoot & Midfield", new PathPlannerAuto("Shoot & Midfield"));
+    autoChooser.addOption("Nothing", new PathPlannerAuto("Nothing"));
+
+    // Ideal Centered Auto
+    autoChooser.addOption("Ideal Center Auto", new PathPlannerAuto("Ideal Center Auto"));
 
     // // Set up feedforward characterization
     // autoChooser
@@ -197,10 +209,9 @@ public class RobotContainer {
      */
 
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
-
     controllerDriver
         .rightBumper()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 2000)));
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3000)));
     controllerDriver
         .rightTrigger()
         .onTrue(
