@@ -25,9 +25,10 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
-  public static final double ANGLE_CLIMB_UP = 30;
+  public static final double ANGLE_START_POSITION = -2;
+  public static final double ANGLE_CLIMB_UP = 50;
   public static final double ANGLE_CLIMB_DOWN = 10;
-  public static final double ANGLE_AMP = 34;
+  public static final double ANGLE_AMP = 90;
   public static final double ANGLE_SPEAKER = 0;
   // public static final double ARM_GEAR_RATIO = 152;
   // ((11.0 / 28.0) * (1.0 / 40.0) * (36.0 / 54.0));
@@ -51,10 +52,11 @@ public final class Constants {
   public static final int INTAKE = 14;
   public static final int RIGHT_WORM_GEAR = 13;
   public static final int LEFT_WORM_GEAR = 15;
-  public static final double MAX_LINEAR_SPEED = Units.feetToMeters(7);
+  public static final double MAX_LINEAR_SPEED = Units.feetToMeters(5);
   public static final double MAX_LINEAR_SPEED_TURBO = Units.feetToMeters(15);
-  public static final double TRACK_WIDTH_X = Units.inchesToMeters(25.0);
-  public static final double TRACK_WIDTH_Y = Units.inchesToMeters(25.0);
+  public static final double MAX_LINEAR_SPEED_AUTO = Units.feetToMeters(15);
+  public static final double TRACK_WIDTH_X = Units.inchesToMeters(20.0);
+  public static final double TRACK_WIDTH_Y = Units.inchesToMeters(20.0);
   public static final double DRIVE_BASE_RADIUS =
       Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
 

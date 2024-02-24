@@ -5,6 +5,7 @@
 package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm.Arm;
 
 public class ArmAngleSpeaker extends Command {
@@ -20,7 +21,7 @@ public class ArmAngleSpeaker extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setPosition(frc.robot.Constants.ANGLE_SPEAKER);
+    arm.setPosition(Constants.ANGLE_SPEAKER);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

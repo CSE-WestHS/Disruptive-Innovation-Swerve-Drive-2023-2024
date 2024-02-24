@@ -42,7 +42,7 @@ import org.littletonrobotics.junction.Logger;
 public class Drive extends SubsystemBase {
 
   private static final double MAX_ANGULAR_SPEED =
-      Constants.MAX_LINEAR_SPEED / Constants.DRIVE_BASE_RADIUS;
+      Constants.MAX_LINEAR_SPEED_TURBO / Constants.DRIVE_BASE_RADIUS;
 
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
@@ -80,7 +80,7 @@ public class Drive extends SubsystemBase {
         () -> kinematics.toChassisSpeeds(getModuleStates()),
         this::runVelocity,
         new HolonomicPathFollowerConfig(
-            Constants.MAX_LINEAR_SPEED, Constants.DRIVE_BASE_RADIUS, new ReplanningConfig()),
+            Constants.MAX_LINEAR_SPEED_AUTO, Constants.DRIVE_BASE_RADIUS, new ReplanningConfig()),
         () ->
             DriverStation.getAlliance().isPresent()
                 && DriverStation.getAlliance().get() == Alliance.Red,
@@ -168,7 +168,7 @@ public class Drive extends SubsystemBase {
     // Calculate module setpoints
     ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
     SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, Constants.MAX_LINEAR_SPEED);
+    SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, Constants.MAX_LINEAR_SPEED_TURBO);
 
     // Send setpoints to modules
     SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
