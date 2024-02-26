@@ -18,6 +18,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,6 +42,7 @@ import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIO;
 import frc.robot.subsystems.Arm.ArmIOSim;
 import frc.robot.subsystems.Arm.ArmIOSparkMax;
+import frc.robot.subsystems.Camera.Camera;
 import frc.robot.subsystems.Indexer.Indexer;
 import frc.robot.subsystems.Indexer.IndexerIO;
 import frc.robot.subsystems.Indexer.IndexerIOSim;
@@ -73,8 +76,7 @@ public class RobotContainer {
   public final Intake intake;
   public final Shooter shooter;
   public final Arm arm;
-  // public final LEDS leds;
-  // public final Camera camera;
+  public Camera camera = new Camera();
 
   // Controller
   private final CommandXboxController controllerDriver = new CommandXboxController(0);
@@ -101,7 +103,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSparkMax());
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
-        // camera = new Camera();
+        camera = new Camera();
         // leds = new LEDS();
         break;
 
@@ -143,7 +145,8 @@ public class RobotContainer {
     //      () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel)
     // .withTimeout(5.0));
 
-    NamedCommands.registerCommand("ShootNoteSpeaker", new ShootNoteSpeaker(indexer, shooter, 3000));
+    NamedCommands.registerCommand(
+        "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 3300)));
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
 
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -165,7 +168,7 @@ public class RobotContainer {
     // autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
     // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
 
-    // camera.useFrontCamera();
+    camera.useFrontCamera();
     // leds.RunLEDS();
     // autoChooser.addOption(
     //  "Flywheel FF Characterization",
@@ -187,10 +190,10 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controllerDriver.getLeftY(),
-            () -> -controllerDriver.getLeftX(),
-            () -> controllerDriver.getRightX(),
-            () -> controllerDriver.getLeftTriggerAxis()));
+            () -> -(controllerDriver.getLeftY()),
+            () -> -(controllerDriver.getLeftX()),
+            () -> -(controllerDriver.getRightX()),
+            () -> -(controllerDriver.getLeftTriggerAxis())));
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
@@ -257,7 +260,12 @@ public class RobotContainer {
             Commands.runOnce(
                     () ->
                         drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+                            new Pose2d(
+                                drive.getPose().getTranslation(),
+                                new Rotation2d(
+                                    (DriverStation.getAlliance().get() == Alliance.Red)
+                                        ? 3.14
+                                        : 0))),
                     drive)
                 .ignoringDisable(true));
 

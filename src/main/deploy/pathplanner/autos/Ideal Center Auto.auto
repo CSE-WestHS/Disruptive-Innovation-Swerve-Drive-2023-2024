@@ -18,12 +18,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "AcquireNote"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Center Note"
@@ -34,16 +28,10 @@
           "data": {
             "pathName": "Return Center Note"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
-          }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Center Autos",
   "choreoAuto": false
 }

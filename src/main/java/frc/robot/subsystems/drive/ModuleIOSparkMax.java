@@ -87,6 +87,9 @@ public class ModuleIOSparkMax implements ModuleIO {
     driveSparkMax.setCANTimeout(250);
     turnSparkMax.setCANTimeout(250);
 
+    driveSparkMax.setInverted(true);
+    turnSparkMax.setInverted(true);
+
     turnAbsoluteEncoder.getConfigurator().apply(new CANcoderConfiguration());
     turnAbsolutePosition = turnAbsoluteEncoder.getAbsolutePosition();
 
