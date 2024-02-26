@@ -18,15 +18,34 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "Center Note"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Note"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Return Center Note"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteSpeaker"
           }
         }
       ]

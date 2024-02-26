@@ -25,7 +25,7 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
-  public static final double ANGLE_START_POSITION = -2;
+  public static final double ANGLE_START_POSITION = -.75;
   public static final double ANGLE_CLIMB_UP = 100;
   public static final double ANGLE_CLIMB_DOWN = 10;
   public static final double ANGLE_AMP = 100;
