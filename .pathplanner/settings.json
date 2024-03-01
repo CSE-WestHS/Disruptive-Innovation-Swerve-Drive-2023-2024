@@ -4,11 +4,14 @@
   "holonomicMode": true,
   "pathFolders": [
     "Center Paths",
-    "Test Paths"
+    "Far Top PAths",
+    "Far Speaker paths",
+    "Test"
   ],
   "autoFolders": [
     "Center Autos",
     "Far Speaker Autos",
+    "Top Autos",
     "Test Autos"
   ],
   "defaultMaxVel": 3.0,

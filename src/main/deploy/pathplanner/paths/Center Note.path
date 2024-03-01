@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 2.6533695172653506,
+        "x": 2.9105529890257786,
         "y": 5.596312345506897
       },
       "prevControl": {
-        "x": 2.1614736597644235,
+        "x": 2.4186571315248515,
         "y": 5.596312345506897
       },
       "nextControl": null,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Center Paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

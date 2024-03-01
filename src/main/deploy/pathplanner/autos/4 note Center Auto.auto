@@ -5,7 +5,7 @@
       "x": 1.3880268362040489,
       "y": 5.596312345506897
     },
-    "rotation": -176.79051368220806
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -18,15 +18,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Center Note"
+            "name": "AcquireNote"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 5.0
+            "pathName": "Center Note"
           }
         },
         {
@@ -42,21 +42,52 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AcquireNote"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Stage Center Note"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 5.0
+            "pathName": "Return Stage Center Note"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "4th center note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Return Stage Center Note"
+            "pathName": "Return 4th center note"
           }
         },
         {

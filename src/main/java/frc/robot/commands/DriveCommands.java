@@ -46,14 +46,14 @@ public class DriveCommands {
       DoubleSupplier triggerSupplier) {
     return Commands.run(
         () -> {
-          if (triggerSupplier.getAsDouble() > 0.05) {
+          if (Math.abs(triggerSupplier.getAsDouble()) > 0.05) {
             MAXSPEED =
                 ((Constants.MAX_LINEAR_SPEED_TURBO - Constants.MAX_LINEAR_SPEED)
-                        * triggerSupplier.getAsDouble())
+                        * Math.abs(triggerSupplier.getAsDouble()))
                     + Constants.MAX_LINEAR_SPEED;
             MAXSPEED_OMEGA =
                 (((Constants.MAX_LINEAR_SPEED_TURBO - Constants.MAX_LINEAR_SPEED)
-                            * triggerSupplier.getAsDouble())
+                            * Math.abs(triggerSupplier.getAsDouble()))
                         + Constants.MAX_LINEAR_SPEED)
                     / Constants.DRIVE_BASE_RADIUS;
           } else {
@@ -85,6 +85,7 @@ public class DriveCommands {
           boolean isFlipped =
               DriverStation.getAlliance().isPresent()
                   && DriverStation.getAlliance().get() == Alliance.Red;
+          System.out.println(isFlipped + " isRed?");
           drive.runVelocity(
               ChassisSpeeds.fromFieldRelativeSpeeds(
                   linearVelocity.getX() * MAXSPEED,

@@ -150,12 +150,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
 
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    autoChooser.addOption("Forward 2M", new PathPlannerAuto("Forward 2M"));
-    autoChooser.addOption("Shoot & Midfield", new PathPlannerAuto("Shoot & Midfield"));
-    autoChooser.addOption("Nothing", new PathPlannerAuto("Nothing"));
+    autoChooser.addOption("4 note Center Auto", new PathPlannerAuto("4 note Center Auto"));
+    autoChooser.addOption("3 note far", new PathPlannerAuto("3 note far"));
+    autoChooser.addOption("Top Auto", new PathPlannerAuto("Top Auto"));
 
     // Ideal Centered Auto
-    autoChooser.addOption("Ideal Center Auto", new PathPlannerAuto("Ideal Center Auto"));
 
     // // Set up feedforward characterization
     // autoChooser

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3880268362040489,
-      "y": 5.596312345506897
+      "x": 1.048544653480285,
+      "y": 4.402981036538514
     },
-    "rotation": -176.79051368220806
+    "rotation": 120.24422051736802
   },
   "command": {
     "type": "sequential",
@@ -18,33 +18,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "AcquireNote"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Center Note"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Return Center Note"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
+            "pathName": "Return Far Sp to Mid pt 1"
           }
         },
         {
@@ -56,19 +32,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Stage Center Note"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "Top note"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Return Stage Center Note"
+            "pathName": "Return Far Sp to Mid pt 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Return Far Sp. to Mid pt. 2"
           }
         },
         {
@@ -80,6 +56,6 @@
       ]
     }
   },
-  "folder": "Center Autos",
+  "folder": "Far Speaker Autos",
   "choreoAuto": false
 }

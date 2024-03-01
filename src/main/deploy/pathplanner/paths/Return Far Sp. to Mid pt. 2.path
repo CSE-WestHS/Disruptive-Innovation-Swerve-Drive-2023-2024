@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 4.23,
+        "y": 1.73
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.005267168429074,
-        "y": 6.059242594675666
+        "x": 3.0442883943411996,
+        "y": 2.242639873750926
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 5.26711750165355
+        "x": 1.1,
+        "y": 4.31
       },
       "prevControl": {
-        "x": 1.9538304740769885,
-        "y": 6.028380578064414
+        "x": 2.1287338870417103,
+        "y": 2.9520712691049433
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 120.93823036970176,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Test",
+  "folder": "Far Speaker paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 151.33881884666184,
     "velocity": 0
   },
   "useDefaultConstraints": true
