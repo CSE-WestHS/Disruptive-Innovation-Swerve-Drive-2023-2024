@@ -18,15 +18,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AcquireNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Note"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              }
+            ]
           }
         },
         {
@@ -42,15 +49,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AcquireNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Stage Center Note"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Stage Center Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              }
+            ]
           }
         },
         {
