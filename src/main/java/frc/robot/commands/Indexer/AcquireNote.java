@@ -46,7 +46,7 @@ public class AcquireNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 5) {
+    if (indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 15) {
       return true;
     }
     return false;
