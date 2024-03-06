@@ -26,15 +26,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.AprilTags.AprilTagLock;
+import frc.robot.AprilTags.Joystick;
+import frc.robot.AprilTags.RotationSource;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
-import frc.robot.AprilTags.AprilTagLock;
-import frc.robot.AprilTags.Joystick;
-import frc.robot.AprilTags.RotationSource;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
@@ -66,7 +65,6 @@ import frc.robot.subsystems.drive.GyroIONavX;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -92,7 +90,6 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -176,7 +173,7 @@ public class RobotContainer {
     // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
 
     camera.useFrontCamera();
-    
+
     // leds.RunLEDS();
     // autoChooser.addOption(
     //  "Flywheel FF Characterization",
@@ -222,9 +219,13 @@ public class RobotContainer {
      *
      */
     // new JoystickButton(controllerDriver, controllerDriver.leftTrigger().kY.value)
-    //                             .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock()))
-    //                             .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
-    controllerDriver.povCenter().onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock())).onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
+    //                             .onTrue(new InstantCommand(() -> hijackableRotation = new
+    // AprilTagLock()))
+    //                             .onFalse(new InstantCommand(() -> hijackableRotation = new
+    // Joystick()));
+    controllerDriver.povDown()
+        .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock()))
+        .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
@@ -238,7 +239,7 @@ public class RobotContainer {
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
-    
+
     // Operator Controls ********************************************************************
     /*
         * a- reverse intake

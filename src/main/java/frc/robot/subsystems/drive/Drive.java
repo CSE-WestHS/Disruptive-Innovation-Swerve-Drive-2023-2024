@@ -20,7 +20,6 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -98,7 +97,7 @@ public class Drive extends SubsystemBase {
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
-        
+
     // Configure SysId
     sysId =
         new SysIdRoutine(
@@ -189,7 +188,8 @@ public class Drive extends SubsystemBase {
   public void stop() {
     runVelocity(new ChassisSpeeds());
   }
-  public void addVisionMeasurement(Pose2d botpose, double d, Vector<N3> fill){}
+
+  public void addVisionMeasurement(Pose2d botpose, double d, Vector<N3> fill) {}
   /**
    * Stops the drive and turns the modules to an X arrangement to resist movement. The modules will
    * return to their normal orientations the next time a nonzero velocity is requested.
