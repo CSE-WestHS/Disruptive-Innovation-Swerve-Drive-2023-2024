@@ -4,15 +4,17 @@
   "holonomicMode": true,
   "pathFolders": [
     "Center Paths",
-    "Far Top PAths",
-    "Far Speaker paths",
+    "Source paths",
+    "Amp PAths",
     "Test"
   ],
   "autoFolders": [
     "Center Autos",
     "Far Speaker Autos",
-    "Top Autos",
-    "Test Autos"
+    "Just Shoot",
+    "Main Autos",
+    "Test Autos",
+    "Top Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

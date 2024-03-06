@@ -23,13 +23,14 @@ public class IndexerIdle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    indexer.runVelocity(targetSpeed);
+    indexer.stop();
+    ;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexer.runVelocity(targetSpeed);
+    indexer.stop();
   }
 
   // Called once the command ends or is interrupted.

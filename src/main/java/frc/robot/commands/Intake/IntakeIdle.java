@@ -23,13 +23,13 @@ public class IntakeIdle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.runVelocity(targetSpeed);
+    intake.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.runVelocity(targetSpeed);
+    intake.stop();
   }
   // Called once the command ends or is interrupted.
   @Override

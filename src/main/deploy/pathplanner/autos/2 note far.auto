@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.048544653480285,
-      "y": 4.402981036538514
+      "x": 0.7913611817198578,
+      "y": 4.413268375408932
     },
     "rotation": 120.24422051736802
   },
@@ -18,39 +18,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Return Far Sp to Mid pt 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AcquireNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Top note"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Return Far Sp to Mid pt 1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Sp to Bottom Mid"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Return Far Sp. to Mid pt. 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
           }
         }
       ]

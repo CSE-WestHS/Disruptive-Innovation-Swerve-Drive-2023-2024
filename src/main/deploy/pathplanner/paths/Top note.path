@@ -8,27 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8530852149372167,
-        "y": 7.170275192685855
+        "x": 1.295440786370295,
+        "y": 6.933666398661118
       },
       "isLocked": false,
       "linkedName": "topShootPos"
-    },
-    {
-      "anchor": {
-        "x": 1.604060952477664,
-        "y": 6.995390431883621
-      },
-      "prevControl": {
-        "x": 1.3957807369160167,
-        "y": 6.998453376228584
-      },
-      "nextControl": {
-        "x": 2.3035999956660262,
-        "y": 6.985103093018347
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -46,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 179.99999999957245,
       "rotateFast": false
     }
@@ -65,7 +49,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Far Top PAths",
+  "folder": "Amp PAths",
   "previewStartingState": {
     "rotation": -119.0113841493905,
     "velocity": 0
