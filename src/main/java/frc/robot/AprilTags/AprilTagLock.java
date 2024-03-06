@@ -20,6 +20,7 @@ public class AprilTagLock implements RotationSource {
 
   @Override
   public double getR() {
-    return rotationPID.calculate(table.getEntry("tx").getDouble(0));
+    // return rotationPID.calculate(table.getEntry("tx").getDouble(0));
+    return 0.0;
   }
 }
