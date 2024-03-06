@@ -200,7 +200,7 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
-            () -> -(/*controllerDriver.getRightX()*/ hijackableRotation.getR()),
+            () -> -(/*controllerDriver.getRightX()*/ hijackableRotation.getR(drive.getPose().getRotation().getDegrees())),
             () -> -(controllerDriver.getLeftTriggerAxis())));
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
@@ -223,7 +223,8 @@ public class RobotContainer {
     // AprilTagLock()))
     //                             .onFalse(new InstantCommand(() -> hijackableRotation = new
     // Joystick()));
-    controllerDriver.povDown()
+    controllerDriver
+        .povDown()
         .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock()))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
