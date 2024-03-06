@@ -213,7 +213,7 @@ public class RobotContainer {
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3300)));
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
     controllerDriver
         .rightTrigger()
         .onTrue(
@@ -275,7 +275,7 @@ public class RobotContainer {
     controllerOperator.b().whileTrue(Commands.run(() -> indexer.runVelocity(-1500)));
 
     controllerOperator.rightTrigger().whileTrue(new ManualGrabNote(intake, indexer, 2000));
-    controllerOperator.rightBumper().whileTrue(Commands.run(() -> shooter.runVelocity(4000)));
+    controllerOperator.rightBumper().whileTrue(Commands.run(() -> shooter.runVelocity(5200)));
     controllerOperator.leftTrigger().onTrue(new ArmAngleSpeaker(arm));
     controllerOperator.leftBumper().onTrue(new ArmAngleAmp(arm));
   }

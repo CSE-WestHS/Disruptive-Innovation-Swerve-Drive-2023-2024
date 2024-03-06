@@ -43,6 +43,7 @@ public class ShootNoteSpeaker extends Command {
   @Override
   public void execute() {
     shooter.runVelocity(targetSpeed);
+    System.out.println(shooter.getVelocityRPM());
     if (Math.abs(shooter.getVelocityRPM() - targetSpeed) < 75) {
 
       indexer.runVelocity(2000);
