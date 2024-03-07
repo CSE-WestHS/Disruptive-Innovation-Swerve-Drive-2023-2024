@@ -223,7 +223,8 @@ public class RobotContainer {
     // AprilTagLock()))
     //                             .onFalse(new InstantCommand(() -> hijackableRotation = new
     // Joystick()));
-    controllerDriver.povDown()
+    controllerDriver
+        .povDown()
         .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock()))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
@@ -239,6 +240,22 @@ public class RobotContainer {
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
+
+    // Driver Gyro Reset
+    controllerDriver
+        .back()
+        .onTrue(
+            Commands.runOnce(
+                    () ->
+                        drive.setPose(
+                            new Pose2d(
+                                drive.getPose().getTranslation(),
+                                new Rotation2d(
+                                    (DriverStation.getAlliance().get() == Alliance.Red)
+                                        ? 3.14
+                                        : 0))),
+                    drive)
+                .ignoringDisable(true));
 
     // Operator Controls ********************************************************************
     /*
