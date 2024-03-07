@@ -200,7 +200,10 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
-            () -> -(/*controllerDriver.getRightX()*/ hijackableRotation.getR()),
+            () ->
+                -(
+                /*controllerDriver.getRightX()*/ hijackableRotation.getR(
+                    drive.getPose().getRotation().getDegrees())),
             () -> -(controllerDriver.getLeftTriggerAxis())));
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
