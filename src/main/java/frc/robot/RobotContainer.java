@@ -55,6 +55,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -90,6 +91,7 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
+  private DistanceEstimator limelight;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -108,6 +110,7 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
+        limelight = new DistanceEstimator();
 
         // leds = new LEDS();
         break;
@@ -171,7 +174,7 @@ public class RobotContainer {
     // autoChooser.addOption("LeftBlue", new PathPlannerAuto("AllAutoLeftBlue"));
     // autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
     // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
-
+    limelight.getDistance();
     camera.useFrontCamera();
 
     // leds.RunLEDS();
