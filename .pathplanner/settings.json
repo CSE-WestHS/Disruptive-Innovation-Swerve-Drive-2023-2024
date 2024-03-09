@@ -8,10 +8,10 @@
     "Source paths"
   ],
   "autoFolders": [
-    "Center Autos",
-    "Source Autos",
-    "Test Autos",
-    "Amp Autos"
+    "4 note Center Autos",
+    "Amp Autos",
+    "2 and 3 note Center Autos",
+    "Source Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

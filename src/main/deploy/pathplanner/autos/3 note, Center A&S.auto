@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3880268362040489,
-      "y": 5.596312345506897
+      "x": 1.46,
+      "y": 5.56
     },
-    "rotation": 180.0
+    "rotation": -177.97591843552144
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Note"
+                  "pathName": "Center, Top Note"
                 }
               },
               {
@@ -37,13 +37,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Return, Center Note"
+                  "pathName": "Return, Center, Top Note"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "ShootNoteSpeaker"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootNoteSpeaker"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -79,47 +92,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "ShootNoteSpeaker"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center, Top Note"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Return, Center, Top Note"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootNoteSpeaker"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.75
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootNoteSpeaker"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -128,6 +116,6 @@
       ]
     }
   },
-  "folder": "Center Autos",
+  "folder": "2 and 3 note Center Autos",
   "choreoAuto": false
 }

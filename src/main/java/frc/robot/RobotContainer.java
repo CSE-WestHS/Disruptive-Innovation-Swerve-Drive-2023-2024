@@ -204,7 +204,7 @@ public class RobotContainer {
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
             () ->
-                -(
+                (
                 /*controllerDriver.getRightX()*/ hijackableRotation.getR(
                     drive.getPose().getRotation().getDegrees())),
             () -> -(controllerDriver.getLeftTriggerAxis())));

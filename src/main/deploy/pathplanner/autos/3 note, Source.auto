@@ -2,19 +2,44 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4188888528152999,
-      "y": 6.861655026568199
+      "x": 0.8016485205902747,
+      "y": 4.402981036538514
     },
-    "rotation": 180.0
+    "rotation": 123.34070734647693
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Source, Bottom Center"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Amp, start to shoot"
+            "pathName": "Return, Source, Bottom Center"
           }
         },
         {
@@ -36,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Amp, Top Note"
+                  "pathName": "Source, Bottom Mid Center"
                 }
               }
             ]
@@ -45,68 +70,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Return, Amp Top note"
+            "pathName": "Return, Source Bottom Mid Center"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "ShootNoteSpeaker"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp, Top Center Note"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Return, Amp Center Top"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp, Center Mid Center"
-                }
-              }
-            ]
           }
         }
       ]
     }
   },
-  "folder": "Amp Autos",
+  "folder": "Source Autos",
   "choreoAuto": false
 }
