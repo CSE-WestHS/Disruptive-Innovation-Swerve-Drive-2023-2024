@@ -204,7 +204,7 @@ public class RobotContainer {
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
             () ->
-                -(
+                (
                 /*controllerDriver.getRightX()*/ hijackableRotation.getR(
                     drive.getPose().getRotation().getDegrees())),
             () -> -(controllerDriver.getLeftTriggerAxis())));
@@ -238,7 +238,10 @@ public class RobotContainer {
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3300)));
+        .onTrue(
+            new ArmAngleSpeaker(arm)
+                .andThen(() -> new AprilTagLock(4))
+                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
         .onTrue(
