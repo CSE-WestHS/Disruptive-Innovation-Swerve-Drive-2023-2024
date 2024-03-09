@@ -231,7 +231,9 @@ public class RobotContainer {
     // Joystick()));
     controllerDriver
         .povDown()
-        .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock()))
+        .whileTrue(
+            new InstantCommand(
+                () -> hijackableRotation = new AprilTagLock(4))) // TODO: vary the id based on team
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver

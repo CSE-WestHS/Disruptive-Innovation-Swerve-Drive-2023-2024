@@ -60,6 +60,8 @@ public final class Constants {
   public static final double DRIVE_BASE_RADIUS =
       Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
   public static final double DRIVEDEADBAND = 0.2;
+  public static final int RED_SPEAKER_ID = 4;
+  public static final int BLUE_SPEAKER_ID = 7;
 
   public static enum Mode {
     /** Running on a real robot. */
