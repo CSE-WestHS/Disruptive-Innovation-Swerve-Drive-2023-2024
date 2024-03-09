@@ -12,25 +12,19 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Center Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
                 }
               }
             ]
@@ -60,15 +54,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Center, Stage Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
                 }
               }
             ]
@@ -100,7 +94,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center, CENTER note"
+                  "pathName": "Center, Top Note"
                 }
               },
               {
@@ -113,15 +107,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Return, 4th center note"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Return, Center, Top Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootNoteSpeaker"
+                }
+              }
+            ]
           }
         }
       ]

@@ -30,9 +30,8 @@ public class AprilTagLock implements RotationSource {
     LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
     LimelightHelpers.LimelightTarget_Fiducial[] fiducials =
         llresults.targetingResults.targets_Fiducials;
-    Logger.recordOutput("fiducials",fiducials);
+    // Logger.recordOutput("fiducials", fiducials);
     SmartDashboard.putString("llresults", dump);
-    
 
     return PIDResult;
 

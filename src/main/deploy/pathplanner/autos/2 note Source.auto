@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3880268362040489,
-      "y": 5.596312345506897
+      "x": 1.048544653480285,
+      "y": 4.402981036538514
     },
-    "rotation": -176.79051368220806
+    "rotation": 120.24422051736802
   },
   "command": {
     "type": "sequential",
@@ -18,28 +18,21 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center Note"
-                }
-              }
-            ]
+            "pathName": "Source, Bottom Center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AcquireNote"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Return Center Note"
+            "pathName": "Return, Source, Bottom Center"
           }
         },
         {
@@ -51,6 +44,6 @@
       ]
     }
   },
-  "folder": "Center Autos",
+  "folder": "Source Autos",
   "choreoAuto": false
 }

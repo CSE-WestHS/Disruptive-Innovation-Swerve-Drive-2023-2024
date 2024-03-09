@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8016485205902747,
-      "y": 4.402981036538514
+      "x": 1.4129651008117177,
+      "y": 7.071277839238143
     },
-    "rotation": 123.34070734647693
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,38 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start to shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNoteSpeaker"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Far Sp to Bottom Mid"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AcquireNote"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Return Far Sp to Mid pt 1"
+            "pathName": "Amp, start to shoot"
           }
         },
         {
@@ -67,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Far Sp to Mid pt 3"
+                  "pathName": "Amp, Top Note"
                 }
               }
             ]
@@ -76,7 +45,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bottom Final Return Path"
+            "pathName": "Return, Amp Top note"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp, Top Center Note"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Return, Amp Center Top"
           }
         },
         {
@@ -88,6 +88,6 @@
       ]
     }
   },
-  "folder": "Far Speaker Autos",
+  "folder": "Amp Autos",
   "choreoAuto": false
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0,
-        "y": 2.5
+        "x": 2.8796909724093833,
+        "y": 6.995390431883621
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
-        "y": 2.5
+        "x": 2.080073380041367,
+        "y": 6.866183441840568
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "topControlledNote"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 2.5
+        "x": 0.72,
+        "y": 6.71
       },
       "prevControl": {
-        "x": 2.0,
-        "y": 2.5
+        "x": 1.5629115970011396,
+        "y": 6.69763228238236
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "topShootPos"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -120.90279785797613,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Test",
+  "folder": "Amp PAths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -174.0469497917479,
     "velocity": 0
   },
   "useDefaultConstraints": true

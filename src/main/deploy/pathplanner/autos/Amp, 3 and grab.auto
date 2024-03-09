@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4129651008117177,
-      "y": 7.071277839238143
+      "x": 1.4188888528152999,
+      "y": 6.861655026568199
     },
-    "rotation": 0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top speaker"
+            "pathName": "Amp, start to shoot"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Top note"
+                  "pathName": "Amp, Top Note"
                 }
               }
             ]
@@ -45,7 +45,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Return Top note"
+            "pathName": "Return, Amp Top note"
           }
         },
         {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Field Top note"
+                  "pathName": "Amp, Top Center Note"
                 }
               },
               {
@@ -76,18 +76,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Return Center Field Top note"
+            "pathName": "Return, Amp Center Top"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "ShootNoteSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AcquireNote"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp, Center Mid Center"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "folder": "Top Autos",
+  "folder": "Amp Autos",
   "choreoAuto": false
 }
