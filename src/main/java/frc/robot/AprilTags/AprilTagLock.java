@@ -22,7 +22,7 @@ public class AprilTagLock implements RotationSource {
 
   @Override
   public double getR(double Heading) {
-    PIDResult = rotationPID.calculate(-table.getEntry("tx").getDouble(0)));
+    PIDResult = rotationPID.calculate(-table.getEntry("tx").getDouble(0));
     Logger.recordOutput("Drive/R", PIDResult);
     return PIDResult;
 
