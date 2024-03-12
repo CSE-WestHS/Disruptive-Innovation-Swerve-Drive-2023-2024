@@ -336,18 +336,14 @@ public class RobotContainer {
     return autoChooser.get();
   }
   public int getAprilTagId() {
-    Optional<Alliance> ally = DriverStation.getAlliance();
-    if (ally.isPresent()) {
-        if (ally.get() == Alliance.Red) {
-            return frc.robot.Constants.RED_SPEAKER_ID;
-        }
-        if (ally.get() == Alliance.Blue) {
-            return frc.robot.Constants.BLUE_SPEAKER_ID;
-        }
+    if (DriverStation.getAlliance().get() == Alliance.Red) {
+        return frc.robot.Constants.RED_SPEAKER_ID;
+    }
+    if (DriverStation.getAlliance().get() == Alliance.Blue) {
+        return frc.robot.Constants.BLUE_SPEAKER_ID;
     }
     else {
         return 0;
     }
-    return 0;
   }
 }
