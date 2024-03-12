@@ -237,16 +237,10 @@ public class RobotContainer {
         .povUp()
         .onTrue(
             new ArmAngleSpeaker(arm)
-<<<<<<< Updated upstream
-                .andThen(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
-=======
                 .andThen(
                     new InstantCommand(
                         () -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300))
-                .andThen(new InstantCommand(() -> hijackableRotation = new Joystick())));
->>>>>>> Stashed changes
+                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
         .onTrue(
