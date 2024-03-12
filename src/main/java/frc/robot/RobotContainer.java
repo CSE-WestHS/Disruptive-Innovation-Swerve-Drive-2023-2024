@@ -244,9 +244,9 @@ public class RobotContainer {
     controllerDriver
         .rightBumper()
         .onTrue(
-            new ArmAngleSpeaker(arm)
-                .andThen(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
+            new ArmAngleSpeaker(arm).andThen(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
+                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300))
+                .andThen(new InstantCommand(() -> hijackableRotation = new Joystick())));
     controllerDriver
         .rightTrigger()
         .onTrue(
