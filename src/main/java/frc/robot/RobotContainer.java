@@ -229,11 +229,7 @@ public class RobotContainer {
      * Right Bumper - Score Speaker Command
      *
      */
-    // new JoystickButton(controllerDriver, controllerDriver.leftTrigger().kY.value)
-    //                             .onTrue(new InstantCommand(() -> hijackableRotation = new
-    // AprilTagLock()))
-    //                             .onFalse(new InstantCommand(() -> hijackableRotation = new
-    // Joystick()));
+    
     controllerDriver
         .povDown()
         .whileTrue(
@@ -242,7 +238,9 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
-        .rightBumper()
+    .rightBumper()
+    .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
+    controllerDriver.povUp()
         .onTrue(
             new ArmAngleSpeaker(arm).andThen(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
                 .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300))
