@@ -8,24 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.419969201642665,
-        "y": 8.02607883055365
-      },
-      "isLocked": false,
-      "linkedName": "topShootPos"
-    },
-    {
-      "anchor": {
-        "x": 7.323821364434709,
-        "y": 5.791771784049963
-      },
-      "prevControl": {
-        "x": 5.931728104817272,
-        "y": 5.881584252424324
-      },
-      "nextControl": {
-        "x": 7.961636374395424,
-        "y": 5.750622428563154
+        "x": 7.641616724674891,
+        "y": 7.053708521831459
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +20,8 @@
         "y": 5.791771784049963
       },
       "prevControl": {
-        "x": 7.869050324566816,
-        "y": 5.771197106303988
+        "x": 6.273400654909417,
+        "y": 5.759450077458713
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 179.48400555684026,
       "rotateFast": false
     }
@@ -67,7 +51,7 @@
   "reversed": false,
   "folder": "Amp PAths",
   "previewStartingState": {
-    "rotation": -120.63283578400863,
+    "rotation": -171.83528475819037,
     "velocity": 0
   },
   "useDefaultConstraints": true

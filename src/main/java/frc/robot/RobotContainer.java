@@ -154,6 +154,11 @@ public class RobotContainer {
     // .withTimeout(5.0));
 
     NamedCommands.registerCommand(
+        "ShootNoteAmp",
+        (new ArmAngleAmp(arm)
+            .andThen(new ShootNoteAmp(indexer, shooter, 2500))
+            .andThen(new ArmAngleSpeaker(arm))));
+    NamedCommands.registerCommand(
         "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 3300)));
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
 
@@ -236,7 +241,7 @@ public class RobotContainer {
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3300)));
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
     controllerDriver
         .rightTrigger()
         .onTrue(
