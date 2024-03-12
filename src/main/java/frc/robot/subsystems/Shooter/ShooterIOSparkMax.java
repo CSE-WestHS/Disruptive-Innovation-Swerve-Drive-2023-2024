@@ -19,14 +19,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkPIDController.ArbFFUnits;
-import edu.wpi.first.math.util.Units;
 
 /**
  * NOTE: To use the Spark Flex / NEO Vortex, replace all instances of "CANSparkMax" with
  * "CANSparkFlex".
  */
 public class ShooterIOSparkMax implements ShooterIO {
-  private static final double GEAR_RATIO = 1.5;
+  private static final double GEAR_RATIO = 1;
 
   private final CANSparkMax leader =
       new CANSparkMax(frc.robot.Constants.SHOOTER_TOP, MotorType.kBrushless);
@@ -34,6 +33,7 @@ public class ShooterIOSparkMax implements ShooterIO {
       new CANSparkMax(frc.robot.Constants.SHOOTER_BOTTOM, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
+  private final SparkPIDController pid_follower = follower.getPIDController();
 
   public ShooterIOSparkMax() {
     leader.restoreFactoryDefaults();
@@ -43,7 +43,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     follower.setCANTimeout(250);
 
     leader.setInverted(false);
-    follower.follow(leader, false);
+    // follower.follow(leader, false);
 
     leader.enableVoltageCompensation(12.0);
     leader.setSmartCurrentLimit(60);
@@ -55,9 +55,8 @@ public class ShooterIOSparkMax implements ShooterIO {
 
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
-    inputs.positionRad = Units.rotationsToRadians(encoder.getPosition() / GEAR_RATIO);
-    inputs.velocityRadPerSec =
-        Units.rotationsPerMinuteToRadiansPerSecond(encoder.getVelocity() / GEAR_RATIO);
+    inputs.positionRad = encoder.getPosition();
+    inputs.velocityRPM = encoder.getVelocity();
     inputs.appliedVolts = leader.getAppliedOutput() * leader.getBusVoltage();
     inputs.currentAmps = new double[] {leader.getOutputCurrent(), follower.getOutputCurrent()};
   }
@@ -65,21 +64,26 @@ public class ShooterIOSparkMax implements ShooterIO {
   @Override
   public void setVoltage(double volts) {
     leader.setVoltage(volts);
+    follower.setVoltage(volts);
   }
 
+  // @Override
+  // public void setVelocityTopSlow(double velocityRPM, double ffVolts) {
+  //   pid.setReference(
+  //       velocityRPM * GEAR_RATIO, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
+  // }
+
   @Override
-  public void setVelocity(double velocityRadPerSec, double ffVolts) {
-    pid.setReference(
-        Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec) * GEAR_RATIO,
-        ControlType.kVelocity,
-        0,
-        ffVolts,
-        ArbFFUnits.kVoltage);
+  public void setVelocity(double velocityRPM, double ffVolts) {
+    pid.setReference(velocityRPM, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
+    pid_follower.setReference(
+        velocityRPM * GEAR_RATIO, ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   @Override
   public void stop() {
     leader.stopMotor();
+    follower.stopMotor();
   }
 
   @Override
@@ -88,5 +92,10 @@ public class ShooterIOSparkMax implements ShooterIO {
     pid.setI(kI, 0);
     pid.setD(kD, 0);
     pid.setFF(0, 0);
+
+    pid_follower.setP(kP, 0);
+    pid_follower.setI(kI, 0);
+    pid_follower.setD(kD, 0);
+    pid_follower.setFF(0, 0);
   }
 }

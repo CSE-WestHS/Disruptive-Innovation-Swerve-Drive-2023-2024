@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.048544653480285,
+      "y": 4.402981036538514
+    },
+    "rotation": 120.24422051736802
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Source, Bottom Center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AcquireNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Return, Source, Bottom Center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNoteSpeaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Source Autos",
+  "choreoAuto": false
+}

@@ -155,6 +155,11 @@ public class RobotContainer {
     // .withTimeout(5.0));
 
     NamedCommands.registerCommand(
+        "ShootNoteAmp",
+        (new ArmAngleAmp(arm)
+            .andThen(new ShootNoteAmp(indexer, shooter, 2500))
+            .andThen(new ArmAngleSpeaker(arm))));
+    NamedCommands.registerCommand(
         "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 3300)));
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
 
@@ -203,8 +208,16 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
+
             () -> (-controllerDriver.getRightX()),
             () -> (-controllerDriver.getLeftTriggerAxis())));
+
+         //   () ->
+        //        (
+                /*controllerDriver.getRightX() hijackableRotation.getR(
+             //       drive.getPose().getRotation().getDegrees())),
+           // () -> -(controllerDriver.getLeftTriggerAxis())));
+*/
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
