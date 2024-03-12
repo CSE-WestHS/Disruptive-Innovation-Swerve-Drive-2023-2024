@@ -66,11 +66,6 @@ import frc.robot.subsystems.drive.GyroIONavX;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
-
-import java.util.Optional;
-
-import javax.swing.text.html.Option;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -229,22 +224,29 @@ public class RobotContainer {
      * Right Bumper - Score Speaker Command
      *
      */
-    
+
     controllerDriver
         .povDown()
-        .whileTrue(
-            new InstantCommand(
-                () -> hijackableRotation = new AprilTagLock(getAprilTagId()))) 
+        .whileTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
-    .rightBumper()
-    .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
-    controllerDriver.povUp()
+        .rightBumper()
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
+    controllerDriver
+        .povUp()
         .onTrue(
             new ArmAngleSpeaker(arm)
+<<<<<<< Updated upstream
                 .andThen(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
                 .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
+=======
+                .andThen(
+                    new InstantCommand(
+                        () -> hijackableRotation = new AprilTagLock(getAprilTagId())))
+                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300))
+                .andThen(new InstantCommand(() -> hijackableRotation = new Joystick())));
+>>>>>>> Stashed changes
     controllerDriver
         .rightTrigger()
         .onTrue(
@@ -335,15 +337,15 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
+
   public int getAprilTagId() {
     if (DriverStation.getAlliance().get() == Alliance.Red) {
-        return frc.robot.Constants.RED_SPEAKER_ID;
+      return frc.robot.Constants.RED_SPEAKER_ID;
     }
     if (DriverStation.getAlliance().get() == Alliance.Blue) {
-        return frc.robot.Constants.BLUE_SPEAKER_ID;
-    }
-    else {
-        return 0;
+      return frc.robot.Constants.BLUE_SPEAKER_ID;
+    } else {
+      return 0;
     }
   }
 }
