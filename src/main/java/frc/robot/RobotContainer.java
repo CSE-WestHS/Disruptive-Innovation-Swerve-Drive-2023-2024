@@ -55,7 +55,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
-import frc.robot.subsystems.LimeLight.*;
+// import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -91,7 +91,7 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
-  private DistanceEstimator limelight;
+  // private DistanceEstimator limelight;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -110,7 +110,7 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
-        limelight = new DistanceEstimator();
+        // limelight = new DistanceEstimator();
 
         // leds = new LEDS();
         break;
@@ -174,7 +174,6 @@ public class RobotContainer {
     // autoChooser.addOption("LeftBlue", new PathPlannerAuto("AllAutoLeftBlue"));
     // autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
     // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
-    limelight.getDistance();
     camera.useFrontCamera();
 
     // leds.RunLEDS();
@@ -212,7 +211,7 @@ public class RobotContainer {
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
     indexer.setDefaultCommand(new IndexerIdle(indexer, 0));
-
+    
     // Driver Controls ********************************************************************
     /* Left Stick - Translate
      * Right Stick - Rotate
@@ -240,7 +239,7 @@ public class RobotContainer {
                 .andThen(
                     new InstantCommand(
                         () -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
+                        .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
         .onTrue(
