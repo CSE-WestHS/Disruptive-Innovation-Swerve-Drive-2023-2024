@@ -113,4 +113,8 @@ public class ArmIOSparkMax implements ArmIO {
     pid.setD(kD, 0);
     pid.setFF(0, 0);
   }
+
+  public void zeroPosition() {
+    encoder.setPosition(frc.robot.Constants.ANGLE_START_POSITION);
+  }
 }

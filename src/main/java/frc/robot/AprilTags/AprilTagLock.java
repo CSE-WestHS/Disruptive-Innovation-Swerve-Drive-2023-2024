@@ -3,6 +3,8 @@ package frc.robot.AprilTags;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
 // import frc.robot.RobotContainer;
@@ -40,7 +42,13 @@ public class AprilTagLock implements RotationSource {
     if (target == null) {
       return rotationPID.calculate(0);
     }
-    PIDResult = rotationPID.calculate(-target.tx);
+    if (DriverStation.getAlliance().get() == Alliance.Blue) {
+      PIDResult = rotationPID.calculate(-target.tx);
+    }
+    if (DriverStation.getAlliance().get() == Alliance.Red) {
+      PIDResult = rotationPID.calculate(target.tx);
+    }
+
     SmartDashboard.putNumber("tx", target.tx);
     Logger.recordOutput("Drive/R", PIDResult);
 

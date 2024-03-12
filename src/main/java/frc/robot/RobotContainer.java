@@ -34,6 +34,7 @@ import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
+import frc.robot.commands.Arm.ZeroPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
@@ -55,7 +56,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
-import frc.robot.subsystems.LimeLight.*;
+// import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Shooter.ShooterIOSim;
@@ -91,7 +92,7 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
   //   new LoggedDashboardNumber("Flywheel Speed", 1500.0);
-  private DistanceEstimator limelight;
+  // private DistanceEstimator limelight;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -110,7 +111,7 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
-        limelight = new DistanceEstimator();
+        // limelight = new DistanceEstimator();
 
         // leds = new LEDS();
         break;
@@ -174,7 +175,6 @@ public class RobotContainer {
     // autoChooser.addOption("LeftBlue", new PathPlannerAuto("AllAutoLeftBlue"));
     // autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
     // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
-    limelight.getDistance();
     camera.useFrontCamera();
 
     // leds.RunLEDS();
@@ -203,11 +203,8 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
-            () ->
-                -(
-                /*controllerDriver.getRightX()*/ hijackableRotation.getR(
-                    drive.getPose().getRotation().getDegrees())),
-            () -> -(controllerDriver.getLeftTriggerAxis())));
+            () -> (-controllerDriver.getRightX()),
+            () -> (-controllerDriver.getLeftTriggerAxis())));
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
@@ -224,21 +221,23 @@ public class RobotContainer {
      * Right Bumper - Score Speaker Command
      *
      */
-    // new JoystickButton(controllerDriver, controllerDriver.leftTrigger().kY.value)
-    //                             .onTrue(new InstantCommand(() -> hijackableRotation = new
-    // AprilTagLock()))
-    //                             .onFalse(new InstantCommand(() -> hijackableRotation = new
-    // Joystick()));
+
     controllerDriver
         .povDown()
-        .whileTrue(
-            new InstantCommand(
-                () -> hijackableRotation = new AprilTagLock(4))) // TODO: vary the id based on team
+        .whileTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
-        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 3300)));
+        .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
+    controllerDriver
+        .povUp()
+        .onTrue(
+            new ArmAngleSpeaker(arm)
+                .andThen(
+                    new InstantCommand(
+                        () -> hijackableRotation = new AprilTagLock(getAprilTagId())))
+                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
         .onTrue(
@@ -248,7 +247,7 @@ public class RobotContainer {
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
-
+    controllerDriver.povLeft().onTrue(new ZeroPosition(arm));
     // Driver Gyro Reset
     controllerDriver
         .back()
@@ -328,5 +327,16 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+
+  public int getAprilTagId() {
+    if (DriverStation.getAlliance().get() == Alliance.Red) {
+      return frc.robot.Constants.RED_SPEAKER_ID;
+    }
+    if (DriverStation.getAlliance().get() == Alliance.Blue) {
+      return frc.robot.Constants.BLUE_SPEAKER_ID;
+    } else {
+      return 0;
+    }
   }
 }
