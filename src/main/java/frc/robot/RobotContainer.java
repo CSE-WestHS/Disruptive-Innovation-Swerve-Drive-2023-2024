@@ -66,6 +66,11 @@ import frc.robot.subsystems.drive.GyroIONavX;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
+
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -233,14 +238,14 @@ public class RobotContainer {
         .povDown()
         .whileTrue(
             new InstantCommand(
-                () -> hijackableRotation = new AprilTagLock(4))) // TODO: vary the id based on team
+                () -> hijackableRotation = new AprilTagLock(getAprilTagId()))) 
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
         .onTrue(
             new ArmAngleSpeaker(arm)
-                .andThen(() -> new AprilTagLock(4))
+                .andThen(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
                 .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
@@ -331,5 +336,20 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+  public int getAprilTagId() {
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+        if (ally.get() == Alliance.Red) {
+            return frc.robot.Constants.RED_SPEAKER_ID;
+        }
+        if (ally.get() == Alliance.Blue) {
+            return frc.robot.Constants.BLUE_SPEAKER_ID;
+        }
+    }
+    else {
+        return 0;
+    }
+    return 0;
   }
 }
