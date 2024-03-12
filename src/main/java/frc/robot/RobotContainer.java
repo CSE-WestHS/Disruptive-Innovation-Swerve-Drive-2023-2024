@@ -34,6 +34,7 @@ import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
+import frc.robot.commands.Arm.ZeroArm;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
@@ -211,7 +212,7 @@ public class RobotContainer {
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
     indexer.setDefaultCommand(new IndexerIdle(indexer, 0));
-    
+
     // Driver Controls ********************************************************************
     /* Left Stick - Translate
      * Right Stick - Rotate
@@ -239,7 +240,7 @@ public class RobotContainer {
                 .andThen(
                     new InstantCommand(
                         () -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-                        .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
+                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
     controllerDriver
         .rightTrigger()
         .onTrue(
@@ -295,6 +296,7 @@ public class RobotContainer {
         */
 
     // Reset pose, needs to be little left middle button
+    controllerOperator.povLeft().onTrue(new ZeroArm(arm));
     controllerOperator
         .back()
         .onTrue(
