@@ -34,7 +34,7 @@ public class ArmIOSparkMax implements ArmIO {
       new CANSparkMax(frc.robot.Constants.LEFT_WORM_GEAR, MotorType.kBrushless);
   private final CANSparkMax follower =
       new CANSparkMax(frc.robot.Constants.RIGHT_WORM_GEAR, MotorType.kBrushless);
-  private final RelativeEncoder encoder;
+  private static RelativeEncoder encoder;
   private SparkPIDController pid;
 
   public ArmIOSparkMax() {
@@ -114,7 +114,9 @@ public class ArmIOSparkMax implements ArmIO {
     pid.setFF(0, 0);
   }
 
-  public void zeroPosition() {
-    encoder.setPosition(frc.robot.Constants.ANGLE_START_POSITION);
+
+  public static RelativeEncoder getEncoder() {
+    return encoder;
+
   }
 }
