@@ -216,7 +216,7 @@ public class RobotContainer {
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
 
-            () -> (- /*controllerDriver.getRightX()*/hijackableRotation.getR(0)),
+            () -> (-controllerDriver.getRightX()),
             () -> (-controllerDriver.getLeftTriggerAxis())));
 
     //   () ->
