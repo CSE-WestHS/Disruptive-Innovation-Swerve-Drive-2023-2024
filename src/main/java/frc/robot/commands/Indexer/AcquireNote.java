@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Indexer.Indexer;
 import frc.robot.subsystems.Intake.Intake;
+import frc.robot.commands.RumbleForTime.RumbleForTime;
 
 public class AcquireNote extends Command {
   private Indexer indexer;
@@ -46,7 +47,10 @@ public class AcquireNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (indexer.getBeamState() || (Timer.getFPGATimestamp() - startTime) > 5) {
+    if (indexer.getBeamState()) {
+      controllerDriver.RumbleForTime(Rumble, RumbleType.kBothRumble, 1.0, 1);
+      return true;
+    } else if ((Timer.getFPGATimestamp() - startTime) > 5){
       return true;
     }
     return false;
