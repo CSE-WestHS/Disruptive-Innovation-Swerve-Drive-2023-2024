@@ -260,7 +260,7 @@ public class RobotContainer {
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
-    controllerDriver.povLeft().onTrue(new ZeroPosition(arm));
+    // controllerDriver.povLeft().onTrue(new ZeroPosition(arm));
     // Driver Gyro Reset
     controllerDriver
         .back()
