@@ -5,6 +5,7 @@
 package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIOSparkMax;
 
@@ -25,6 +26,7 @@ public class ZeroArm extends Command {
   @Override
   public void execute() {
     ArmIOSparkMax.getEncoder().setPosition(frc.robot.Constants.ANGLE_START_POSITION);
+    arm.setPosition(-Constants.ANGLE_SPEAKER);//just a guess
   }
 
   // Called once the command ends or is interrupted.

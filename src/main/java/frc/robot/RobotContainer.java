@@ -20,6 +20,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,6 +37,7 @@ import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
 import frc.robot.commands.Arm.ZeroArm;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.RumbleForTime;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
 import frc.robot.commands.Intake.IntakeIdle;
@@ -56,6 +58,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.subsystems.Rumble.Rumble;
 // import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
@@ -68,6 +71,7 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import frc.robot.subsystems.Rumble.Rumble;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -83,11 +87,12 @@ public class RobotContainer {
   public final Shooter shooter;
   public final Arm arm;
   public Camera camera = new Camera();
-
+  public Rumble Rumble;
   // Controller
   private static final CommandXboxController controllerDriver = new CommandXboxController(0);
   private final CommandXboxController controllerOperator = new CommandXboxController(1);
   private RotationSource hijackableRotation = new Joystick();
+  RumbleForTime rumblecontroller = new RumbleForTime(Rumble, RumbleType.kBothRumble,10,2);
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
@@ -176,7 +181,7 @@ public class RobotContainer {
     // autoChooser.addOption("RightBlue", new PathPlannerAuto("AllAutoRightBlue"));
     // autoChooser.addOption("AutoScoreLeft", new PathPlannerAuto("ScoreAutoLeft"));
     camera.useFrontCamera();
-
+    
     // leds.RunLEDS();
     // autoChooser.addOption(
     //  "Flywheel FF Characterization",
