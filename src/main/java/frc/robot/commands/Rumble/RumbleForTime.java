@@ -4,5 +4,49 @@
 
 package frc.robot.commands.Rumble;
 
-/** Add your docs here. */
-public class RumbleForTime {}
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Rumble.Rumble;
+
+public class RumbleForTime extends Command {
+  private Timer timer = new Timer();
+  private double time;
+  private double strength;
+  private RumbleType type;
+  private Rumble rumble;
+  /** Creates a new RumbleForTime. */
+  public RumbleForTime(Rumble Rumble, RumbleType Type, double strength, double time) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.rumble = Rumble;
+    this.type = Type;
+    this.strength = strength;
+    this.time = time;
+    addRequirements(Rumble);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    timer.start();
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    rumble.setVibration(strength, type);
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    rumble.setVibration(0);
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return timer.get() > time;
+  }
+}

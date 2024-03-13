@@ -56,9 +56,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
-
 import frc.robot.subsystems.Rumble.Rumble;
-
 // import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
@@ -85,12 +83,11 @@ public class RobotContainer {
   public final Intake intake;
   public final Shooter shooter;
   public final Arm arm;
-  private Rumble rumble;
   public Camera camera = new Camera();
-
+  public final Rumble rumble;
   // Controller
-  public static final CommandXboxController controllerDriver = new CommandXboxController(0);
-  public final CommandXboxController controllerOperator = new CommandXboxController(1);
+  private static final CommandXboxController controllerDriver = new CommandXboxController(0);
+  private final CommandXboxController controllerOperator = new CommandXboxController(1);
   private RotationSource hijackableRotation = new Joystick();
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -115,9 +112,7 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
-
         rumble = new Rumble();
-
         // limelight = new DistanceEstimator();
 
         // leds = new LEDS();
@@ -136,6 +131,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSim());
         shooter = new Shooter(new ShooterIOSim());
         arm = new Arm(new ArmIOSim());
+        rumble = new Rumble();
         break;
 
       default:
@@ -151,6 +147,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIO() {});
         shooter = new Shooter(new ShooterIO() {});
         arm = new Arm(new ArmIO() {});
+        rumble = new Rumble();
         break;
     }
 
@@ -219,13 +216,12 @@ public class RobotContainer {
             () -> (-controllerDriver.getRightX()),
             () -> (-controllerDriver.getLeftTriggerAxis())));
 
-    //   () ->
-    //        (
-    /*controllerDriver.getRightX() hijackableRotation.getR(
-                 //       drive.getPose().getRotation().getDegrees())),
-               // () -> -(controllerDriver.getLeftTriggerAxis())));
-    */
-
+         //   () ->
+        //        (
+                /*controllerDriver.getRightX() hijackableRotation.getR(
+             //       drive.getPose().getRotation().getDegrees())),
+           // () -> -(controllerDriver.getLeftTriggerAxis())));
+*/
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
@@ -247,7 +243,7 @@ public class RobotContainer {
         .povDown()
         .whileTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
-    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake, rumble));
+    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake,rumble));
     controllerDriver
         .rightBumper()
         .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
@@ -268,9 +264,7 @@ public class RobotContainer {
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
-
     // controllerDriver.povLeft().onTrue(new ZeroPosition(arm));
-
     // Driver Gyro Reset
     controllerDriver
         .back()
