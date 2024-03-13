@@ -155,7 +155,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.75
+                        "waitTime": 1.0
                       }
                     },
                     {
@@ -187,7 +187,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 2.0
+                        "waitTime": 1.75
                       }
                     },
                     {
@@ -218,6 +218,6 @@
       ]
     }
   },
-  "folder": "4 note Center Autos",
+  "folder": "Center Autos",
   "choreoAuto": false
 }

@@ -34,7 +34,6 @@ import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
-import frc.robot.commands.Arm.ZeroPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
@@ -211,16 +210,15 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
-
             () -> (-controllerDriver.getRightX()),
             () -> (-controllerDriver.getLeftTriggerAxis())));
 
-         //   () ->
-        //        (
-                /*controllerDriver.getRightX() hijackableRotation.getR(
-             //       drive.getPose().getRotation().getDegrees())),
-           // () -> -(controllerDriver.getLeftTriggerAxis())));
-*/
+    //   () ->
+    //        (
+    /*controllerDriver.getRightX() hijackableRotation.getR(
+                 //       drive.getPose().getRotation().getDegrees())),
+               // () -> -(controllerDriver.getLeftTriggerAxis())));
+    */
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
