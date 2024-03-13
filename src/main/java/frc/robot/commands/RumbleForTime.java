@@ -4,9 +4,8 @@
 
 package frc.robot.commands;
 
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Rumble.Rumble;
 
@@ -16,12 +15,11 @@ public class RumbleForTime extends Command {
   private double strength;
   private RumbleType type;
 
-  
   private Rumble rumble;
   /** Creates a new RumbleForTime. */
   public RumbleForTime(Rumble Rumble, RumbleType Type, double Strength, double Time) {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+
     this.type = Type;
     this.strength = Strength;
     this.time = Time;

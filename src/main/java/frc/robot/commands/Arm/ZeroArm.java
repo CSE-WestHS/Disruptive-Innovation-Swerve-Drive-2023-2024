@@ -4,8 +4,8 @@
 
 package frc.robot.commands.Arm;
 
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmIOSparkMax;
 
@@ -25,9 +25,13 @@ public class ZeroArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ArmIOSparkMax.getEncoder().setPosition(frc.robot.Constants.ANGLE_START_POSITION);
-    arm.setPosition(-Constants.ANGLE_SPEAKER);
+    final RelativeEncoder encoder = ArmIOSparkMax.getEncoder();
+    encoder.setPosition(0);
   }
+  // arm.restoreFactoryDefaults();
+
+  // encoder.setPositionConversionFactor(Constants.ARM_GEAR_RATIO);
+  // arm.setPosition(Constants.ANGLE_START_POSITION);
 
   // Called once the command ends or is interrupted.
   @Override

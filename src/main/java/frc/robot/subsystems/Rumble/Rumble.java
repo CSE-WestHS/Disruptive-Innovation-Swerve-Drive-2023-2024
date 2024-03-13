@@ -4,29 +4,25 @@
 
 package frc.robot.subsystems.Rumble;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Rumble extends SubsystemBase {
-  XboxController controller1;
-  XboxController controller2;
-  
-  /** Creates a new Vibrator. */
-  public Rumble(XboxController controller1, XboxController controller2) {
-    this.controller1 = controller1;
-    this.controller2 = controller2;
-  }
+  XboxController controller1 = new XboxController(0);
+  XboxController controller2 = new XboxController(1);
 
-  public void setVibration(double value, RumbleType type){
+  /** Creates a new Vibrator. */
+  public Rumble() {}
+
+  public void setVibration(double value, RumbleType type) {
     controller1.setRumble(type, value);
     controller2.setRumble(type, value);
-   }
+  }
 
-  public void setVibration(double value){
+  public void setVibration(double value) {
     setVibration(value, RumbleType.kBothRumble);
-    
   }
 
   @Override

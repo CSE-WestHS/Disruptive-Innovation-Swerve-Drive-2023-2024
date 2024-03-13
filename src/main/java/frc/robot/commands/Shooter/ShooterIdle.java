@@ -23,13 +23,13 @@ public class ShooterIdle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.runVelocity(targetSpeed);
+    shooter.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.runVelocity(targetSpeed);
+    shooter.stop();
   }
   // Called once the command ends or is interrupted.
   @Override
