@@ -34,7 +34,7 @@ import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
-// import frc.robot.commands.Arm.ZeroArm;
+import frc.robot.commands.Arm.ZeroPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
@@ -56,7 +56,9 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+
 import frc.robot.subsystems.Rumble.Rumble;
+
 // import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
@@ -113,7 +115,9 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
+
         rumble = new Rumble();
+
         // limelight = new DistanceEstimator();
 
         // leds = new LEDS();
@@ -211,6 +215,7 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
+
             () -> (- /*controllerDriver.getRightX()*/hijackableRotation.getR(0)),
             () -> (-controllerDriver.getLeftTriggerAxis())));
 
@@ -220,6 +225,7 @@ public class RobotContainer {
                  //       drive.getPose().getRotation().getDegrees())),
                // () -> -(controllerDriver.getLeftTriggerAxis())));
     */
+
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
@@ -262,7 +268,9 @@ public class RobotContainer {
 
     controllerDriver.a().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_UP));
     controllerDriver.x().onTrue(new ArmSetAngle(arm, Constants.ANGLE_CLIMB_DOWN));
-    // controllerDriver.povLeft().onTrue(new ZeroArm(arm));
+
+    // controllerDriver.povLeft().onTrue(new ZeroPosition(arm));
+
     // Driver Gyro Reset
     controllerDriver
         .back()

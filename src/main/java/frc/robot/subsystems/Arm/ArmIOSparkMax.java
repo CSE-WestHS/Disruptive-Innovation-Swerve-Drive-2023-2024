@@ -114,7 +114,9 @@ public class ArmIOSparkMax implements ArmIO {
     pid.setFF(0, 0);
   }
 
+
   public static RelativeEncoder getEncoder() {
     return encoder;
+
   }
 }

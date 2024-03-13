@@ -7,6 +7,7 @@ package frc.robot.commands.Indexer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.commands.RumbleForTime;
 import frc.robot.subsystems.Indexer.Indexer;
 import frc.robot.subsystems.Intake.Intake;
@@ -14,6 +15,7 @@ import frc.robot.subsystems.Rumble.Rumble;
 
 public class AcquireNote extends Command {
   private Rumble rumble;
+
   private Indexer indexer;
   private Intake intake;
   private double startTime;
@@ -21,7 +23,9 @@ public class AcquireNote extends Command {
   public AcquireNote(Indexer Indexer, Intake Intake, Rumble Rumble) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Intake);
+
     this.rumble = Rumble;
+
     this.indexer = Indexer;
     this.intake = Intake;
   }
@@ -52,7 +56,9 @@ public class AcquireNote extends Command {
   @Override
   public boolean isFinished() {
     if (indexer.getBeamState()) {
+
       new RumbleForTime(rumble, RumbleType.kBothRumble, 1, 0.25).schedule();
+
       return true;
     } else if ((Timer.getFPGATimestamp() - startTime) > 5) {
       return true;
