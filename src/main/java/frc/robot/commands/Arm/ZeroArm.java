@@ -26,7 +26,7 @@ public class ZeroArm extends Command {
   @Override
   public void execute() {
     ArmIOSparkMax.getEncoder().setPosition(frc.robot.Constants.ANGLE_START_POSITION);
-    arm.setPosition(-Constants.ANGLE_SPEAKER);//just a guess
+    arm.setPosition(-Constants.ANGLE_SPEAKER);
   }
 
   // Called once the command ends or is interrupted.
