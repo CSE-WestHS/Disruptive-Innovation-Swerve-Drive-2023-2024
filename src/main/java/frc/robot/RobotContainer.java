@@ -56,6 +56,7 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Intake.IntakeIO;
 import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Intake.IntakeIOSparkMax;
+import frc.robot.subsystems.Rumble.Rumble;
 // import frc.robot.subsystems.LimeLight.*;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterIO;
@@ -82,6 +83,7 @@ public class RobotContainer {
   public final Intake intake;
   public final Shooter shooter;
   public final Arm arm;
+  public Rumble rumble;
   public Camera camera = new Camera();
 
   // Controller
@@ -111,6 +113,7 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
+        rumble = new Rumble();
         // limelight = new DistanceEstimator();
 
         // leds = new LEDS();
@@ -161,7 +164,7 @@ public class RobotContainer {
             .andThen(new ArmAngleSpeaker(arm))));
     NamedCommands.registerCommand(
         "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 3300)));
-    NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake));
+    NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake, rumble));
 
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
     autoChooser.addOption("4 note Center Auto", new PathPlannerAuto("4 note Center Auto"));
@@ -239,7 +242,7 @@ public class RobotContainer {
         .povDown()
         .whileTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
-    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
+    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake, rumble));
     controllerDriver
         .rightBumper()
         .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));

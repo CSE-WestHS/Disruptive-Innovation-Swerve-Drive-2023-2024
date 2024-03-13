@@ -13,11 +13,10 @@ import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Rumble.Rumble;
 
 public class AcquireNote extends Command {
-  // private Rumble rumble;
+  private Rumble rumble;
   private Indexer indexer;
   private Intake intake;
   private double startTime;
-  private Rumble rumble;
   /** Creates a new IndexIn. */
   public AcquireNote(Indexer Indexer, Intake Intake, Rumble Rumble) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -53,7 +52,7 @@ public class AcquireNote extends Command {
   @Override
   public boolean isFinished() {
     if (indexer.getBeamState()) {
-      new RumbleForTime(rumble, RumbleType.kBothRumble, 1, 0.25);
+      new RumbleForTime(rumble, RumbleType.kBothRumble, 1, 0.25).schedule();
       return true;
     } else if ((Timer.getFPGATimestamp() - startTime) > 5) {
       return true;
