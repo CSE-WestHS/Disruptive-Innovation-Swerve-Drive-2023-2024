@@ -52,7 +52,7 @@ public class AcquireNote extends Command {
   @Override
   public boolean isFinished() {
     if (indexer.getBeamState()) {
-      new RumbleForTime(rumble, RumbleType.kBothRumble, 0.1, 1).schedule();
+      new RumbleForTime(rumble, RumbleType.kBothRumble, 1, 0.25).schedule();
       return true;
     } else if ((Timer.getFPGATimestamp() - startTime) > 5) {
       return true;
