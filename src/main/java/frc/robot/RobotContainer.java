@@ -162,7 +162,7 @@ public class RobotContainer {
             .andThen(new ShootNoteAmp(indexer, shooter, 2500))
             .andThen(new ArmAngleSpeaker(arm))));
     NamedCommands.registerCommand(
-        "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 3300)));
+        "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 5000)));
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake, rumble));
 
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -329,7 +329,7 @@ public class RobotContainer {
     controllerOperator.b().whileTrue(Commands.run(() -> indexer.runVelocity(-1500)));
 
     controllerOperator.rightTrigger().whileTrue(new ManualGrabNote(intake, indexer, 2000));
-    controllerOperator.rightBumper().whileTrue(Commands.run(() -> shooter.runVelocity(4000)));
+    controllerOperator.rightBumper().whileTrue(Commands.run(() -> shooter.runVelocity(5000)));
     controllerOperator.leftTrigger().onTrue(new ArmAngleSpeaker(arm));
     controllerOperator.leftBumper().onTrue(new ArmAngleAmp(arm));
   }
