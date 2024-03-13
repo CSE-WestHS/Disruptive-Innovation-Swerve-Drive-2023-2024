@@ -26,7 +26,7 @@ public class ZeroArm extends Command {
   @Override
   public void execute() {
     final RelativeEncoder encoder = ArmIOSparkMax.getEncoder();
-    encoder.setPosition(0);
+    //encoder.restoreFactoryDefaults();
   }
   // arm.restoreFactoryDefaults();
 
