@@ -162,7 +162,7 @@ public class RobotContainer {
             .andThen(new ShootNoteAmp(indexer, shooter, 2500))
             .andThen(new ArmAngleSpeaker(arm))));
     NamedCommands.registerCommand(
-        "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 3300)));
+        "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 5400)));
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake, rumble));
 
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
