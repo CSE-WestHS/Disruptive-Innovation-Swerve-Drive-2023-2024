@@ -113,6 +113,7 @@ public class RobotContainer {
         arm = new Arm(new ArmIOSparkMax());
         camera = new Camera();
         rumble = new Rumble();
+
         // limelight = new DistanceEstimator();
 
         // leds = new LEDS();
@@ -162,7 +163,6 @@ public class RobotContainer {
             .andThen(new ShootNoteAmp(indexer, shooter, 2500))
             .andThen(new ArmAngleSpeaker(arm))));
     NamedCommands.registerCommand(
-
         "ShootNoteSpeaker", (new ShootNoteSpeaker(indexer, shooter, 5400)));
 
     NamedCommands.registerCommand("AcquireNote", new AcquireNote(indexer, intake, rumble));
