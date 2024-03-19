@@ -21,6 +21,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.Vector;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -74,7 +75,11 @@ public class Drive extends SubsystemBase {
     modules[1] = new Module(frModuleIO, 1);
     modules[2] = new Module(blModuleIO, 2);
     modules[3] = new Module(brModuleIO, 3);
-
+    PIDController HeadingPID = new PIDController(0.03, 0, 0);
+    HeadingPID.setTolerance(1); // allowable angle error
+    HeadingPID.enableContinuousInput(
+        -180, 180); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
+    HeadingPID.setSetpoint(0);
     // Configure AutoBuilder for PathPlanner
     AutoBuilder.configureHolonomic(
         this::getPose,
