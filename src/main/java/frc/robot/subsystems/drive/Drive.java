@@ -277,4 +277,11 @@ public class Drive extends SubsystemBase {
       new Translation2d(-(Constants.TRACK_WIDTH_X) / 2.0, -(Constants.TRACK_WIDTH_Y) / 2.0)
     };
   }
+
+  public void setBrakeMode(boolean brake) {
+    modules[0].setBrakeMode(brake);
+    modules[1].setBrakeMode(brake);
+    modules[2].setBrakeMode(brake);
+    modules[3].setBrakeMode(brake);
+  }
 }

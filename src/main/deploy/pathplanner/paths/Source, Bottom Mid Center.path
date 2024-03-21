@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.17376754051754,
-        "y": 0.648102348836276
+        "x": 4.091650705823934,
+        "y": 1.9044088538627535
       },
       "isLocked": false,
       "linkedName": "bottomShootAngle"
@@ -20,8 +20,8 @@
         "y": 2.458673990029684
       },
       "prevControl": {
-        "x": 6.0687660222438256,
-        "y": 0.9670098538192057
+        "x": 4.304278878828027,
+        "y": 0.915225614235013
       },
       "nextControl": null,
       "isLocked": false,
