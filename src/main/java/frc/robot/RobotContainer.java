@@ -29,12 +29,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.AprilTags.AprilTagLock;
 import frc.robot.AprilTags.Joystick;
 import frc.robot.AprilTags.RotationSource;
+import frc.robot.commands.AprilTagCommand;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
 import frc.robot.commands.Arm.ArmSetAngle;
 import frc.robot.commands.Arm.ArmUpGradual;
-import frc.robot.commands.Arm.ZeroPosition;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Indexer.AcquireNote;
 import frc.robot.commands.Indexer.IndexerIdle;
@@ -88,7 +88,7 @@ public class RobotContainer {
   // Controller
   private static final CommandXboxController controllerDriver = new CommandXboxController(0);
   private final CommandXboxController controllerOperator = new CommandXboxController(1);
-  private RotationSource hijackableRotation = new Joystick();
+  private static RotationSource hijackableRotation = new Joystick();
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
   // private final LoggedDashboardNumber flywheelSpeedInput =
@@ -199,6 +199,10 @@ public class RobotContainer {
   public static CommandXboxController getController() {
     return controllerDriver;
   }
+
+  public static RotationSource getHijack() {
+    return hijackableRotation;
+  }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -212,16 +216,15 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
-
             () -> (-controllerDriver.getRightX()),
             () -> (-controllerDriver.getLeftTriggerAxis())));
 
-         //   () ->
-        //        (
-                /*controllerDriver.getRightX() hijackableRotation.getR(
-             //       drive.getPose().getRotation().getDegrees())),
-           // () -> -(controllerDriver.getLeftTriggerAxis())));
-*/
+    //   () ->
+    //        (
+    /*controllerDriver.getRightX() hijackableRotation.getR(
+                 //       drive.getPose().getRotation().getDegrees())),
+               // () -> -(controllerDriver.getLeftTriggerAxis())));
+    */
 
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
@@ -243,7 +246,7 @@ public class RobotContainer {
         .povDown()
         .whileTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
-    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake,rumble));
+    controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake, rumble));
     controllerDriver
         .rightBumper()
         .onTrue(new ArmAngleSpeaker(arm).andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
@@ -251,10 +254,8 @@ public class RobotContainer {
         .povUp()
         .onTrue(
             new ArmAngleSpeaker(arm)
-                .andThen(
-                    new InstantCommand(
-                        () -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-                .beforeStarting(new ShootNoteSpeaker(indexer, shooter, 3300)));
+                .andThen(new AprilTagCommand(new AprilTagLock(getAprilTagId())))
+                .andThen(new ShootNoteSpeaker(indexer, shooter, 5200)));
     controllerDriver
         .rightTrigger()
         .onTrue(
@@ -346,7 +347,7 @@ public class RobotContainer {
     return autoChooser.get();
   }
 
-  public int getAprilTagId() {
+  public static int getAprilTagId() {
     if (DriverStation.getAlliance().get() == Alliance.Red) {
       return frc.robot.Constants.RED_SPEAKER_ID;
     }
