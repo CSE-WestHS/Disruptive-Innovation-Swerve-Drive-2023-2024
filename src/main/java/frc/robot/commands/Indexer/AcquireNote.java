@@ -30,15 +30,15 @@ public class AcquireNote extends Command {
   @Override
   public void initialize() {
     startTime = Timer.getFPGATimestamp();
-    indexer.runVelocity(1200);
-    intake.runVelocity(2000);
+    indexer.runVelocity(1250);
+    intake.runVelocity(2500);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexer.runVelocity(1200);
-    intake.runVelocity(2000);
+    indexer.runVelocity(1250);
+    intake.runVelocity(2500);
   }
 
   // Called once the command ends or is interrupted.
