@@ -18,6 +18,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -82,7 +83,9 @@ public class RobotContainer {
   public final Shooter shooter;
   public final Arm arm;
   public Camera camera = new Camera();
-
+  //limelight table
+  NetworkTable table = LimelightHelpers.getLimelightNTTable("limelight");
+  double tx = table.getEntry("tx").getDouble(0);
   // Controller
   private static final CommandXboxController controllerDriver = new CommandXboxController(0);
   private final CommandXboxController controllerOperator = new CommandXboxController(1);
@@ -233,6 +236,7 @@ public class RobotContainer {
         .povDown()
         .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock()))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
+    controllerDriver.leftStick().whileTrue(Commands.run(() -> DriveCommands.limelightAiming(tx), drive));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake));
     controllerDriver
         .rightBumper()
