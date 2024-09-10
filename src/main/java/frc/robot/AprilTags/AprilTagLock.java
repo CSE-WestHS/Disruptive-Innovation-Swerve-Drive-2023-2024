@@ -32,7 +32,7 @@ public class AprilTagLock implements RotationSource {
 
   @Override
   public double getR(double Heading) {
-    System.out.println("I ran");
+    System.out.println("April Tag Calculations made!");
     String dump = limelight.getJSONDump("limelight");
     LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
     PIDController pid = createPIDController();
