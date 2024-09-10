@@ -23,7 +23,7 @@ public class AprilTagLock implements RotationSource {
   }
 
   private static PIDController createPIDController() {
-    rotationPID.setTolerance(10); // allowable angle error
+    rotationPID.setTolerance(3); // allowable angle error
     rotationPID.enableContinuousInput(
         -180, 180); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
     rotationPID.setSetpoint(0); // 0 = apriltag angle
