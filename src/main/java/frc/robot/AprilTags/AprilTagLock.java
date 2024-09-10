@@ -23,7 +23,7 @@ public class AprilTagLock implements RotationSource {
   }
 
   private static PIDController createPIDController() {
-    rotationPID.setTolerance(1); // allowable angle error
+    rotationPID.setTolerance(10); // allowable angle error
     rotationPID.enableContinuousInput(
         -180, 180); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
     rotationPID.setSetpoint(0); // 0 = apriltag angle
@@ -32,20 +32,22 @@ public class AprilTagLock implements RotationSource {
 
   @Override
   public double getR(double Heading) {
+    System.out.println("I ran");
     String dump = limelight.getJSONDump("limelight");
     LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
+    PIDController pid = createPIDController();
     LimelightHelpers.LimelightTarget_Fiducial[] fiducials =
         llresults.targetingResults.targets_Fiducials;
     SmartDashboard.putString("llresults", dump);
     LimelightTarget_Fiducial target = getMainId(fiducials, speakerTarget);
     if (target == null) {
-      return rotationPID.calculate(0);
+      return pid.calculate(0);
     }
     if (DriverStation.getAlliance().get() == Alliance.Blue) {
-      PIDResult = rotationPID.calculate(-target.tx);
+      PIDResult = pid.calculate(-target.tx);
     }
     if (DriverStation.getAlliance().get() == Alliance.Red) {
-      PIDResult = rotationPID.calculate(target.tx);
+      PIDResult = pid.calculate(target.tx);
     }
 
     SmartDashboard.putNumber("tx", target.tx);
