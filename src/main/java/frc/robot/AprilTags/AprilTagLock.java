@@ -3,8 +3,6 @@ package frc.robot.AprilTags;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
 // import frc.robot.RobotContainer;
@@ -16,7 +14,7 @@ public class AprilTagLock implements RotationSource {
   // LimelightHelpers limelight = new LimelightHelpers();
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   private double PIDResult;
-  public static PIDController rotationPID = new PIDController(1, 0, 0);
+  public static PIDController rotationPID = new PIDController(0.035, 0.001, 0);
 
   public AprilTagLock(int target) {
     speakerTarget = target;
@@ -42,11 +40,7 @@ public class AprilTagLock implements RotationSource {
     LimelightTarget_Fiducial target = getMainId(fiducials, speakerTarget);
     if (target == null) {
       return pid.calculate(0);
-    }
-    if (DriverStation.getAlliance().get() == Alliance.Blue) {
-      PIDResult = pid.calculate(-target.tx);
-    }
-    if (DriverStation.getAlliance().get() == Alliance.Red) {
+    } else {
       PIDResult = pid.calculate(target.tx);
     }
 
