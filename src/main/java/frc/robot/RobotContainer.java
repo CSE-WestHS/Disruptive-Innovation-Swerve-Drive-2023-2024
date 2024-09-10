@@ -240,7 +240,7 @@ public class RobotContainer {
 
     controllerDriver
         .povDown()
-        .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(4)))
+        .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake, rumble));
     controllerDriver

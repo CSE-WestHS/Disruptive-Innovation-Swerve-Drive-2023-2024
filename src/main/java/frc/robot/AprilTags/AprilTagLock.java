@@ -13,7 +13,7 @@ import org.littletonrobotics.junction.Logger;
 
 public class AprilTagLock implements RotationSource {
   int speakerTarget;
-  LimelightHelpers limelight = new LimelightHelpers();
+  // LimelightHelpers limelight = new LimelightHelpers();
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   private double PIDResult;
   public static PIDController rotationPID = new PIDController(1, 0, 0);
@@ -33,7 +33,7 @@ public class AprilTagLock implements RotationSource {
   @Override
   public double getR(double Heading) {
     System.out.println("April Tag Calculations made!");
-    String dump = limelight.getJSONDump("limelight");
+    String dump = LimelightHelpers.getJSONDump("limelight");
     LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("limelight");
     PIDController pid = createPIDController();
     LimelightHelpers.LimelightTarget_Fiducial[] fiducials =
@@ -54,9 +54,6 @@ public class AprilTagLock implements RotationSource {
     Logger.recordOutput("Drive/R", PIDResult);
 
     return PIDResult;
-
-    // return rotationPID.calculate(table.getEntry("tx").getDouble(0));
-
   }
 
   public LimelightHelpers.LimelightTarget_Fiducial getMainId(
