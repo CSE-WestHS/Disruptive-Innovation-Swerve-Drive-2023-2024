@@ -16,6 +16,8 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -26,9 +28,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.AprilTags.AprilTagLock;
-import frc.robot.AprilTags.Joystick;
-import frc.robot.AprilTags.RotationSource;
 import frc.robot.commands.Arm.ArmAngleAmp;
 import frc.robot.commands.Arm.ArmAngleSpeaker;
 import frc.robot.commands.Arm.ArmDownGradual;
@@ -68,6 +67,7 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import frc.robot.AprilTags.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -212,7 +212,9 @@ public class RobotContainer {
             drive,
             () -> -(controllerDriver.getLeftY()),
             () -> -(controllerDriver.getLeftX()),
-            () -> (hijackableRotation.getR(drive.getPose().getRotation().getDegrees())),
+            
+            // () -> (hijackableRotation.getR(drive.getPose().getRotation().getDegrees())),
+            () -> (controllerDriver.getRightX()),
             () -> (-controllerDriver.getLeftTriggerAxis())));
 
     //   () ->
@@ -221,7 +223,7 @@ public class RobotContainer {
                  //       drive.getPose().getRotation().getDegrees())),
                // () -> -(controllerDriver.getLeftTriggerAxis())));
     */
-
+    
     shooter.setDefaultCommand(new ShooterIdle(shooter, 0));
     intake.setDefaultCommand(new IntakeIdle(intake, 0));
     indexer.setDefaultCommand(new IndexerIdle(indexer, 0));
@@ -237,10 +239,10 @@ public class RobotContainer {
      * Right Bumper - Score Speaker Command
      *
      */
-
-    controllerDriver
-        .povDown()
-        .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
+    controllerDriver.povDown().onTrue(new AutoTurnApril());
+    // controllerDriver
+    //     .povDown()
+    //     .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
         .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake, rumble));
     controllerDriver
@@ -335,6 +337,16 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+  public double getAimType(int type) {
+    if (type == 0) {
+      AprilTagAiming pid = new AprilTagAiming();
+      return pid.getR(getAprilTagId());
+    }
+    else {
+      return controllerDriver.getRightX();
+    }
+    
   }
 
   public int getAprilTagId() {
