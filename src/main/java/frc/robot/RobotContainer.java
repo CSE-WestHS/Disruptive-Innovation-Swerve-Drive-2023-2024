@@ -239,11 +239,12 @@ public class RobotContainer {
      * Right Bumper - Score Speaker Command
      *
      */
-    controllerDriver.povDown().onTrue(new AutoTurnApril());
+    controllerDriver.povDown().whileTrue(new AutoTurnApril(drive));
+    // controllerDriver.povDown().onTrue(new AutoTurnApril());
     // controllerDriver
     //     .povDown()
     //     .onTrue(new InstantCommand(() -> hijackableRotation = new AprilTagLock(getAprilTagId())))
-        .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
+        // .onFalse(new InstantCommand(() -> hijackableRotation = new Joystick()));
     controllerDriver.leftBumper().onTrue(new AcquireNote(indexer, intake, rumble));
     controllerDriver
         .rightBumper()
