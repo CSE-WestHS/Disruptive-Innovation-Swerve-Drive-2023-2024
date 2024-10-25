@@ -34,34 +34,30 @@ public final class Constants {
   // ((11.0 / 28.0) * (1.0 / 40.0) * (36.0 / 54.0));
   public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
   public static final int LED_LENGTH = 60;
-  public static final int DRIVE_ENCODER_FL = 16;
-  public static final int DRIVE_ENCODER_FR = 19;
-  public static final int DRIVE_ENCODER_BL = 17;
-  public static final int DRIVE_ENCODER_BR = 18;
-  public static final int DRIVE_FRONT_LEFT = 7;
-  public static final int TURN_FRONT_LEFT = 8;
-  public static final int DRIVE_FRONT_RIGHT = 2;
-  public static final int TURN_FRONT_RIGHT = 3;
-  public static final int DRIVE_BACK_RIGHT = 11;
-  public static final int TURN_BACK_RIGHT = 12;
-  public static final int DRIVE_BACK_LEFT = 9;
-  public static final int TURN_BACK_LEFT = 10;
-  public static final int SHOOTER_TOP = 4;
-  public static final int SHOOTER_BOTTOM = 6;
-  public static final int INDEXER = 5;
-  public static final int INTAKE = 14;
-  public static final int RIGHT_WORM_GEAR = 13;
-  public static final int LEFT_WORM_GEAR = 15;
-  public static final double MAX_LINEAR_SPEED = Units.feetToMeters(10);
+  public static final int DRIVE_ENCODER_FL = 8;
+  public static final int DRIVE_ENCODER_FR = 11;
+  public static final int DRIVE_ENCODER_BL = 5;
+  public static final int DRIVE_ENCODER_BR = 2;
+  public static final int DRIVE_FRONT_LEFT = 6;
+  public static final int TURN_FRONT_LEFT = 4;
+  public static final int DRIVE_FRONT_RIGHT = 9;
+  public static final int TURN_FRONT_RIGHT = 7;
+  public static final int DRIVE_BACK_RIGHT = 12;
+  public static final int TURN_BACK_RIGHT = 10;
+  public static final int DRIVE_BACK_LEFT = 3;
+  public static final int TURN_BACK_LEFT = 1;
+  public static final int SHOOTER_TOP = 21;
+  public static final int SHOOTER_BOTTOM = 13;
+  public static final int INDEXER = 20;
+  public static final int INTAKE = 16;
+  public static final int INTAKE_BOTTOM = 15;
+  public static final double MAX_LINEAR_SPEED = Units.feetToMeters(7);
   public static final double MAX_LINEAR_SPEED_TURBO = Units.feetToMeters(40);
-  public static final double MAX_LINEAR_SPEED_AUTO = Units.feetToMeters(25);
+  public static final double MAX_LINEAR_SPEED_AUTO = Units.feetToMeters(20);
   public static final double TRACK_WIDTH_X = Units.inchesToMeters(20.0);
   public static final double TRACK_WIDTH_Y = Units.inchesToMeters(20.0);
   public static final double DRIVE_BASE_RADIUS =
       Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
-  public static final double DRIVEDEADBAND = 0.2;
-  public static final int RED_SPEAKER_ID = 4;
-  public static final int BLUE_SPEAKER_ID = 7;
 
   public static enum Mode {
     /** Running on a real robot. */

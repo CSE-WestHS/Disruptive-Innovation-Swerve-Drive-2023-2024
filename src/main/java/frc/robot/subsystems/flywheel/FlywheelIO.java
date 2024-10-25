@@ -21,14 +21,14 @@ public interface FlywheelIO {
     public double positionRad = 0.0;
     public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
-    public double[] currentAmps = new double[] {};
+    public double currentAmps = 0.0;
   }
 
   /** Updates the set of loggable inputs. */
   public default void updateInputs(FlywheelIOInputs inputs) {}
 
   /** Run open loop at the specified voltage. */
-  public default void setVoltage(double volts) {}
+  // public default void setVoltage(double volts) {}
 
   /** Run closed loop at the specified velocity. */
   public default void setVelocity(double velocityRadPerSec, double ffVolts) {}

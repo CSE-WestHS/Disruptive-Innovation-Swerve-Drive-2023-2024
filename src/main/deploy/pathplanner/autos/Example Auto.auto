@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4096302478319247,
-      "y": 5.4826372509887875
+      "x": 2.0,
+      "y": 7.0
     },
     "rotation": 180.0
   },
@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootNoteSpeaker"
+            "name": "Run Flywheel"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 3.0
+            "pathName": "Example Path"
           }
         }
       ]
