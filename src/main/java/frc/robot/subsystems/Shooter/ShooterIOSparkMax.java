@@ -81,7 +81,7 @@ public class ShooterIOSparkMax implements ShooterIO {
 
     UpperIntake.restoreFactoryDefaults();
     UpperIntake.setCANTimeout(250);
-    UpperIntake.setInverted(true);
+    UpperIntake.setInverted(false);
     UpperIntake.enableVoltageCompensation(11.0);
     UpperIntake.setSmartCurrentLimit(35);
     UpperIntake.burnFlash();
@@ -138,8 +138,8 @@ public class ShooterIOSparkMax implements ShooterIO {
 
     US_pid.setReference(
         velocityRadPerSec_Upper, ControlType.kVelocity, 0, ffVolts_Upper, ArbFFUnits.kVoltage);
-    // LS_pid.setReference(
-    //     velocityRadPerSec_Lower, ControlType.kVelocity, 0, ffVolts_Lower, ArbFFUnits.kVoltage);
+    LS_pid.setReference(
+        velocityRadPerSec_Lower, ControlType.kVelocity, 0, ffVolts_Lower, ArbFFUnits.kVoltage);
   }
 
   @Override

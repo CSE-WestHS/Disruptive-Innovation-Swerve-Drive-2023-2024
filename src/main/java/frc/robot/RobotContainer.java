@@ -89,9 +89,9 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> -controller.getRightX()));
+            () -> -controller.getLeftY() * 0.75,
+            () -> -controller.getLeftX() * 0.75,
+            () -> -controller.getRightX() * 0.75));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     // Reset Pose
     controller
@@ -113,7 +113,7 @@ public class RobotContainer {
         .leftBumper()
         .onTrue(
             Commands.run(() -> shooter.runIndexerVelocity(500))
-                .alongWith(Commands.run(() -> shooter.runIntakeVelocity(1500)))
+                .alongWith(Commands.run(() -> shooter.runIntakeVelocity(3500)))
                 .onlyWhile(noteDetected.negate())
                 .withTimeout(30)
                 .andThen(shooter::stop));
@@ -123,9 +123,9 @@ public class RobotContainer {
         .b()
         .and(controller.y())
         .whileTrue(
-            Commands.startEnd(() -> shooter.runShooterVelocity(2500.0), shooter::stop, shooter)
+            Commands.startEnd(() -> shooter.runShooterVelocity(4500.0), shooter::stop, shooter)
                 .alongWith(Commands.run(() -> shooter.runIntakeVelocity(-1500)))
-                .alongWith(Commands.run(() -> shooter.runIndexerVelocity(-500))));
+                .alongWith(Commands.run(() -> shooter.runIndexerVelocity(2500))));
 
     // Shoot
     controller
@@ -134,10 +134,20 @@ public class RobotContainer {
             Commands.race(
                     Commands.run(() -> shooter.runShooterVelocity(4500)),
                     Commands.waitSeconds(0.75))
-                .andThen(Commands.run(() -> shooter.runIndexerVelocity(4000)))
-                .onlyWhile(noteDetected)
+                .andThen(
+                    Commands.race(
+                        Commands.run(() -> shooter.runIndexerVelocity(4500)),
+                        Commands.waitSeconds(1.5)))
                 .andThen(shooter::stop));
-
+    // controller
+    //             .rightBumper()
+    //             .onTrue(
+    //                 Commands.race(
+    //                         Commands.run(() -> shooter.runShooterVelocity(4500)),
+    //                         Commands.waitSeconds(0.75))
+    //                     .andThen(Commands.run(() -> shooter.runIndexerVelocity(4000)))
+    //                     .onlyWhile(noteDetected)
+    //                     .andThen(shooter::stop));
     // Test
     // controller
     //     .leftTrigger()
