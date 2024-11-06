@@ -58,6 +58,7 @@ public class ShooterIOSparkMax implements ShooterIO {
   private final SparkPIDController LI_pid = LowerIntake.getPIDController();
 
   public ShooterIOSparkMax() {
+    //initialize upper shooter motor controller
     UpperShooter.restoreFactoryDefaults();
     UpperShooter.setCANTimeout(250);
     UpperShooter.setInverted(false);
@@ -65,6 +66,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     UpperShooter.setSmartCurrentLimit(35);
     UpperShooter.burnFlash();
 
+    //initialize lower shooter motor controller
     LowerShooter.restoreFactoryDefaults();
     LowerShooter.setCANTimeout(250);
     LowerShooter.setInverted(true);
@@ -72,6 +74,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     LowerShooter.setSmartCurrentLimit(35);
     LowerShooter.burnFlash();
 
+    //initialize Indexer motor controller
     Indexer.restoreFactoryDefaults();
     Indexer.setCANTimeout(250);
     Indexer.setInverted(true);
@@ -79,6 +82,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     Indexer.setSmartCurrentLimit(35);
     Indexer.burnFlash();
 
+    //initialize Upper Intake motor controller
     UpperIntake.restoreFactoryDefaults();
     UpperIntake.setCANTimeout(250);
     UpperIntake.setInverted(false);
@@ -86,6 +90,7 @@ public class ShooterIOSparkMax implements ShooterIO {
     UpperIntake.setSmartCurrentLimit(35);
     UpperIntake.burnFlash();
 
+    //initialize Lower Intake motor controller
     LowerIntake.restoreFactoryDefaults();
     LowerIntake.setCANTimeout(250);
     LowerIntake.setInverted(false);
@@ -93,7 +98,9 @@ public class ShooterIOSparkMax implements ShooterIO {
     LowerIntake.setSmartCurrentLimit(35);
     LowerIntake.burnFlash();
   }
-
+  /**
+   * @see description continuously updates inputs for all motor controllers
+   */
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
 
