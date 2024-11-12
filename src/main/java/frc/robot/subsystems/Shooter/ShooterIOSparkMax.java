@@ -103,7 +103,7 @@ public class ShooterIOSparkMax implements ShooterIO {
    */
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
-
+    
     inputs.US_positionRad = US_encoder.getPosition();
     inputs.US_velocityRPM = US_encoder.getVelocity();
     inputs.US_appliedVolts = UpperShooter.getAppliedOutput() * UpperShooter.getBusVoltage();

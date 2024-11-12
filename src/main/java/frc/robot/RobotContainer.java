@@ -89,9 +89,9 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY() * 0.75,
-            () -> -controller.getLeftX() * 0.75,
-            () -> -controller.getRightX() * 0.75));
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX(),
+            () -> -controller.getRightX()));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     // Reset Pose
     controller
@@ -104,7 +104,7 @@ public class RobotContainer {
                                 drive.getPose().getTranslation(),
                                 new Rotation2d(
                                     (DriverStation.getAlliance().get() == Alliance.Red)
-                                        ? 3.14
+                                        ? 3.14 
                                         : 0))),
                     drive)
                 .ignoringDisable(true));
