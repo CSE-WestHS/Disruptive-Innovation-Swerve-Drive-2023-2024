@@ -16,5 +16,6 @@ import edu.wpi.first.cscore.UsbCamera;
 public class testTrack {
    UsbCamera usbCamera = new UsbCamera("USB Camera 0",0); 
    MjpegServer mjpegServer1 = new MjpegServer("serve_USB Camera 0", 1181);
+   mjpegServer1.setSource(usbCamera);
    
 }
