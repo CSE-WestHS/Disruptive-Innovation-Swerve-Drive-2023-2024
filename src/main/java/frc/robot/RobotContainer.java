@@ -23,12 +23,17 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.subsystems.camera.testTrack;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
+import frc.robot.subsystems.lowtapershooter.lowtapershooter;
+import frc.robot.subsystems.lowtapershooter.lowtapershooterIOSim;
+import frc.robot.subsystems.lowtapershooter.lowtapershooterIOSparkMax;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -40,7 +45,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  private final testTrack cam;
   // private final Flywheel flywheel;
+  private final lowtapershooter isstillmassive;
   // private final Flywheel motor2;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -55,15 +62,16 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        drive =
+        drive = 
             new Drive(
                 new GyroIONavX(),
                 new ModuleIOSparkMax(0),
                 new ModuleIOSparkMax(1),
                 new ModuleIOSparkMax(2),
                 new ModuleIOSparkMax(3));
+        cam = new testTrack();
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
-
+        isstillmassive = new lowtapershooter(new lowtapershooterIOSparkMax());
         // drive = new Drive(
         // new GyroIOPigeon2(),
         // new ModuleIOTalonFX(0),
@@ -73,7 +81,7 @@ public class RobotContainer {
         // flywheel = new Flywheel(new FlywheelIOTalonFX());
         break;
 
-      case SIM:
+      case SIM: 
         // Sim robot, instantiate physics sim IO implementations
         drive =
             new Drive(
@@ -83,6 +91,8 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         // flywheel = new Flywheel(new FlywheelIOSim());
+        cam = new testTrack();
+         isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
         break;
 
       default:
@@ -95,7 +105,9 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         // flywheel = new Flywheel(new FlywheelIO() {});
-        break;
+        cam = new testTrack();
+         isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
+        break; 
     }
 
     // Set up auto routines
@@ -134,6 +146,7 @@ public class RobotContainer {
             () -> controller.getLeftX(),
             () -> controller.getRightX()));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    controller.a().whileTrue(Commands.run(isstillmassive.runVelocity(), nulll))
     controller
         .b()
         .onTrue(
