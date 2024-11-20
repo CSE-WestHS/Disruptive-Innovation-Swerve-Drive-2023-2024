@@ -34,7 +34,6 @@ import frc.robot.subsystems.drive.ModuleIOSparkMax;
 import frc.robot.subsystems.lowtapershooter.lowtapershooter;
 import frc.robot.subsystems.lowtapershooter.lowtapershooterIOSim;
 import frc.robot.subsystems.lowtapershooter.lowtapershooterIOSparkMax;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -63,7 +62,7 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        drive = 
+        drive =
             new Drive(
                 new GyroIONavX(),
                 new ModuleIOSparkMax(0),
@@ -82,7 +81,7 @@ public class RobotContainer {
         // flywheel = new Flywheel(new FlywheelIOTalonFX());
         break;
 
-      case SIM: 
+      case SIM:
         // Sim robot, instantiate physics sim IO implementations
         drive =
             new Drive(
@@ -93,7 +92,7 @@ public class RobotContainer {
                 new ModuleIOSim());
         // flywheel = new Flywheel(new FlywheelIOSim());
         cam = new testTrack();
-         isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
+        isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
         break;
 
       default:
@@ -107,8 +106,8 @@ public class RobotContainer {
                 new ModuleIO() {});
         // flywheel = new Flywheel(new FlywheelIO() {});
         cam = new testTrack();
-         isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
-        break; 
+        isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
+        break;
     }
 
     // Set up auto routines

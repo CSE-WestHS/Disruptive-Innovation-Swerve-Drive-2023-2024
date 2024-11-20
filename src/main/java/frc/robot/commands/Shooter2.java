@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.units.Current;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.lowtapershooter.lowtapershooter;
@@ -21,13 +20,13 @@ public class Shooter2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    secondSecond=Timer.getFPGATimestamp();
+    secondSecond = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   shooter.runVelocity(2500);
+    shooter.runVelocity(2500);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,7 +38,7 @@ public class Shooter2 extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((Timer.getFPGATimestamp()-secondSecond)==10) {
+    if ((Timer.getFPGATimestamp() - secondSecond) == 10) {
       return true;
     }
     return false;
