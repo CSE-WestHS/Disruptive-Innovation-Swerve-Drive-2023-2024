@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.Shooter2;
 import frc.robot.subsystems.camera.testTrack;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.drive.Drive;
@@ -146,7 +147,7 @@ public class RobotContainer {
             () -> controller.getLeftX(),
             () -> controller.getRightX()));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.a().whileTrue(Commands.run(isstillmassive.runVelocity(), nulll))
+    controller.a().whileTrue(new Shooter2(isstillmassive));
     controller
         .b()
         .onTrue(
