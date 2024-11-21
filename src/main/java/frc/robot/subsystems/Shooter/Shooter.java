@@ -69,7 +69,7 @@ public class Shooter extends SubsystemBase {
         Shooter_ffModel.calculate(velocityRPM),
         velocityRPM,
         Shooter_ffModel.calculate(velocityRPM));
-        
+
     Logger.recordOutput("Shooter/ShooterSetpointRPM", velocityRPM);
   }
 

@@ -104,7 +104,7 @@ public class RobotContainer {
                                 drive.getPose().getTranslation(),
                                 new Rotation2d(
                                     (DriverStation.getAlliance().get() == Alliance.Red)
-                                        ? 3.14 
+                                        ? 3.14
                                         : 0))),
                     drive)
                 .ignoringDisable(true));
@@ -132,8 +132,7 @@ public class RobotContainer {
         .rightBumper()
         .onTrue(
             Commands.race(
-                    Commands.run(() -> shooter.runShooterVelocity(4500)),
-                    Commands.waitSeconds(0.75))
+                    Commands.run(() -> shooter.runShooterVelocity(5200)), Commands.waitSeconds(2))
                 .andThen(
                     Commands.race(
                         Commands.run(() -> shooter.runIndexerVelocity(4500)),
