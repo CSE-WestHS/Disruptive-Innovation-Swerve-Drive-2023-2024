@@ -28,13 +28,13 @@ import edu.wpi.first.math.util.Units;
 public class lowtapershooterIOSparkMax implements lowtapershooterIO {
   private static final double GEAR_RATIO = 1.5;
 
-  private final CANSparkMax leader = new CANSparkMax(0, MotorType.kBrushless);
-  private final CANSparkMax follower = new CANSparkMax(1, MotorType.kBrushless);
+  private final CANSparkMax leader = new CANSparkMax(90, MotorType.kBrushless);
+  private final CANSparkMax follower = new CANSparkMax(56, MotorType.kBrushless);
   private final RelativeEncoder encoder = leader.getEncoder();
   private final SparkPIDController pid = leader.getPIDController();
 
-  private final CANSparkMax leader2 = new CANSparkMax(2, MotorType.kBrushless);
-  private final CANSparkMax follower2 = new CANSparkMax(3, MotorType.kBrushless);
+  private final CANSparkMax leader2 = new CANSparkMax(24, MotorType.kBrushless);
+  private final CANSparkMax follower2 = new CANSparkMax(66, MotorType.kBrushless);
   private final RelativeEncoder encoder2 = leader2.getEncoder();
   private final SparkPIDController pid2 = leader2.getPIDController();
 

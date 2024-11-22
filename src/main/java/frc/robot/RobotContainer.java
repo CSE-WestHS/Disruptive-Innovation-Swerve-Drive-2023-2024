@@ -51,6 +51,7 @@ public class RobotContainer {
   // private final Flywheel motor2;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
+  private double SpeedFactor = 1;
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -127,11 +128,14 @@ public class RobotContainer {
     //  "Flywheel FF Characterization",
     // new FeedForwardCharacterization(
     //  flywheel, flywheel::runVolts, flywheel::getCharacterizationVelocity));
-
+    // cam.useCamera();
     // Configure the button bindings
     configureButtonBindings();
   }
 
+  public void incrementspeed() {
+    SpeedFactor += 2;
+  }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -142,8 +146,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> controller.getLeftY(),
-            () -> controller.getLeftX(),
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX() * SpeedFactor,
             () -> controller.getRightX()));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller.a().whileTrue(new Shooter2(isstillmassive));
@@ -156,6 +160,8 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
+    controller.povUp().onTrue(Commands.runOnce(() -> incrementspeed()));
+
     // controller
     //  .a()
     // .whileTrue(

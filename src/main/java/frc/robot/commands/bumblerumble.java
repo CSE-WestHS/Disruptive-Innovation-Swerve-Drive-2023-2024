@@ -8,45 +8,52 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.RumbleMyCat.RumbleCat;
-import frc.robot.subsystems.lowtapershooter.lowtapershooter;
 
-public class Shooter2 extends Command {
-  lowtapershooter shooter;
-  double secondSecond;
-  RumbleCat cat3 = new RumbleCat();
-  /** Creates a new Shooter2. */
-  public Shooter2(lowtapershooter shooter3) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.shooter = shooter3;
+public class bumblerumble extends Command {
+  /** Creates a new bumblerumble. */
+  RumbleCat cat;
+
+  RumbleType catType;
+  double strenghthCat;
+  double strenghthCat2;
+  Timer tim = new Timer();
+  /**
+   * @see Rumpble Rumble the controls
+   * @param cat
+   * @param catType
+   * @param strenghthCat
+   * @param strenghthCat2
+   */
+  public bumblerumble(
+      RumbleCat cat, RumbleType catType, double strenghthCat, double strenghthCat2) {
+    // Use addRequirements() here to declare subsystem dependencies. double
+    this.cat = cat;
+    this.catType = catType;
+    this.strenghthCat = strenghthCat;
+    this.strenghthCat2 = strenghthCat2;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    secondSecond = Timer.getFPGATimestamp();
+    tim.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.runVelocity(2500);
+    cat.setVibration(strenghthCat, catType);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stop();
+    cat.setVibration(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((Timer.getFPGATimestamp() - secondSecond) >= 3) {
-      new bumblerumble(cat3, RumbleType.kBothRumble, 1, 0.25).schedule();
-      return true;
-    } else {
-      new bumblerumble(cat3, RumbleType.kBothRumble, 1, 0.25).schedule();
-      return false;
-    }
+    return tim.get() > strenghthCat2;
   }
 }
