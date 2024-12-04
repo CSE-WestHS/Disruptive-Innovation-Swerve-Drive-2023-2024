@@ -4,27 +4,23 @@
 
 package frc.robot.subsystems.Limelight;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import org.littletonrobotics.junction.Logger;
 
 /** Add your docs here. */
 public class DistanceEstimator {
-    public double table() {
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        double ty = table.getEntry("ty").getDouble(0);
-        double Angle = 25;
-        double leHight = 8.215;
-        double goalHight = 80;
-        double angleTogoal = Angle + ty;
-        angleTogoal = Units.degreesToRadians(angleTogoal); 
-        double distancetolimelightgoal = (goalHight - leHight) / Math.atan(angleTogoal);
-        Logger.recordOutput("distance from goal", distancetolimelightgoal);
-        return distancetolimelightgoal;
-
-
-    }
-
+  public double table() {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    double ty = table.getEntry("ty").getDouble(0);
+    double Angle = 25;
+    double leHight = 8.215;
+    double goalHight = 80;
+    double angleTogoal = Angle + ty;
+    angleTogoal = Units.degreesToRadians(angleTogoal);
+    double distancetolimelightgoal = (goalHight - leHight) / Math.atan(angleTogoal);
+    Logger.recordOutput("distance from goal", distancetolimelightgoal);
+    return distancetolimelightgoal;
+  }
 }

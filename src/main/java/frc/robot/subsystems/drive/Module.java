@@ -59,22 +59,22 @@ public class Module {
       case REAL:
         driveFeedforward = new SimpleMotorFeedforward(0.36295, 0.13244);
         driveFeedback = new PIDController(.15, 0.0, 0.0);
-        turnFeedback = new PIDController(7, 1, 0.0);
+        turnFeedback = new PIDController(.05, 0, 0.0);
         break;
       case REPLAY:
         driveFeedforward = new SimpleMotorFeedforward(0.1, 0.13);
         driveFeedback = new PIDController(0.05, 0.0, 0.0);
-        turnFeedback = new PIDController(7.0, 0.0, 0.0);
+        turnFeedback = new PIDController(.05, 0.0, 0.0);
         break;
       case SIM:
         driveFeedforward = new SimpleMotorFeedforward(0.0, 0.13);
         driveFeedback = new PIDController(0.1, 0.0, 0.0);
-        turnFeedback = new PIDController(10.0, 0.0, 0.0);
+        turnFeedback = new PIDController(.05, 0.0, 0.0);
         break;
       default:
         driveFeedforward = new SimpleMotorFeedforward(0.0, 0.0);
         driveFeedback = new PIDController(0.0, 0.0, 0.0);
-        turnFeedback = new PIDController(0.0, 0.0, 0.0);
+        turnFeedback = new PIDController(0.05, 0.0, 0.0);
         break;
     }
 
