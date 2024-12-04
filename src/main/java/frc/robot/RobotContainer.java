@@ -23,17 +23,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FeedForwardCharacterization;
-import frc.robot.commands.Shooter2;
-import frc.robot.subsystems.camera.testTrack;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSparkMax;
-import frc.robot.subsystems.lowtapershooter.lowtapershooter;
-import frc.robot.subsystems.lowtapershooter.lowtapershooterIOSim;
-import frc.robot.subsystems.lowtapershooter.lowtapershooterIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -45,9 +40,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
-  private final testTrack cam;
+  // private final testTrack cam;
   // private final Flywheel flywheel;
-  private final lowtapershooter isstillmassive;
+  // private final lowtapershooter isstillmassive;
   // private final Flywheel motor2;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -70,9 +65,9 @@ public class RobotContainer {
                 new ModuleIOSparkMax(1),
                 new ModuleIOSparkMax(2),
                 new ModuleIOSparkMax(3));
-        cam = new testTrack();
+        // cam = new testTrack();
         // flywheel = new Flywheel(new FlywheelIOSparkMax());
-        isstillmassive = new lowtapershooter(new lowtapershooterIOSparkMax());
+        // isstillmassive = new lowtapershooter(new lowtapershooterIOSparkMax());
         // drive = new Drive(
         // new GyroIOPigeon2(),
         // new ModuleIOTalonFX(0),
@@ -92,8 +87,8 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         // flywheel = new Flywheel(new FlywheelIOSim());
-        cam = new testTrack();
-        isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
+        // cam = new testTrack();
+        // isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
         break;
 
       default:
@@ -106,8 +101,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         // flywheel = new Flywheel(new FlywheelIO() {});
-        cam = new testTrack();
-        isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
+        // cam = new testTrack();
+        // isstillmassive = new lowtapershooter(new lowtapershooterIOSim());
         break;
     }
 
@@ -150,7 +145,7 @@ public class RobotContainer {
             () -> -controller.getLeftX() * SpeedFactor,
             () -> controller.getRightX()));
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.a().whileTrue(new Shooter2(isstillmassive));
+    // controller.a().whileTrue(new Shooter2(isstillmassive));
     controller
         .b()
         .onTrue(
@@ -160,7 +155,7 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
-    controller.povUp().onTrue(Commands.runOnce(() -> incrementspeed()));
+    // controller.povUp().onTrue(Commands.runOnce(() -> incrementspeed()));
 
     // controller
     //  .a()
