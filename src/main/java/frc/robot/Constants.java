@@ -23,6 +23,18 @@ package frc.robot;
  */
 public final class Constants {
   public static final Mode currentMode = Mode.REAL;
+  public static final int DRIVE_ENCODER_FL = 8;
+  public static final int DRIVE_ENCODER_FR = 11;
+  public static final int DRIVE_ENCODER_BL = 5;
+  public static final int DRIVE_ENCODER_BR = 2;
+  public static final int DRIVE_FRONT_LEFT = 9;
+  public static final int TURN_FRONT_LEFT = 7;
+  public static final int DRIVE_FRONT_RIGHT = 12;
+  public static final int TURN_FRONT_RIGHT = 10;
+  public static final int DRIVE_BACK_RIGHT = 3;
+  public static final int TURN_BACK_RIGHT = 1;
+  public static final int DRIVE_BACK_LEFT = 36;
+  public static final int TURN_BACK_LEFT = 4;
 
   public static enum Mode {
     /** Running on a real robot. */
