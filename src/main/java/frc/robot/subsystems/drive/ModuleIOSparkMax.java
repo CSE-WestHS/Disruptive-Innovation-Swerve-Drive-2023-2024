@@ -57,14 +57,14 @@ public class ModuleIOSparkMax implements ModuleIO {
             new CANSparkMax(frc.robot.Constants.DRIVE_FRONT_RIGHT, MotorType.kBrushless);
         turnSparkMax = new CANSparkMax(frc.robot.Constants.TURN_FRONT_RIGHT, MotorType.kBrushless);
         turnAbsoluteEncoder = new CANcoder(frc.robot.Constants.DRIVE_ENCODER_FR);
-        absoluteEncoderOffset = new Rotation2d(-1.68); // MUST BE CALIBRATED
+        absoluteEncoderOffset = new Rotation2d(0.9); // MUST BE CALIBRATED
         break;
       case 1:
         driveSparkMax = new CANSparkMax(frc.robot.Constants.DRIVE_FRONT_LEFT, MotorType.kBrushless);
         turnSparkMax = new CANSparkMax(frc.robot.Constants.TURN_FRONT_LEFT, MotorType.kBrushless);
-        turnAbsoluteEncoder = new CANcoder(8);
+        turnAbsoluteEncoder = new CANcoder(frc.robot.Constants.DRIVE_ENCODER_FL);
         absoluteEncoderOffset =
-            new Rotation2d(frc.robot.Constants.DRIVE_ENCODER_FL); // MUST BE CALIBRATED
+            new Rotation2d(-2.64); // MUST BE CALIBRATED
         break;
       case 2:
         driveSparkMax = new CANSparkMax(frc.robot.Constants.DRIVE_BACK_RIGHT, MotorType.kBrushless);
