@@ -28,7 +28,7 @@ public class LEDS {
     if (DriverStation.isDisabled()) {
       for (var i = 0; i < buffer.getLength(); i++) {
         // Sets the specified LED to the HSV values for yellow
-        buffer.setHSV(i, 60, 100, 0);
+        buffer.setHSV(i, 60, 100, 100);
       }
       System.out.println("set LEDs");
       leds.setData(buffer);
